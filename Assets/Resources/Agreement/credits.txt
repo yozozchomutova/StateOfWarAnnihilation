@@ -1,0 +1,29 @@
+<size=22><b>[Font] Hemi Head Font</b></size>
+-Made by:<b> Raymond Larabie </b>
+-Licensed under<b> SIL Open Font License 1.1 (OFL) </b>
+-No changes/modifications were made.
+-From: https://www.1001fonts.com/hemi-head-426-font.html
+
+<size=22><b>[Font] Exo Font Family</b></size>
+-Made by:<b> ndiscovered </b>
+-Licensed under<b> SIL Open Font License 1.1 (OFL) </b>
+-No changes/modifications were made.
+-From: https://www.1001fonts.com/exo-font.html
+
+<size=22><b>[Font] The Jewish Bitmap Font</b></size>
+-Made by:<b> JLH Fonts</b>
+-Licensed under<b> Public Domain</b>
+-No changes/modifications were made.
+-From: https://www.1001fonts.com/the-jewish-bitmap-font.html
+
+<size=22><b>[Sound] Explosion 1.0</b></size>
+-Made by:<b> jobro </b>
+-Licensed under<b> Creative Commons 3.0 (CC 3.0) </b>
+-No changes/modifications were made.
+-From: https://freesound.org/people/jobro/sounds/35462/
+
+<size=22><b>[Sound] UI_swoosh.wav</b></size>
+-Made by:<b> Electroviolence </b>
+-Licensed under<b> Creative Commons 0 (CC0 1.0) </b>
+-Modifications were made!
+-From: https://freesound.org/people/Electroviolence/sounds/234549/
