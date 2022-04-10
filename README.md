@@ -1,1 +1,1 @@
-# StateOfWarLegion
+# StateOfWarCommunity
