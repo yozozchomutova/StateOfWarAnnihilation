@@ -1,8 +1,0 @@
--By using our software, you are agreeing to follow these license rules:
-
-<size=22><b>You can:</b></size>
--Use program.
-
-<size=22><b>You can't:</b></size>
--Modify.
--Distribute on your own.
