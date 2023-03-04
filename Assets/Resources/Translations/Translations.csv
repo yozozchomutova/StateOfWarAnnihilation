@@ -1,0 +1,23 @@
+Key,English,Czech
+Menu.Singleplayer,Singleplayer,Hra pro jednoho hráče
+Menu.Multiplayer,Multiplayer,Hra pro více hráčů
+Menu.Editor,Editor,Editor
+Menu.Settings,Settings,Nastavení
+Menu.Stats,Stats,Statistiky
+Menu.Exit,Exit,Exit
+Menu.Singleplayer.Campaign,Campaign,Kampaň
+Menu.Singleplayer.WorldRuler,World ruler,Světový vládce
+Menu.Singleplayer.Conqueror,Conqueror,Dobyvatel
+Menu.Singleplayer.LoadLevel,Load level,Načíst level
+Menu.Multiplayer.Matchmaking,Matchmaking,Hledat zápas
+Menu.Multiplayer.Tournaments,Tournament,Turnaj
+Menu.Multiplayer.IndividualGames,Individual games,Jednotlivé hry
+Menu.Editor.LevelEditor,Level editor,Levelový editor
+Menu.Editor.LevelEditorTutorial,Level editor Tutorial,Levelový editor Tutoriál
+Menu.Editor.PublicRepository,Public repository,Veřejný repozítář
+Menu.Settings.General,General,Obecné
+Menu.Settings.Services,Services,Služby
+Menu.Settings.Modules,Modules,Moduly
+Menu.Stats.Stats,Stats,Statistiky
+Menu.Stats.Achievements,Achievements,Úspěchy
+Menu.Stats.Agreement,Agreement,Souhlas

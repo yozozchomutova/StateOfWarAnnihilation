@@ -1,0 +1,22 @@
+I really don't want to mess with Privacy Policy and Terms of Service so much, so simply:
+
+Privacy Policy:
+Privacy policy describes what personal data game collects and how it (or we) uses these data.
+
+-Unity Analytics - Enabled. Cannot be disabled.
+Collects your country for sure and your playing activity. Nothing serious personal. 
+For more info, you should refer to Unity engine Analytics privacy policy.
+
+-SOW:Annihilation Analytics - Can be enabled or disabled.
+Currently this service targets Singleplayer mode.
+If you finish or exit level in Singleplayer, this service sends to database level map you played and stuff that happened in game.
+No personal data are being collected. These data will be mostly used to rebalance all units and generally improving game. 
+Levels won't be published anywhere. After being processed, they're going to be deleted from database.
+
+-Discord Rich presence SDK - Can be enabled or disabled.
+If you have Rich presence enabled in Discord, game status will be displayed under your profile.
+SOW:Annihilation use this for interfacing with multiplayer.
+If you want to know, how discord collects and uses data trough SDK, you may want refer to: https://discord.com/privacy
+
+Terms of Use:
+Currently there are no terms of use, due to no multiplayer.

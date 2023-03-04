@@ -1,0 +1,101 @@
+Key,English,Czech
+LevelEditor.TerrainEdit.WaterLevel,Water level,Hloubka vody
+LevelEditor.TerrainEdit.TerrainEdit,Edit terrain,Uprava terénu
+LevelEditor.TerrainEdit.StartEdit,Start edit,Začít ůpravy
+LevelEditor.TerrainEdit.EndEdit,End edit,Konec úprav
+LevelEditor.TerrainEdit.BrushSize,Brush size,Velikost štětce
+LevelEditor.TerrainEdit.BrushStrength,Brush strength,Síla štětce
+LevelEditor.TerrainEdit.PointingHeight,Pointing height:,Naměřená výška:
+LevelEditor.TerrainEdit.Height,Height,Výška
+LevelEditor.TerrainEdit.RaiseLowerTerrain,Raise/Lower terrain,Zvýšit/Snížit terén
+LevelEditor.TerrainEdit.FlattenEnteredValue,Flatten (Entered value),Vyrovnat (Zadaná hodnota)
+LevelEditor.TerrainEdit.FlattenTerrainHeight,Flatten (Terrain height),Vyrovnat (Terénová výška)
+LevelEditor.TerrainEdit.Smooth,Smooth,Vyhladit
+,,
+LevelEditor.TerrainPaint.TerrainPainting,Terrain painting,Malování terénů
+LevelEditor.TerrainPaint.StartPaint,Start paint,Začít úpravy
+LevelEditor.TerrainPaint.EndPaint,End paint,Konec úprav
+LevelEditor.TerrainPaint.ModeDrawTextures,Draw textures,Malovat textury
+LevelEditor.TerrainPaint.ModeSmoothTextures,Smooth textures,Vyhladit textury
+LevelEditor.TerrainPaint.ModeDrawPlants,Draw plants,Malovat trávu
+LevelEditor.TerrainPaint.BrushSize,Brush size,Velikost štětce
+LevelEditor.TerrainPaint.Intensity,Intensity,Intenzita
+LevelEditor.TerrainPaint.Alpha,Alpha,Alpha
+LevelEditor.TerrainPaint.Note0RemoveGrass,NOTE: Set 0 for removing grass.,POZNÁMKA: Nastavte intenzitu na 0 pro mazání trávy.
+LevelEditor.TerrainPaint.T.Grass,Grass,Tráva
+LevelEditor.TerrainPaint.T.Rock,Rock,Kámen
+LevelEditor.TerrainPaint.T.Mud,Mud,Bahno
+LevelEditor.TerrainPaint.T.Sand,Sand,Poušť
+LevelEditor.TerrainPaint.T.SandRocks,Sand rocks,Pískovité kameny
+LevelEditor.TerrainPaint.T.Snow,Snow,Sníh
+LevelEditor.TerrainPaint.T.SnowRocks,Snow rocks,Sněžné kameny
+LevelEditor.TerrainPaint.T.Gravel,Gravel,Štěrk
+,,
+LevelEditor.MapObjects.MapObjects,Map objects,Mapové objekty
+LevelEditor.MapObjects.Properties,Properties,Vlastnosti
+LevelEditor.MapObjects.DragToDraw,Drag to draw,Neustále pokládat při táhnutí
+LevelEditor.MapObjects.RemoveMode,Remove mode,Režim odstraňování
+LevelEditor.MapObjects.Spacing,Spacing,Odstupy
+,,
+LevelEditor.Navigations.Navigations,Navigation,Navigace
+LevelEditor.Navigations.AllowedMaxGroundAngle,Allowed max ground angle,Povolený maximalní pozemní uhel
+LevelEditor.Navigations.Visualize,Visualize,Vizualizovat
+LevelEditor.Navigations.OffsetZ,Offset Z,Posunutí po ose Z
+LevelEditor.Navigations.Recalculate,Recalculate,Přepočítat
+,,
+LevelEditor.EventManager.Ok,Ok,Ok
+LevelEditor.EventManager.Node.TimeCountdown,Time countdown,Časový odpočet
+LevelEditor.EventManager.Node.GiveResources,Give resources,Darovat zdroje
+LevelEditor.EventManager.Node.GiveAirForces,Give air forces,Darovat letouny
+LevelEditor.EventManager.Node.LaunchCarrybus,Launch carrybus,Vyslat výsadek
+LevelEditor.EventManager.Node.LaunchAirForce,Launch air force,Vyslat letoun
+LevelEditor.EventManager.Node.2InputANDGate,2 Input AND Gate,2 Vstupové AND Hradlo
+LevelEditor.EventManager.Node.LastCCStanding,Last command c. standing,Poslední stojící příkazové centrum
+LevelEditor.EventManager.Node.LastUnitStanding,Last unit standing,Poslední stojící jednotka
+LevelEditor.EventManager.Node.WinGame,Win game,Zvítězít hru
+LevelEditor.EventManager.Node.LoseGame,Lose game,Prohrát hru
+LevelEditor.EventManager.Node.AutopathUnit,Autopath unit,Autonavigovat jednotku
+LevelEditor.EventManager.Node.UnitCheckDistance,Unit check distance,Zkontrolovat vzdálenost jednotky
+LevelEditor.EventManager.Node.IsUnitDead,Is unit dead,Je jednotka mrtvá
+,,
+LevelEditor.UnitsBar.Units,Units,Jednotky
+LevelEditor.UnitsBar.UnitProperties,Unit properties,Vlastnosti jednotky
+LevelEditor.UnitsBar.Health,Health,Životy
+,,
+LevelEditor.SelectBuilding,Select building,Vyberte budovu
+LevelEditor.SelectTower,Select tower,Vyberte věž
+LevelEditor.SelectUnit,Select unit,Vyberte jednotku
+LevelEditor.SelectAirForce,Select air force,Vyberte letoun
+,,
+LevelEditor.PlayerSettings.PlayerSettings,Player settings,Nastavení hráčů
+LevelEditor.PlayerSettings.Team,Team,Tým
+LevelEditor.PlayerSettings.Money,Money,Peníze
+LevelEditor.PlayerSettings.Research,Research,Výzkumné body
+LevelEditor.PlayerSettings.Ok,Ok,Ok
+,,
+LevelEditor.LevelInfo.LevelProperties,Level properties,Vlastnosti levelu
+LevelEditor.LevelInfo.TerrainSize,Terrain size,Velikost terénu
+LevelEditor.LevelInfo.Icon,Icon,Ikona
+LevelEditor.LevelInfo.Description,Description,Popis
+LevelEditor.LevelInfo.Load,Load,Načíst
+LevelEditor.LevelInfo.Players,Players,Hráči
+,,
+LevelEditor.NewLevel.Confirm.Question,Are you sure to create new level?,Jste si jist s vytvořením nového levelu?
+LevelEditor.NewLevel.Confirm.Warning,"! Don't forget to save your work, before creating new level","! Nezapomeňte si uložit svoji práci, před vytvořením nového levelu"
+LevelEditor.NewLevel.Confirm.Cancel,Cancel,Zrušit
+LevelEditor.NewLevel.Confirm.Create,Create new,Vytvořit nový
+,,
+LevelEditor.LoadLevel.LevelList,Level list,Levelový list
+LevelEditor.LoadLevel.Cancel,Cancel,Zrušit
+LevelEditor.LoadLevel.OpenFileExplorer,Open file explorer,Otevřít průzkumník
+LevelEditor.LoadLevel.Load,Load,Načíst
+,,
+LevelEditor.SaveLevel.Title,Save summary,Uložení / shrnutí
+LevelEditor.SaveLevel.LevelName,Level name,Název levelu
+LevelEditor.SaveLevel.CalculatedDifficulty,Calculated difficulty,Vypočítaná obtížnost
+LevelEditor.SaveLevel.OutOfBoundsObjects,Out of bounds objects,Objektů mimo hranice
+LevelEditor.SaveLevel.UnderWaterObjects,Objects under water,Objektů pod vodou
+LevelEditor.SaveLevel.FloatingObjects,Floating objects,Levitující objekty
+LevelEditor.SaveLevel.Save,Save,Uložit
+,,
+LevelEditor.ExitEditor.Question,Are you sure to exit? (Also don't forget to save your changes),Chcete opravdu odejít? (Nezapomeňtě uložit svoji práci)
