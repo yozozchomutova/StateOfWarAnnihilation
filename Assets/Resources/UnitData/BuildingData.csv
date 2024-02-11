@@ -1,0 +1,11 @@
+Unit ID,productionDefaultUnit,productionMax,productionCooldownDefault,productionAllowedUnits
+,S,I,F,A
+0_commandCenter1,0_smf1,1,3,0_smf1
+0_1st_factory,0_tonk1,5,35,0_tonk1|0_longarm1|0_heavy1|0_flamingo1|0_antiAircraft1
+0_2nd_factory,0_tonk1,6,45,0_tonk1|0_longarm1|0_heavy1|0_flamingo1|0_antiAircraft1|0_tonk2|0_longarm2|0_heavy2|0_flamingo2|0_antiAircraft2
+0_3rd_factory,0_tonk1,9,55,0_tonk1|0_longarm1|0_heavy1|0_flamingo1|0_antiAircraft1|0_tonk2|0_longarm2|0_heavy2|0_flamingo2|0_antiAircraft2|0_tonk3|0_longarm3|0_heavy3|0_flamingo3|0_antiAircraft3
+0_goldMachine1,0_goldbrick1,3,0.9,0_goldbrick1
+0_researchStation1,0_research1,3,0.65,0_research1
+0_navigator1,0_jet1,3,70,0_jet1|0_destroyer1|0_cyclone1|0_carrybus1|0_debris1
+0_windTurbine1,0_energy1,3,0.3,0_energy1
+0_stepper_factory1,0_kodimizerS1,3,67,0_kodimizerS1|0_pinkyS1|0_culometS1|0_antiAircraftS1|0_shockerS1|0_atomizer1

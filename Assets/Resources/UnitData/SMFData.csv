@@ -1,0 +1,3 @@
+Unit ID,floatingHeight,destroyRate,upgradeRate,repairRate,repairRate,idleAlertTimeDefault,sideWeaponCooldownDefault,sideWeaponRange,sideWeaponDamage,moveMaxSpeed,moveAcceleration
+,F,F,F,F,F,F,F,F,F,F,F
+0_smf1,7,6,4,13,12,15,2,13,7,4,6

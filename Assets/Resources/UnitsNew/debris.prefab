@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6512096565427428348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6512096565427428347}
+  - component: {fileID: 3519367648668570327}
+  - component: {fileID: 3341407761661490502}
+  m_Layer: 14
+  m_Name: debris
+  m_TagString: Unit
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6512096565427428347
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6512096565427428348}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3519367648668570327
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6512096565427428348}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3341407761661490502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6512096565427428348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d7c49d024f91bb4e90553ee0da3e170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unit: {fileID: 0}
+  body: {fileID: 0}
+  collider: {fileID: 0}
+  meshRenderersAll: []
+  meshRenderersDefault: []
+  id: 0_debris1
+  unitSOWCWId: -1
+  bodyId: 
+  name: Debris
+  icon: {fileID: 2800000, guid: 0175f7993245d9c42ae8397aeadee183, type: 3}
+  virtualSpace: 0
+  unitType: 5
+  value: 0
+  valid: 0
+  hpMax: 999999
+  hp: 0
+  respawnOnDeath: 0
+  airShield: 0
+  upgradableToUnit: 
+  upgradeProgress: 0
+  headMaxYawRotSpeed: 0
+  headVelocity: {x: 0, y: 0, z: 0}
+  headRotation: {x: 0, y: 0, z: 0}
+  propertiesUI_editor: {fileID: 0}
+  propertiesUI_game: {fileID: 0}
+  headBlowupVFX: 0
+  heightOffset_end: 30
+  canBeShotDown: 0
+  instantTeleportToTarget: 1
+  attackTriggerDistance: 0.5
+  actionLengthTime: 6
+  fireIncludesVelocity: 0
+  additionalWeaponForce: {x: 0, y: 0, z: 0}
+  approachType: 0
+  targetMode: 0
+  weaponTargetOffset: 7.5
+  spawnRandomWeapons: 1
+  spawnWeaponCount: 16
+  weaponDamage: 140
+  weaponCoreBlast: 2
+  weaponBlast: 5
+  weaponIsFreefall: 1
+  shuffleWeaponOrder: 1
+  weaponLaunchDelay_randomBase: 0.1
+  weaponLaunchDelay_spacing: 0.6
+  projectileSpreadRandomization: 0.1
+  acceleration: 10
+  speedNormal: 10
+  speedAction: 0
+  coreRotationY: 0
+  offRotY: 0
+  adjustmentCornerScale: 0
+  terrainImageScale_primary: 8
+  MIN_adjustment: 2
+  MAX_adjustment: 2
+  launched: 0
+  targettedEnd: {x: 0, y: 0, z: 0}
+  fans: []
+  frontThrusters: []
+  backThrusters: []
+  bottomDoorLeft: {fileID: 0}
+  bottomDoorRight: {fileID: 0}
+  animRoot: {fileID: 0}
+  animTargetApproach: {fileID: 0}
+  animTargetLeave: {fileID: 0}
+  weaponPrefabs:
+  - {fileID: 7522048958133430748, guid: 13a768dd3bf659f45a0b3d3dd2ea09e1, type: 3}
+  - {fileID: 1762896696391529737, guid: 0544b7b0ab88cab46a320d28b84e0cf8, type: 3}
+  - {fileID: 442492119566468800, guid: 72b8841501529c742bb228e51f565793, type: 3}
+  - {fileID: 7533155723989607415, guid: 37ac89e847322d340bea83b9b0a33017, type: 3}
+  weapons: []
+  adjustmentCornersMat: {fileID: 0}
+  terrainImageMat_primary: {fileID: 2100000, guid: 4a444bb7e7cb4204182a4e86a1cf4661,
+    type: 2}

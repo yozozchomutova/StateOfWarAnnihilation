@@ -1,0 +1,7 @@
+Unit ID,heightOffset_end,canBeShotDown,instantTeleportToTarget,attackTriggerDistance,actionLengthTime,fireIncludesVelocity,approachType,targetMode,weaponTargetOffset,spawnRandomWeapons,spawnWeaponCount,weaponDamage,weaponCoreBlast,weaponBlast,weaponIsFreefall,shuffleWeaponOrder,weaponLaunchDelay_randomBase,weaponLaunchDelay_spacing,projectileSpreadRandomization,acceleration,speedNormal,speedAction,offRotY,adjustmentCornerScale,terrainImageScale_primary,MIN_adjustment,MAX_adjustment,coreRotationY
+,F,B,B,F,F,B,I,I,F,B,I,F,F,F,B,B,F,F,F,F,F,F,F,F,F,F,F,F
+0_jet1,13,0,0,12,0,1,0,0,0,0,0,30,1,3,0,0,0.15,0,0,1,45,0,90,0.3,2,1,3,0
+0_destroyer1,12,1,0,5.3,6,0,1,1,0.55,0,0,60,2,3,1,0,0,0.11,0,3,6,2,90,0,7,2,2,0
+0_cyclone1,12,1,0,0.84,15.5,0,2,2,5,0,0,25,2,3,1,1,0.1,0.16,0.04,5,10,0,45,0,5,2,2,60
+0_carrybus1,14,1,0,12,20,0,3,3,0,0,0,0,0,0,0,0,0,0,0,0.8,8,5,90,0,5,2,2,0
+0_debris1,30,0,1,0.5,6,0,2,2,7.5,1,16,140,2,5,1,1,0.1,0.6,0.1,10,10,0,0,0,8,2,2,0

@@ -1,0 +1,112 @@
+#PRIVACY_POLICY#
+<size=40><b>002 version of Agreement update</b></size>
+
+-Added more people in Credits.
+
+<size=50><color=#61a8ff><b>Privacy Policy for State of War: Annihilation</b></color></size>
+
+This Privacy Policy explains the different types of information that we collect while you use our application. (Atleast should)
+Changed Privacy Policies come with new version number. Every time Privacy Policy gets changed, you will be always informed straight after launching application.
+
+<size=30><b>Consent</b></size>
+
+By using our application, you hereby consent to our Privacy Policy and agree to its terms.
+
+<size=30><b>Information we collect and How we use them</b></size>
+
+None of the following data is sold to anyone.
+None of the following data is permanently stored anywhere. (They are local, just on your device)
+All following data can be changed or disabled in Settings -> Privacy.
+
+We collect and use these types of data:
+
+<b><color=#ff5454>Discord username, avatar and Rich Presence (RPC)</color></b>
+-Integrating game with your discord account, allowing you to play multiplayer with other discord users..
+-These informations has no protection/encryption.
+-Non-Personal informations about your game state will be visible on your profile on Discord. (RPC)
+
+<size=30><b>CCPA - Privacy Rights (Do Not Sell My Personal Information)</b></size>
+
+Under the CCPA, among other rights, California consumers have the right to:
+Request that a business that collects a consumer's personal data disclose the categories and specific pieces of personal data that a business has collected about consumers.
+Request that a business delete any personal data about the consumer that a business has collected.
+Request that a business that sells a consumer's personal data, not sell the consumer's personal data.
+If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.
+
+<size=30><b>GDPR - Data Protection Rights</b></size>
+
+We would like to make sure you are fully aware of all of your data protection rights. Every user is entitled to the following:
+
+The right to access – You have the right to request copies of your personal data.
+
+The right to rectification – You have the right to request that we correct any information you believe is inaccurate. You also have the right to request that we complete the information you believe is incomplete.
+
+The right to erasure – You have the right to request that we erase your personal data, under certain conditions.
+
+The right to restrict processing – You have the right to request that we restrict the processing of your personal data, under certain conditions.
+
+The right to object to processing – You have the right to object to our processing of your personal data, under certain conditions.
+
+The right to data portability – You have the right to request that we transfer the data that we have collected to another organization, or directly to you, under certain conditions.
+
+If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.
+
+<size=30><b>Children's Information</b></size>
+
+This game don't comply with COPPA, because this game is not made for younger than 13 years old people.
+
+<size=30><b>Contact</b></size>
+
+If you have any questions, request something or want to tell me something:
+
+Contact via email: jozozchomutova@email.cz
+(Faster responses) Contact via discord: YozoZChomutova#5596 (Discord ID: 395926018067660801)
+
+#LICENSE#
+-By using our software, you are agreeing to follow these license rules:
+
+<size=22><b>You can:</b></size>
+-Use program.
+-Modify for private use.
+
+<size=22><b>You can't:</b></size>
+-Modify for public / commercial use.
+-Distribute on your own.
+
+<size=22><b>Limitations:</b></size>
+-Warranty
+-Liability
+
+#CREDITS#
+
+<size=22><b>[Asset] Hologram Shader</b></size>
+-Made by:<b> Raymond Larabie </b>
+-Licensed under<b> MIT License </b>
+-Changes were made. (Scan Tiling range)
+-From: https://github.com/andydbc/HologramShader
+
+<size=22><b>[Font] Hemi Head Font</b></size>
+-Made by:<b> Raymond Larabie </b>
+-Licensed under<b> SIL Open Font License 1.1 (OFL) </b>
+-No changes/modifications were made.
+-From: https://www.1001fonts.com/hemi-head-426-font.html
+
+<size=22><b>[Font] Exo Font Family</b></size>
+-Made by:<b> ndiscovered </b>
+-Licensed under<b> SIL Open Font License 1.1 (OFL) </b>
+-No changes/modifications were made.
+-From: https://www.1001fonts.com/exo-font.html
+
+<size=22><b>[Font] The Jewish Bitmap Font</b></size>
+-Made by:<b> JLH Fonts</b>
+-Licensed under<b> Public Domain</b>
+-No changes/modifications were made.	
+-From: https://www.1001fonts.com/the-jewish-bitmap-font.html
+
+<size=22><b>[Sound] UI_swoosh.wav</b></size>
+-Made by:<b> Electroviolence </b>
+-Licensed under<b> Creative Commons 0 (CC0 1.0) </b>
+-Modifications were made!
+-From: https://freesound.org/people/Electroviolence/sounds/234549/
+
+#END#

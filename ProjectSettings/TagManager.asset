@@ -4,19 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Shootable
-  - building
-  - unit
-  - terrain
-  - headquarters
-  - smallFactory
-  - mediumFactory
-  - bigFactory
-  - radar
-  - goldMine
-  - laboratory
-  - wind
-  - robotFactory
+  - UnitBody
+  - Unit
   layers:
   - Default
   - TransparentFX

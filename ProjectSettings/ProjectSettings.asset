@@ -136,7 +136,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 03-01-003-__AV
+  bundleVersion: 03-06-003-__AV
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -761,6 +761,7 @@ PlayerSettings:
     Build: 0
     Collab: 0
     ErrorHub: 0
+    Game Performance: 1
     Game_Performance: 0
     Hub: 0
     Purchasing: 0

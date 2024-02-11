@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6512096565427428348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6512096565427428347}
+  - component: {fileID: -7646715876741724586}
+  m_Layer: 0
+  m_Name: debris
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6512096565427428347
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6512096565427428348}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-7646715876741724586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6512096565427428348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2380258af7b91d34a84405984bde001b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitId: 0_debris1
+  unitName: Debris
+  maxHp: 1
+  respawnOnDeath: 0
+  maxUpgradePoints: 0
+  cost: 0
+  bodyId: 
+  unitType: 0
+  hasUpgradableStage: 0
+  upgradedUnitId: 
+  hp: 0
+  icon: {fileID: 2800000, guid: 0175f7993245d9c42ae8397aeadee183, type: 3}
+  propertiesUI_editor: {fileID: 0}
+  propertiesUI_game: {fileID: 0}
+  meshRenderers: []
+  ignorableRenderers: []
+  materialsForIgnorables: []
+  maximumUnitNeighbourRange: -1
+  moneyDependant: 0
+  upgradePoints: 0
+  actionType: 0
+  targetMode: 2
+  approachType: 2
+  canBeShotDown: 0
+  variationCounts: 
+  spawnUnitsID: []
+  offRotY: 0
+  heightOffset_end: 30
+  rootIsSpinning: 0
+  acceleration: 10
+  maxNormalSpeed: 10
+  maxActionSpeed: 0
+  instantTeleportToTarget: 1
+  terrainImageScale_primary: 8
+  terrainImageMat_primary: {fileID: 2100000, guid: 4a444bb7e7cb4204182a4e86a1cf4661,
+    type: 2}
+  weaponDamage: 35
+  weaponCoreBlast: 2
+  weaponBlast: 5
+  weaponsFreefall: 1
+  shuffleWeaponOrder: 1
+  weapons: []
+  setAFMaterialForWeapons: 1
+  spawnRandomWeapons: 1
+  spawnWeaponCount: 16
+  weaponPrefabs:
+  - {fileID: 7522048958133430748, guid: 13a768dd3bf659f45a0b3d3dd2ea09e1, type: 3}
+  - {fileID: 1762896696391529737, guid: 0544b7b0ab88cab46a320d28b84e0cf8, type: 3}
+  - {fileID: 442492119566468800, guid: 72b8841501529c742bb228e51f565793, type: 3}
+  - {fileID: 7533155723989607415, guid: 37ac89e847322d340bea83b9b0a33017, type: 3}
+  actionLengthTime: 6
+  attackTriggerDistance: 0.5
+  weaponLaunchDelay_additive: 0.6
+  weaponLaunchDelay_randomBase: 0.1
+  weaponTargetOffset: 2
+  projectileSpreadRandomization: 0.1
+  fireIncludesVelocity: 0
+  additionalWeaponForce: {x: 0, y: -1, z: 0}
+  adjustmentCornersMat: {fileID: 0}
+  adjustmentCornerScale: 0
+  MIN_adjustment: 2
+  MAX_adjustment: 2
+  fans: []
+  frontThrusters: []
+  backThrusters: []
+  bottomDoorLeft: {fileID: 0}
+  bottomDoorRight: {fileID: 0}
+  coreRotationY: 0
