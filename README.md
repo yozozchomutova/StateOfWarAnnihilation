@@ -1,9 +1,14 @@
 
 # State of War: Annihilation
 
-State of War: Annihilation is Real-time strategy game. It's highly inspired by old Warmonger edition.<br>
+State of War: Annihilation is rts game. Players use mostly ground tanks with turrets to destroy their enemy. Also players can only build towers and buildings can be occupied by destroying them. Air is also playing crucial role with few aircrafts that supports ground units. As game goes, players are gradually upgrading their units and buildings. Not every mission is same.
 
-## Stats
+Game and It's concept is still under development and far from finish.  Highly inspired by old Warmonger edition.
+
+You can use dedicated launcher to install and manage game:
+https://github.com/yozozchomutova/StateOfWarAnnihilation_Manager/releases
+
+---
 
 [![discord](https://img.shields.io/discord/935213241066459196?label=discord)](https://discord.gg/e4VEdMC2Jw) 
 [![release](https://img.shields.io/github/v/release/yozozchomutova/StateOfWarAnnihilation)](https://github.com/yozozchomutova/StateOfWarAnnihilation/releases) 
@@ -16,6 +21,7 @@ State of War: Annihilation is Real-time strategy game. It's highly inspired by o
 | ----------------- | ------------------------------------------------------------------ |
 | Contributing | See `CONTRIBUTING.MD` |
 | FAQ | See `FAQ.md` |
+| Code documentation | See `DOCUMENTATION.MD` |
 ## Support
 
 For support, question, talk or help, join our discord server https://discord.gg/e4VEdMC2Jw
