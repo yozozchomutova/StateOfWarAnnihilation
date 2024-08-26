@@ -249,11 +249,13 @@ MonoBehaviour:
   headMaxYawRotSpeed: 0
   headVelocity: {x: 0, y: 0, z: 0}
   headRotation: {x: 0, y: 0, z: 0}
+  placementDistance: 0
   propertiesUI_editor: {fileID: 2591345113724391693, guid: ac51947911c141e43b5685f2097cfbc7,
     type: 3}
   propertiesUI_game: {fileID: 8010636976199725756, guid: 9a23fc3b5b835b7449a0d3f3c0c233ea,
     type: 3}
-  headBlowupVFX: 0
+  unitDeathVFXType: 0
+  unitDeathVFX: {fileID: 0}
   productionDefaultUnit: 0_tonk1
   productionMax: 9
   productionCooldownDefault: 55
@@ -635,7 +637,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:

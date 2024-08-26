@@ -22,7 +22,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_28de85506601443d82b6148f21ccc69c:
-        m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+        m_Texture: {fileID: 8400000, guid: 4ae8ae7350b67b44785d874c413a2e03, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_6d0f902902b04ba687ee00a51db7ba6d:
@@ -51,24 +51,24 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Boolean_d3c978b0d14a4f66be175a9b89855be0: 1
-    - Vector1_55003dfa023448c3bffa42f3ca4a99a4: 0.42
-    - Vector1_6269b1025b26473ca8bc61634f34b537: 0
-    - Vector1_687f54e8c371429f86b9eaab0e7dfe3e: 0.742
-    - Vector1_6c82dffdd68049bcb019d3a9c64c92a0: 0.08
-    - Vector1_6f56a0970372485390c6587863c2374e: 89.6
-    - Vector1_7273530c27a34c9f8ee5723b84f96baa: 0.15
-    - Vector1_dada42ebfac44076897b6de67441ba32: 0.15
-    - _Ambient_Occlusion: 0.1
+    - Boolean_d3c978b0d14a4f66be175a9b89855be0: 0
+    - Vector1_55003dfa023448c3bffa42f3ca4a99a4: 1
+    - Vector1_6269b1025b26473ca8bc61634f34b537: 0.9
+    - Vector1_687f54e8c371429f86b9eaab0e7dfe3e: 0.68
+    - Vector1_6c82dffdd68049bcb019d3a9c64c92a0: 0.29
+    - Vector1_6f56a0970372485390c6587863c2374e: 0.87
+    - Vector1_7273530c27a34c9f8ee5723b84f96baa: 1.5
+    - Vector1_dada42ebfac44076897b6de67441ba32: 0.39
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - Color_36218622185947c6a5ae36366d8e21d8: {r: 0.10346207, g: 0.42591897, b: 0.8773585,
+    - Color_36218622185947c6a5ae36366d8e21d8: {r: 0.15218925, g: 0.20937225, b: 0.3396225,
         a: 0.9607843}
-    - Color_93e06cd551a5449091bcde90b46765a0: {r: 0.627451, g: 0.9821378, b: 1, a: 1}
-    - Vector2_4351ac2be1d74054986ec5378db9d578: {r: 10, g: 10, b: 0, a: 0}
+    - Color_93e06cd551a5449091bcde90b46765a0: {r: 0.20652366, g: 0.3679245, b: 0.33936897,
+        a: 0.19607843}
+    - Vector2_4351ac2be1d74054986ec5378db9d578: {r: 1024, g: 1024, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &4377006366996924075
+--- !u!114 &7722052115916803096
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

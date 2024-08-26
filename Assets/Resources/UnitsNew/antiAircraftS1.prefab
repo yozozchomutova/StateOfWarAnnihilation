@@ -242,9 +242,12 @@ MonoBehaviour:
   headMaxYawRotSpeed: 0
   headVelocity: {x: 0, y: 0, z: 0}
   headRotation: {x: 0, y: 0, z: 0}
+  placementDistance: 1.2
   propertiesUI_editor: {fileID: 0}
   propertiesUI_game: {fileID: 0}
-  headBlowupVFX: 0
+  unitDeathVFXType: 1
+  unitDeathVFX: {fileID: 5348919988709969672, guid: f7ae8b148fd838c45a5cf71f4fad9658,
+    type: 3}
   state: 0
   attacksGround: 0
   attacksAir: 0
@@ -285,6 +288,7 @@ MonoBehaviour:
   - {fileID: 2684556169484518082}
   projectileOutput_light: []
   spinGuns: []
+  lights: []
 --- !u!1001 &5004315212556806180
 PrefabInstance:
   m_ObjectHideFlags: 0

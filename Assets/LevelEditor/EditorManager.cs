@@ -23,7 +23,6 @@ public class EditorManager : MonoBehaviour
 
     //For LevelData
     public Terrain terrain;
-    public Transform water;
 
     [Header("Audio")]
     public AudioSource bird1;
@@ -60,7 +59,6 @@ public class EditorManager : MonoBehaviour
     {
         //Connect with LevelData
         LevelData.mainTerrain = terrain;
-        LevelData.water = water;
 
         LevelData.Init();
 
@@ -221,7 +219,7 @@ public class EditorManager : MonoBehaviour
         bw.Write((int)panelLevelInfo.description.text.Length); //Desc length
         bw.Write((int)panelLevelInfo.imageBytes.Length); //Img length
 
-        ML_03_05 mapLevel = new ML_03_05(LevelData.mainTerrain, water.position.y, barMapObjects, barBuildings, barNavigations);
+        ML_03_05 mapLevel = new ML_03_05(LevelData.mainTerrain, barMapObjects, barBuildings, barNavigations);
         byte[] mapLevelData = CompressionManager.Compress(Serialize(mapLevel));
 
         bw.Write((int)mapLevelData.Length); //Map level data length
@@ -297,12 +295,7 @@ public class EditorManager : MonoBehaviour
         UndoType undoType = undoTypes[undoTypes.Count - 1];
         byte[][] data = undoTypesData[undoTypesData.Count - 1];
 
-        if (undoType == UndoType.WATER_LEVEL)
-        {
-            float value = BitConverter.ToSingle(data[0], 0);
-            water.position = new Vector3(water.position.x, value, water.position.z);
-            barTerrainEdit.waterLevel.value = value;
-        } else if (undoType == UndoType.TERRAIN_PAINT)
+        if (undoType == UndoType.TERRAIN_PAINT)
         {
             TerrainData tData = terrain.terrainData;
 
@@ -334,13 +327,6 @@ public class EditorManager : MonoBehaviour
 
         UndoType redoType = redoTypes[redoTypes.Count - 1];
         byte[][] data = redoTypesData[redoTypesData.Count - 1];
-
-        if (redoType == UndoType.WATER_LEVEL)
-        {
-            float value = BitConverter.ToSingle(data[0], 0);
-            water.position = new Vector3(water.position.x, value, water.position.z);
-            barTerrainEdit.waterLevel.value = value;
-        }
 
         redoTypes.RemoveAt(redoTypes.Count - 1);
         redoTypesData.RemoveAt(redoTypesData.Count - 1);

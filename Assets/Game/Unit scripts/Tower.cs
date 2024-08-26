@@ -16,10 +16,30 @@ public class Tower : AttackingUnit
     public override bool canBePlaced()
     {
         bool neighbourUnitsFactor = Physics.OverlapSphere(transform.position, placementDistance, 1 << 14).Length <= 1;
-        bool groundFactor = NavMesh.SamplePosition(getRoot().position, out _, 0.3f, NavMesh.AllAreas);
+        bool groundFactor = NavMesh.SamplePosition(getRoot().position, out _, 1.0f, NavMesh.AllAreas);
         bool costFactor = LevelData.scene == LevelData.Scene.GAME ? LevelData.ts.money >= value : true;
+        bool teamUnitNear = false;
 
-        return neighbourUnitsFactor && groundFactor && costFactor;
+        Collider[] units = Physics.OverlapSphere(getRoot().position, 5, 1 << 14);
+        foreach (Collider c in units)
+        {
+            Unit u = c.GetComponent<Unit>();
+            if (u.team.id == LevelData.ts.teamId)
+            {
+                if (u.unitType == UnitType.BUILDING || u.unitType == UnitType.TOWER)
+                {
+                    if (u != this)
+                    {
+                        teamUnitNear = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        //Debug.Log("" + neighbourUnitsFactor + " " + groundFactor + " " + costFactor);
+
+        return neighbourUnitsFactor && groundFactor && costFactor && teamUnitNear;
     }
     #endregion
 

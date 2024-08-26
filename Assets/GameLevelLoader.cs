@@ -10,7 +10,6 @@ public class GameLevelLoader : MonoBehaviour
 
     public Terrain terrain;
     public TerrainEdging terrainEdging;
-    public Transform water;
 
     public Transform cameraPivot;
 
@@ -74,7 +73,6 @@ public class GameLevelLoader : MonoBehaviour
         MapLevel.setStaticParentTrans(levelManager.transform);
 
         LevelData.mainTerrain = terrain;
-        LevelData.water = water;
 
         LevelData.Init();
 
@@ -102,14 +100,14 @@ public class GameLevelLoader : MonoBehaviour
         stream.Position = LoadLevelPanel.onGoingLoadingLvl.mapLevelData_offset;
         byte[] mapLevelBytes = LevelUI.readByteSequence(br, lui.mapLevelData_length);
         
-        if (PanelLoadLevel.compareVersion(lui, 03, 05, 01))
+        if (PanelLoadLevel.compareVersion(lui, 03, 06, 01))
         {
             byte[] decompressedMapBytes = CompressionManager.Decompress(mapLevelBytes);
 
             ML_03_05 mapLevel = PanelLoadLevel.Deserialize<ML_03_05>(decompressedMapBytes);
             mapLevel.mapWidth = (int)(mapLevel.mapWidth / 2f);
             mapLevel.mapHeight = (int)(mapLevel.mapHeight / 2f);
-            mapLevel.LoadData(terrain, water, gameObject.transform, false);
+            mapLevel.LoadData(terrain, gameObject.transform, false);
         }
         else
         {
@@ -285,7 +283,7 @@ public class GameLevelLoader : MonoBehaviour
         {
             for (int y = 0; y < radarTxt.height; y++)
             {
-                bool isThereWater = water.transform.position.y >= terrain.SampleHeight(new Vector3((float)y / (float)radarTxt.height * td.size.x, 0, (float)x / (float)radarTxt.width * td.size.z));
+                bool isThereWater = false; //TODO minimap radar show water/land
                 if (isThereWater)
                 {
                     radarTxt.SetPixel(x, y, Color.cyan);

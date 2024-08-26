@@ -48,6 +48,7 @@ public class YZCH_TerrainEditor : MonoBehaviour
     private float strengthSave;
 
     [Header("UI")]
+    public Text brushSizeTxt;
     public Text pointingHeightTxt;
 
     //Mouse
@@ -97,14 +98,14 @@ public class YZCH_TerrainEditor : MonoBehaviour
                 x = Mathf.Clamp01(buildTargPos.x / tData.size.x);
                 y = Mathf.Clamp01(buildTargPos.z / tData.size.z);
 
-                if (mode == Mode.PAINT_TERRAIN)
-                {
-                    int alphamapRes = tData.alphamapResolution;
-                    float[,,] fetchAlphamaps = tData.GetAlphamaps(0, 0, alphamapRes, alphamapRes);
+                //if (mode == Mode.PAINT_TERRAIN)
+                //{
+                //    int alphamapRes = tData.alphamapResolution;
+                //    float[,,] fetchAlphamaps = tData.GetAlphamaps(0, 0, alphamapRes, alphamapRes);
 
-                    Thread backgroundThread = new Thread(() => heavyWorkTest(alphamapRes, fetchAlphamaps));
-                    backgroundThread.Start();
-                }
+                //    Thread backgroundThread = new Thread(() => heavyWorkTest(alphamapRes, fetchAlphamaps));
+                //    backgroundThread.Start();
+                //}
             }
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -122,32 +123,52 @@ public class YZCH_TerrainEditor : MonoBehaviour
                 {
                     if (Input.GetKey(KeyCode.LeftShift))
                     {
-                        strengthSave = strength;
+                        strengthSave = -strength;
                     }
                     else
                     {
-                        strengthSave = -strength;
+                        strengthSave = strength;
                     }
 
                     switch (mode)
                     {
                         case Mode.EDIT_TERRAIN:
-                            int startX = (int)(Mathf.Max(hit.point.x - area, 0) / tData.size.x * tData.alphamapResolution);
-                            int startY = (int)(Mathf.Max(hit.point.z - area, 0) / tData.size.z * tData.alphamapResolution);
-                            int endX = (int)(Mathf.Min((hit.point.x + area) / tData.size.x * tData.alphamapResolution, tData.alphamapResolution));
-                            int endY = (int)(Mathf.Min((hit.point.z + area) / tData.size.z * tData.alphamapResolution, tData.alphamapResolution));
+                            Vector3Int hitPoint = new Vector3Int((int)hit.point.x, 0, (int)hit.point.z);
+                            int startX = (int)((hitPoint.x - area) / tData.size.x * tData.heightmapResolution);
+                            int startY = (int)((hitPoint.z - area) / tData.size.z * tData.heightmapResolution);
+                            int endX = (int)((hitPoint.x + area) / tData.size.x * tData.heightmapResolution);
+                            int endY = (int)((hitPoint.z + area) / tData.size.z * tData.heightmapResolution);
 
-                            float[,] heightmaps = tData.GetHeights(startX, startY, endX - startX, endY - startY);
-                            for (int i = 0; i < heightmaps.GetLength(0); i++)
+                            float expectedWidth = endX - startX;
+                            float expectedHeight = endY - startY;
+
+                            //print("x: " + hitPoint.x + " |y: " + hitPoint.z + "SX: " + startX + " |SY: " + startY + " |EX: " + endX + " |EY: " + endY + " |WI: " + expectedWidth + " |HE: " + expectedHeight);
+
+                            float[,] heightmaps = tData.GetHeights(
+                                Mathf.Max(startX, 0),
+                                Mathf.Max(startY, 0),
+                                Mathf.Min(endX, tData.heightmapResolution) - startX,
+                                Mathf.Min(endY, tData.heightmapResolution) - startY
+                                );
+
+                            float infPX = influencingPoints.GetLength(0);
+                            float infPY = influencingPoints.GetLength(1);
+
+                            int hmX = heightmaps.GetLength(0);
+                            int hmY = heightmaps.GetLength(1);
+
+                            for (int i = 0; i < hmX; i++)
                             {
-                                for (int j = 0; j < heightmaps.GetLength(1); j++)
+                                for (int j = 0; j < hmY; j++)
                                 {
-                                    int influencePointX = (int)((float)i / heightmaps.GetLength(0) * influencingPoints.GetLength(0));
-                                    int influencePointY = (int)((float)j / heightmaps.GetLength(1) * influencingPoints.GetLength(1));
+                                    int influencePointX = (int) Mathf.Clamp((i / expectedWidth + (-Mathf.Min(0, startY) / expectedWidth)) * infPX,  0, infPX - 1);
+                                    int influencePointY = (int) Mathf.Clamp((j / expectedHeight + (-Mathf.Min(0, startX) / expectedHeight)) * infPY, 0, infPY - 1);
+                                    
+                                    //print("I: " + i + " |J: " + j + " |PX: " + influencePointX + " |PY: " + influencePointY + " |HX: " + heightmaps.GetLength(0) + " |HY: " + heightmaps.GetLength(1));
                                     float influenceAmount = influencingPoints[influencePointX, influencePointY] * strength;
                                     if (editTerrainMode == TerrainEditMode.RAISE_LOWER)
                                     {
-                                        heightmaps[i, j] -= influenceAmount * strengthSave / 6f * Time.deltaTime;
+                                        heightmaps[i, j] += influenceAmount * strengthSave / 6f * Time.deltaTime;
                                     }
                                     else if (editTerrainMode == TerrainEditMode.FLATTEN_BY_VALUE)
                                     {
@@ -179,7 +200,7 @@ public class YZCH_TerrainEditor : MonoBehaviour
                                 }
                             }
 
-                            tData.SetHeights(startX, startY, heightmaps);
+                            tData.SetHeights(Mathf.Max(startX, 0), Mathf.Max(startY, 0), heightmaps);
                             break;
                         case Mode.PAINT_TERRAIN:
                             startX = (int)(Mathf.Max(hit.point.x - area, 0) / tData.size.x * tData.alphamapResolution);
@@ -255,9 +276,10 @@ public class YZCH_TerrainEditor : MonoBehaviour
         }
     }
 
-    public void setBrushSize(float area)
+    public void setBrushSize(int area)
     {
         this.area = area;
+        brushSizeTxt.text = "Brush Size [" + area + "]";
         brushImage.localScale = new Vector3(area * buildTargetScaleMultiplier, 1, area * buildTargetScaleMultiplier);
         buildTarget.localScale = new Vector3(area * buildTargetScaleMultiplier, 1, area * buildTargetScaleMultiplier);
     }

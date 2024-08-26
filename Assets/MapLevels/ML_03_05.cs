@@ -50,7 +50,7 @@ public class ML_03_05
     #endregion
 
     #region Saving level
-    public ML_03_05(Terrain terrain, float waterLevel, BarMapObjects barMapObjects, BarBuildings barBuildings, BarNavigations barNavigations)
+    public ML_03_05(Terrain terrain, BarMapObjects barMapObjects, BarBuildings barBuildings, BarNavigations barNavigations)
     {
         TerrainData tData = terrain.terrainData;
 
@@ -194,7 +194,7 @@ public class ML_03_05
     #endregion
 
     #region Load level
-    public void LoadData(Terrain terrain, Transform water, Transform parentTrans, bool editorMode)
+    public void LoadData(Terrain terrain, Transform parentTrans, bool editorMode)
     {
         TerrainData tData = terrain.terrainData;
 
@@ -288,7 +288,6 @@ public class ML_03_05
             tData.SetAlphamaps(0, 0, fetchAlphamaps);
 
         //4.Water
-        water.position = new Vector3(mapWidth, waterLevel, mapHeight);
 
         //5. Map Objects
         for (int i = 0; i < mapObject_ids.Length; i++)

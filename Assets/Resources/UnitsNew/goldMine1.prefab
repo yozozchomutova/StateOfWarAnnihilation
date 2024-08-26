@@ -125,11 +125,13 @@ MonoBehaviour:
   headMaxYawRotSpeed: 0
   headVelocity: {x: 0, y: 0, z: 0}
   headRotation: {x: 0, y: 0, z: 0}
+  placementDistance: 0
   propertiesUI_editor: {fileID: 2591345113724391693, guid: 8dddb4acc74c6624bbe974a613eb140a,
     type: 3}
   propertiesUI_game: {fileID: 3595848855637158183, guid: fbfaa6a02baabfc47a85ec48e1f1b0c6,
     type: 3}
-  headBlowupVFX: 0
+  unitDeathVFXType: 0
+  unitDeathVFX: {fileID: 0}
   productionDefaultUnit: 0_gold1
   productionMax: 3
   productionCooldownDefault: 0.9

@@ -89,11 +89,11 @@ public class SC_EditorFlyCamera : MonoBehaviour
             {
                 transform.root.Translate(transform.right * speed, Space.World);
             }
-            if (Input.GetKey(KeyCode.Q))
+            if (Input.GetKey(KeyCode.E))
             {
                 transform.root.Translate(transform.up * speed, Space.World);
             }
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetKey(KeyCode.Q))
             {
                 transform.root.Translate(-transform.up * speed, Space.World);
             }

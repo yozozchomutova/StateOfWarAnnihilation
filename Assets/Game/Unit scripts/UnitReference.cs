@@ -41,13 +41,21 @@ public abstract class UnitReference : MonoBehaviour
     {
         LevelData.units.Remove(unit);
 
-        if (body != null)
+        if (unit.unitDeathVFXType == Unit.DeathEffect.HEAD_BLOW)
         {
             body.stopMoving();
-            Destroy(body.gameObject);
+            Destroy(body.gameObject, 6);
+            Destroy(unit.gameObject, 6);
+        } else
+        {
+            if (body != null)
+            {
+                body.stopMoving();
+                Destroy(body.gameObject);
+            }
+            if (unit != null)
+                Destroy(unit.gameObject);
         }
-        if (unit != null)
-            Destroy(unit.gameObject);
     }
 
     #region [Functions] Rendering

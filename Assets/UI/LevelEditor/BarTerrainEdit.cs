@@ -20,7 +20,6 @@ public class BarTerrainEdit : MonoBehaviour
     //References
     [Header("References")]
     public EditorManager editorManager;
-    public Slider waterLevel;
     public Slider brushSize;
     public Slider brushStrength;
     public Slider brushHeight;
@@ -108,19 +107,6 @@ public class BarTerrainEdit : MonoBehaviour
         scTerrainEditor.strength = brushStrength.value;
         scTerrainEditor.height = brushHeight.value;
         scTerrainEditor.brushScaling();
-    }
-
-    public void OnLevelWaterChanged()
-    {
-        water.transform.position = new Vector3(water.transform.position.x, waterLevel.value, water.transform.position.z);
-    }
-
-    public void OnLevelWaterDragBegin()
-    {
-        byte[][] data = new byte[1][];
-        data[0] = BitConverter.GetBytes(waterLevel.value);
-
-        editorManager.createUndoAction(EditorManager.UndoType.WATER_LEVEL, data);
     }
 
     public void OnDeformModeChange()

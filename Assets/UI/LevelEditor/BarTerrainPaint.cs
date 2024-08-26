@@ -7,9 +7,6 @@ public class BarTerrainPaint : MonoBehaviour
 {
     private bool painting = false;
 
-    [Header("Water")]
-    public GameObject water;
-
     [Header("Editor manager")]
     public YZCH_TerrainEditor terrainEditor;
 
@@ -165,7 +162,7 @@ public class BarTerrainPaint : MonoBehaviour
     {
         //Brush size
         //float offsetArea = DT_brushSize.value % 2;
-        terrainEditor.setBrushSize(DT_brushSize.value/* - offsetArea*/);
+        terrainEditor.setBrushSize((int)DT_brushSize.value/* - offsetArea*/);
         //terrainEditor.brushScaling();
 
         terrainEditor.strength = alphaSlider.value; //Alpha
@@ -179,8 +176,6 @@ public class BarTerrainPaint : MonoBehaviour
 
     private void OnEnable()
     {
-        waterLevelSlider.value = water.transform.position.y;
-
         terrainEditor.setBrushImageVisibility(true);
     }
 

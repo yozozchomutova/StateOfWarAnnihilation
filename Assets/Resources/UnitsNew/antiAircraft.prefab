@@ -786,7 +786,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5388706054090164372}
   - component: {fileID: 5251969938172738979}
-  - component: {fileID: 824533845980858896}
+  - component: {fileID: 4420298305639361799}
   m_Layer: 14
   m_Name: antiAircraft
   m_TagString: Unit
@@ -823,7 +823,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &824533845980858896
+--- !u!114 &4420298305639361799
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -832,7 +832,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6331118303721023733}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09879b17dcd158443b782405a1278707, type: 3}
+  m_Script: {fileID: 11500000, guid: b48fb24acba839d40a6a6378975484c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
@@ -847,7 +847,7 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: f8aa7b6ca084a9042b4e07649331efc0, type: 3}
   virtualSpace: 0
   unitType: 1
-  value: 1
+  value: 200
   valid: 0
   hpMax: 75
   hp: 0
@@ -858,9 +858,12 @@ MonoBehaviour:
   headMaxYawRotSpeed: 0
   headVelocity: {x: 0, y: 0, z: 0}
   headRotation: {x: 0, y: 0, z: 0}
+  placementDistance: 1.2
   propertiesUI_editor: {fileID: 0}
   propertiesUI_game: {fileID: 0}
-  headBlowupVFX: 0
+  unitDeathVFXType: 1
+  unitDeathVFX: {fileID: 5348919988709969672, guid: f7ae8b148fd838c45a5cf71f4fad9658,
+    type: 3}
   state: 0
   attacksGround: 0
   attacksAir: 1

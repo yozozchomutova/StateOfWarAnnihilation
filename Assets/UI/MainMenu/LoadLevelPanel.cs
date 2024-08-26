@@ -81,7 +81,7 @@ public class LoadLevelPanel : MonoBehaviour
             levelUIOffsetY -= 110;
 
             //Disable LevelUI if not compatible
-            if (!PanelLoadLevel.compareVersion(levelUI.d, 03, 01, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 02, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 03, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 04, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 05, 01))
+            if (!PanelLoadLevel.compareVersion(levelUI.d, 03, 01, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 02, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 03, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 04, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 05, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 06, 01))
             {
                 levelUI.disablePlayBtn();
             }

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63817d93022759543b57e795c78efe11, type: 3}
   m_Name: LocalizationSettings
   m_EditorClassIdentifier: 
-  TableId: 1RvKY3VE_y5FPhEECCa5dv4F7REJ7rBtGzQg9Z_B_DE4
+  TableId: 1g5QPZdOnluM4IdbLNdPdNEF5nx4vtxspPmrtZJBcDws
   Sheets:
-  - Name: Translations
+  - Name: Menu
+    Id: 44201373
+    TextAsset: {fileID: 4900000, guid: 7d52012e1d6a2f84aba25a8335c72c15, type: 3}
+  - Name: LevelEditor
     Id: 0
-    TextAsset: {fileID: 4900000, guid: e27559530a63c334682a1f8d2f579fd2, type: 3}
-  - Name: Translations_LevelEditor
-    Id: 1
-    TextAsset: {fileID: 4900000, guid: 52c82dec9eb4d7b449ed1d2d441b2537, type: 3}
+    TextAsset: {fileID: 4900000, guid: 45c0ee14f72b80f4cb88d0f5ee48c521, type: 3}
   SaveFolder: {fileID: 102900000, guid: 4ea297c5eaf68be4baa8ede0946ca7ee, type: 3}

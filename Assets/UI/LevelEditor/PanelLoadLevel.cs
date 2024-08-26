@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class PanelLoadLevel : MonoBehaviour
 {
-    public Transform water;
     public Terrain mainTerrain;
     public TerrainEdging terrainEdging;
 
@@ -96,13 +95,13 @@ public class PanelLoadLevel : MonoBehaviour
             byte[] decompressedMapBytes = CompressionManager.Decompress(mapLevelBytes);
 
             ML_02_12 mapLevel = Deserialize<ML_02_12>(decompressedMapBytes);
-            mapLevel.LoadData(mainTerrain, water, objectTrans, true);
-        } else if (compareVersion(lui, 03, 05, 01))
+            mapLevel.LoadData(mainTerrain, objectTrans, true);
+        } else if (compareVersion(lui, 03, 05, 01) || compareVersion(lui, 03, 06, 01))
         {
             byte[] decompressedMapBytes = CompressionManager.Decompress(mapLevelBytes);
 
             ML_03_05 mapLevel = Deserialize<ML_03_05>(decompressedMapBytes);
-            mapLevel.LoadData(mainTerrain, water, objectTrans, true);
+            mapLevel.LoadData(mainTerrain, objectTrans, true);
         }
         else
         {

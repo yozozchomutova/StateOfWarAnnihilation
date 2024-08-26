@@ -15,8 +15,8 @@ LevelEditor.TerrainEdit.Smooth,Smooth,Vyhladit
 LevelEditor.TerrainPaint.TerrainPainting,Terrain painting,Malování terénů
 LevelEditor.TerrainPaint.StartPaint,Start paint,Začít úpravy
 LevelEditor.TerrainPaint.EndPaint,End paint,Konec úprav
+LevelEditor.TerrainPaint.ModeEditTerrain,Edit terrain,Upravit terén
 LevelEditor.TerrainPaint.ModeDrawTextures,Draw textures,Malovat textury
-LevelEditor.TerrainPaint.ModeSmoothTextures,Smooth textures,Vyhladit textury
 LevelEditor.TerrainPaint.ModeDrawPlants,Draw plants,Malovat trávu
 LevelEditor.TerrainPaint.BrushSize,Brush size,Velikost štětce
 LevelEditor.TerrainPaint.Intensity,Intensity,Intenzita

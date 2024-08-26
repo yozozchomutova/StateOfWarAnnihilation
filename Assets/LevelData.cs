@@ -19,7 +19,6 @@ public class LevelData
 
     //Terrain
     public static Terrain mainTerrain;
-    public static Transform water;
 
     public static int navigations_agentTypeID;
 
@@ -91,10 +90,6 @@ public class LevelData
         //Size
         tData.size = new Vector3(mapSize, tData.size.y, mapSize);
 
-        //Water
-        water.localPosition = new Vector3(tData.size.x / 2f, water.localPosition.y, tData.size.z / 2f);
-        water.localScale = new Vector3(tData.size.x / 50f, 1f, tData.size.z / 50f);
-
         //Terrain edging update
         if (te != null)
         {
@@ -114,7 +109,7 @@ public class LevelData
         {
             for (int y = 0; y < mapHeights.GetLength(1); y++)
             {
-                mapHeights[x, y] = 0f;
+                mapHeights[x, y] = PanelNewLevel.terrainHeightLvl1;
             }
         }
 
@@ -142,9 +137,6 @@ public class LevelData
 
         //Clear map objects
         clearAllMapObjects();
-
-        //Reset water level
-        water.localPosition = new Vector3(water.localPosition.x, -0.25f, water.localPosition.z);
     }
 
     public static void clearAllMapObjects()

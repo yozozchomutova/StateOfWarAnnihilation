@@ -218,9 +218,16 @@ public class BarBuildings : MonoBehaviour
                         Destroy(Instantiate(buildSmoke_particle, hit.collider.gameObject.transform.position, buildSmoke_particle.transform.localRotation), 1);
                         remove_wav.Play();
 
-                        LevelData.units.Remove(Unit.getUnit(hit.collider));
-                        LevelData.units.Remove(hit.collider.gameObject.GetComponentInChildren<Unit>());
-                        Destroy(hit.collider.gameObject);
+                        Unit u = Unit.getUnit(hit.collider);
+                        if (Unit.getUnit(hit.collider).hasBodyID())
+                        {
+                            Destroy(hit.collider.transform.parent.parent.gameObject);
+
+                        } else
+                        {
+                            Destroy(hit.collider.gameObject);
+                        }
+                        LevelData.units.Remove(u);
                     }
                 } else {
                     mouseSphere.gameObject.SetActive(false);
@@ -397,11 +404,11 @@ public class BarBuildings : MonoBehaviour
         }
         if (newTeamID == Team.WHITE) //Neutral buildings have usually 50%
         {
-            unitHealthSlider.value = 0.5f;
+            unitHealthSlider.value = 0.5f; 
         }
 
         selectedTeamID = newTeamID;
-        unitIconBcg.color = getSelectedTeam().minimapColor;
+        unitIconBcg.color = getSelectedTeam().minimapColor * new Color(1f, 1f, 1f, 0.1f);
     }
 
     private Team getSelectedTeam()

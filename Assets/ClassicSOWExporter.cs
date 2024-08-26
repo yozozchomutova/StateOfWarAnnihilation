@@ -21,28 +21,37 @@ public class ClassicSOWExporter
 
     private static readonly byte[] TIL_ENDER = { (byte)0x00, (byte)0x00, (byte)0x00, (byte)0x00 };
 
-    public byte[] edtBytes;
-    public byte[] mapBytes;
-    public byte[] srfBytes;
-    public byte[] tilBytes;
-    public byte[] tmiBytes;
+    public static byte[] tilBytes;
+    public static byte[] tmiBytes;
 
-    public void exportAll(Camera photoshotCam, string levelFileName, int toMapSize)
+    public static void exportAll(Camera photoshotCam, string levelFileName, int toMapSize)
     {
-        exportEdt(toMapSize);
-        exportMap(toMapSize);
-        exportSrf(photoshotCam, toMapSize);
-        exportTmiTil(toMapSize);
+        Debug.Log("Path: " + levelFileName);
 
-        //Save
+        byte[] edtBytes = exportEdt(toMapSize);
         File.WriteAllBytes(levelFileName + ".edt", edtBytes);
+        edtBytes = null;
+
+        byte[] mapBytes = exportMap(toMapSize);
         File.WriteAllBytes(levelFileName + ".map", mapBytes);
+        mapBytes = null;
+
+        byte[] jpgBytes = exportJpg(photoshotCam, toMapSize);
+        File.WriteAllBytes(levelFileName + ".jpg", jpgBytes);
+        jpgBytes = null;
+
+        byte[] srfBytes = exportSrf(photoshotCam, toMapSize);
         File.WriteAllBytes(levelFileName + ".srf", srfBytes);
+        srfBytes = null;
+        
+        (byte[] tmiBytes, byte[] tilBytes) = exportTmiTil(toMapSize);
         File.WriteAllBytes(levelFileName + ".til", tilBytes);
         File.WriteAllBytes(levelFileName + ".tmi", tmiBytes);
+        tilBytes = null;
+        tmiBytes = null;
     }
 
-    public void exportEdt(int toMapSize)
+    public static byte[] exportEdt(int toMapSize)
     {
         //Concat
         List<Byte> byteList = new List<Byte>();
@@ -110,7 +119,13 @@ public class ClassicSOWExporter
             Unit u = unitsToWrite[i];
             UnitSOWCW b = u.generateSOWCW(new UnitSOWCW(), toMapSize);
 
-            if (b.teamId != -1)
+            if (b.teamId == -1) //Eliminates red, yellow, orange, etc...
+            {
+                Debug.Log("Unknown Team: " + u.name);
+            } else if (b.unitId == -1) //Eliminates unknown sowcid...
+            {
+                Debug.Log("Unknown sowCID: " + u.name);
+            } else //Write
             {
                 if (u.unitType == Unit.UnitType.BUILDING || u.unitType == Unit.UnitType.TOWER)
                 {
@@ -125,10 +140,10 @@ public class ClassicSOWExporter
 
         //Return
         writeToList(byteList, EDT_ENDER);
-        edtBytes = byteListToArray(byteList);
+        return byteListToArray(byteList);
     }
 
-    public void exportMap(int toMapSize)
+    public static byte[] exportMap(int toMapSize)
     {
         //Concat
         List<Byte> byteList = new List<Byte>();
@@ -251,10 +266,10 @@ public class ClassicSOWExporter
 
         //Return
         writeToList(byteList, MAP_ENDER);
-        mapBytes = byteListToArray(byteList);
+        return byteListToArray(byteList);
     }
 
-    private bool[][] fixMapHoles(bool[][] tiles)
+    private static bool[][] fixMapHoles(bool[][] tiles)
     {
         for (int x = 0; x < tiles.Length; x++)
         {
@@ -280,7 +295,39 @@ public class ClassicSOWExporter
         return tiles;
     }
 
-    public void exportSrf(Camera photoshotCam, int toMapSize)
+    public static byte[] exportJpg(Camera photoshotCam, int toMapSize)
+    {
+        int mapSize = toMapSize * 32;
+        Rect rect = new Rect(0, 0, mapSize, mapSize);
+        RenderTexture renderTexture = new RenderTexture(mapSize, mapSize, 24);
+        Texture2D screenShot = new Texture2D(mapSize, mapSize, TextureFormat.RGBA32, false);
+
+        photoshotCam.targetTexture = renderTexture;
+        photoshotCam.Render();
+
+        RenderTexture.active = renderTexture;
+        screenShot.ReadPixels(rect, 0, 0);
+        screenShot.Apply();
+
+        photoshotCam.targetTexture = null;
+        RenderTexture.active = null;
+
+        MonoBehaviour.Destroy(renderTexture);
+        renderTexture = null;
+
+        //Start process
+        byte[] srfHeaderBytes = Resources.Load<TextAsset>("SOWCW Exporting/srfHeader").bytes;
+
+        //Fetch copy + paste bytes
+        List<Byte> byteArrayOutputStream = new List<Byte>();
+
+        //Apply textures
+        byteArrayOutputStream.AddRange(screenShot.EncodeToJPG(100));
+
+        //Return
+        return byteArrayOutputStream.ToArray();
+    }
+    public static byte[] exportSrf(Camera photoshotCam, int toMapSize)
     {
         //IMPLEMENTED
         int mapSize = toMapSize * 32;
@@ -309,14 +356,13 @@ public class ClassicSOWExporter
         byteArrayOutputStream.AddRange(srfHeaderBytes);
 
         //Apply textures
-
         byteArrayOutputStream.AddRange(screenShot.EncodeToJPG(100));
 
         //Return
-        srfBytes = byteArrayOutputStream.ToArray();
+        return byteArrayOutputStream.ToArray();
     }
 
-    public void exportSrf(int toMapSize)
+    public static byte[] exportSrf(int toMapSize)
     {
         Texture2D bcgImg = new Texture2D(toMapSize*32, toMapSize*32);
 
@@ -369,10 +415,10 @@ public class ClassicSOWExporter
         byteArrayOutputStream.AddRange(bcgImg.EncodeToJPG());
 
         //Return
-        srfBytes = byteArrayOutputStream.ToArray();
+        return byteArrayOutputStream.ToArray();
     }
 
-    public void exportTmiTil(int toMapSize)
+    public static (byte[], byte[]) exportTmiTil(int toMapSize)
     {
         //TMI
         List<Byte> tmiByteList = new List<Byte>();
@@ -400,6 +446,8 @@ public class ClassicSOWExporter
         writeToList(tilByteList, TIL_ENDER);
 
         tilBytes = byteListToArray(tilByteList);
+
+        return (tmiBytes, tilBytes);
     }
 
     private static void writeToList(List<Byte> byteList, byte[] bytes){
@@ -427,7 +475,7 @@ public class ClassicSOWExporter
         writeToList(byteList, new byte[] { 0x00, 0x00, 0x00, 0x00 });
     }
 
-    public void writeEdtBuilding(UnitSOWCW b, List<byte> byteList)
+    public static void writeEdtBuilding(UnitSOWCW b, List<byte> byteList)
     {
         writeToList(byteList, toInt(123, Order.LITTLE_ENDIAN)); // Building unit
         writeToList(byteList, new byte[] { (byte)b.unitId, 0, 0, 0 }); // Type
@@ -450,7 +498,7 @@ public class ClassicSOWExporter
         writeToList(byteList, toInt(Mathf.RoundToInt(b.HPpercentage * 100), Order.LITTLE_ENDIAN)); // HP (Percentage)
     }
 
-    public void writeEdtUnit(UnitSOWCW b, List<byte> byteList)
+    public static void writeEdtUnit(UnitSOWCW b, List<byte> byteList)
     {
         writeToList(byteList, toInt(224, Order.LITTLE_ENDIAN)); // unit
         writeToList(byteList, new byte[] { (byte)b.unitId, 0, 0, 0 }); // Type

@@ -87,8 +87,10 @@ public abstract class Unit : UnitReference
     public GameObject propertiesUI_game;
     #endregion
     #region [Variables] VFX
-    /// <summary> Do effect, when unit dies </summary>
-    public bool headBlowupVFX;
+    /// <summary> Type of effect, when unit dies </summary>
+    public DeathEffect unitDeathVFXType = DeathEffect.NONE;
+    /// <summary> Do specific effect, when unit dies </summary>
+    public GameObject unitDeathVFX;
     #endregion
 
     #region [Functions] Custom init()
@@ -198,7 +200,7 @@ public abstract class Unit : UnitReference
         return bodyId != "";
     }
 
-    /// <summary> Dealds damage to unit </summary>
+    /// <summary> Deals damage to unit </summary>
     public void damage(int sourceTeamId, float damage)
     {
         hp -= damage;
@@ -257,7 +259,6 @@ public abstract class Unit : UnitReference
 
         if (respawnOnDeath)
         {
-            Debug.Log("RESPAWN");
             UnitSerializable serialized = serializeUnit();
             serialized.setF(KEY_UNIT_HP, 1f);
             serialized.setI(KEY_UNIT_TEAMID, sourceTeamId);
@@ -295,17 +296,29 @@ public abstract class Unit : UnitReference
         LevelData.units.Remove(this);
         LevelManager.levelManager.selectedUnits.Remove(this);
 
-        if (!headBlowupVFX)
-        {
-            if (body != null)
-                Destroy(transform.parent.gameObject);
-            else
-                Destroy(gameObject);
-        }
+        //if (!headBlowupVFX)
+        //{
+        //    if (body != null)
+        //        Destroy(transform.parent.gameObject);
+        //    else
+        //        Destroy(gameObject);
+        //}
 
         //Head blowing visual effect
-        headVelocity = new Vector3(Range(-2, 2), 10f, Range(-2, 2));
-        headRotation = new Vector3(Range(-1f, 1f), Range(-1f, 1f), Range(-1f, 1f));
+        if (unitDeathVFXType == DeathEffect.HEAD_BLOW)
+        {
+            headVelocity = new Vector3(Range(-3, 3), 10f, Range(-3, 3));
+            headRotation = new Vector3(Range(-2f, 2f), Range(-2f, 2f), Range(-2f, 2f));
+
+            unit.gameObject.transform.parent = null;
+            Rigidbody r = unit.gameObject.AddComponent<Rigidbody>();
+            r.useGravity = true;
+            r.velocity = headVelocity;
+            r.angularVelocity = headRotation;
+
+            //Show effect
+            Destroy(Instantiate(unitDeathVFX, transform.position, Quaternion.identity), 6);
+        }
 
         destroyBoth();
 
@@ -471,6 +484,14 @@ public abstract class Unit : UnitReference
         STEPPER = 3,
         SMF = 4,
         AIRFORCE = 5
+    }
+    #endregion
+    #region [Enums] Unit Type
+    public enum DeathEffect
+    {
+        NONE = 0,
+        HEAD_BLOW = 1,
+        BUILDING_EXPLOSION = 2
     }
     #endregion
     #region [Enums] Virtual space

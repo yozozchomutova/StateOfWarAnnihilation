@@ -598,11 +598,13 @@ MonoBehaviour:
   headMaxYawRotSpeed: 0
   headVelocity: {x: 0, y: 0, z: 0}
   headRotation: {x: 0, y: 0, z: 0}
+  placementDistance: 0
   propertiesUI_editor: {fileID: 6040409664801805755, guid: af5a976f981b01c41bbe930b58fa98e9,
     type: 3}
   propertiesUI_game: {fileID: 3595848855637158183, guid: 8db1eb7e30a2f6846a3b77be84649a52,
     type: 3}
-  headBlowupVFX: 0
+  unitDeathVFXType: 0
+  unitDeathVFX: {fileID: 0}
   productionDefaultUnit: 0_smf1
   productionMax: 1
   productionCooldownDefault: 3
@@ -2990,6 +2992,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 482232346090924732, guid: 64300ffd954e85040b3681d96a8fd691,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 482232346090924732, guid: 64300ffd954e85040b3681d96a8fd691,
         type: 3}

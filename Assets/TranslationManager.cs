@@ -16,6 +16,9 @@ public class TranslationManager : MonoBehaviour
         {
             LocalizationManager.Read();
 
+#if DEBUG
+            LocalizationManager.Language = "English";
+#else
             switch ((SystemLanguage) PlayerPrefs.GetInt("stg_language", (int) SystemLanguage.English))
             {
                 case SystemLanguage.Czech:
@@ -26,6 +29,7 @@ public class TranslationManager : MonoBehaviour
                     LocalizationManager.Language = "English";
                     break;
             }
+#endif
         }
 
         //Translate all components

@@ -82,29 +82,32 @@ MonoBehaviour:
   headMaxYawRotSpeed: 0
   headVelocity: {x: 0, y: 0, z: 0}
   headRotation: {x: 0, y: 0, z: 0}
+  placementDistance: 1.2
   propertiesUI_editor: {fileID: 0}
   propertiesUI_game: {fileID: 0}
-  headBlowupVFX: 0
+  unitDeathVFXType: 1
+  unitDeathVFX: {fileID: 5348919988709969672, guid: f7ae8b148fd838c45a5cf71f4fad9658,
+    type: 3}
   state: 0
-  attacksGround: 0
+  attacksGround: 1
   attacksAir: 0
   projectilePrefab: {fileID: 3016182435785851098, guid: 2d0d9c37dc3f7eb4fac7aa8d786da3ae,
     type: 3}
-  projectileDamage: 0
+  projectileDamage: 10
   projectileFireDelayBase: 0
   projectileFireDelaySpacing: 0
-  projectileIsFreefall: 0
+  projectileIsFreefall: 1
   projectileInstantDamage: 0
   projectileFireSpread: 0
-  projectilePeakHeight: 0
-  projectileFireForce: 0
-  fireCooldownDefault: 0
-  fireRange: 0
+  projectilePeakHeight: 0.25
+  projectileFireForce: 10
+  fireCooldownDefault: 2.5
+  fireRange: 17
   dieToFire: 0
-  autoAttack: 0
-  radiusBlastCore: 0
-  radiusBlastOutter: 0
-  rotateSpeed: 0
+  autoAttack: 1
+  radiusBlastCore: 0.3
+  radiusBlastOutter: 0.3
+  rotateSpeed: 90
   fireCooldown: 0
   targetedRotationX: 0
   targetedRotationY: 0

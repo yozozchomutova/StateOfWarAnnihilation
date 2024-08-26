@@ -15,6 +15,12 @@ public class PanelSaveConfirm : MonoBehaviour
     public Terrain mainTerrain;
     public Transform water;
 
+    [Header("Export SOWA editor")]
+    public Camera photoshotCam;
+    public Text sowcMapSize;
+    public Slider sowcMapSlider;
+    public InputField sowcMapName;
+
     [Header("References")]
     public BarMapObjects barMapObjects;
     public BarBuildings barBuildings;
@@ -42,7 +48,7 @@ public class PanelSaveConfirm : MonoBehaviour
         bw.Write((int)panelLevelInfo.description.text.Length); //Desc length
         bw.Write((int)panelLevelInfo.imageBytes.Length); //Img length
 
-        ML_03_05 mapLevel = new ML_03_05(mainTerrain, water.position.y, barMapObjects, barBuildings, barNavigations);
+        ML_03_05 mapLevel = new ML_03_05(mainTerrain, barMapObjects, barBuildings, barNavigations);
         byte[] mapLevelData = CompressionManager.Compress(Serialize(mapLevel));
 
         bw.Write((int)mapLevelData.Length); //Map level data length
@@ -91,5 +97,16 @@ public class PanelSaveConfirm : MonoBehaviour
         }
 
         return (int)((float)blueUnitCount / allUnitCount * 100f);
+    }
+
+    public void SowCSliderChange()
+    {
+        sowcMapSize.text = "Map Size (" + (int) sowcMapSlider.value + ")";
+    }
+
+    public void ExportSowClassicLevel()
+    {
+        string folder = Application.persistentDataPath;
+        ClassicSOWExporter.exportAll(photoshotCam, folder + "/M" + sowcMapName.text, (int)sowcMapSlider.value);
     }
 }

@@ -46,7 +46,7 @@ public class LevelUI : MonoBehaviour
     public void Init()
     {
         //TEMPORARY FILE PATH
-        Init("C:\\Users\\danek\\AppData\\LocalLow\\JozoProductions\\StateOfWarAnnihilation\\SavedLevels\\NL06.lvl");
+        Init("C:\\Users\\danek\\AppData\\LocalLow\\YZCH\\StateOfWarAnnihilation\\SavedLevels\\LEVEL01.lvl");
     }
 
     private void Init(string fileLvlPath)
@@ -77,7 +77,7 @@ public class LevelUI : MonoBehaviour
             } else if ((d.big_patch == 2) && (d.small_patch == 1 || d.small_patch == 2 || d.small_patch == 3 || d.small_patch == 4 || d.small_patch == 5 || d.small_patch == 6 || d.small_patch == 7 || d.small_patch == 8 || d.small_patch == 9 || d.small_patch == 10 || d.small_patch == 11 || d.small_patch == 12 || d.small_patch == 13) && d.build_code == 1)
             {
                 LoadVer_01_04___AV(stream, br);
-            } else if ((d.big_patch == 3) && (d.small_patch == 1 || d.small_patch == 2 || d.small_patch == 3 || d.small_patch == 4 || d.small_patch == 5))
+            } else if ((d.big_patch == 3) && (d.small_patch == 1 || d.small_patch == 2 || d.small_patch == 3 || d.small_patch == 4 || d.small_patch == 5 || d.small_patch == 6))
             {
                 LoadVer_01_04___AV(stream, br);
             }
