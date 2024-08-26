@@ -107,25 +107,25 @@ public class MouseControlling : MonoBehaviour
         {
             if (cursorType == CursorType.NORMAL1)
             {
-                Cursor.SetCursor(StaticSources.mouseSpriteNormal, Vector2.zero, CursorMode.Auto);
+                Cursor.SetCursor(GlobalList.mouseSpriteNormal, Vector2.zero, CursorMode.Auto);
             } else if (cursorType == CursorType.ATTACK)
             {
-                Cursor.SetCursor(StaticSources.mouseSpriteAttack, Vector2.zero, CursorMode.Auto);
+                Cursor.SetCursor(GlobalList.mouseSpriteAttack, Vector2.zero, CursorMode.Auto);
             } else if (cursorType == CursorType.UPGRADE)
             {
-                Cursor.SetCursor(StaticSources.mouseSpriteUpgrade, Vector2.zero, CursorMode.Auto);
+                Cursor.SetCursor(GlobalList.mouseSpriteUpgrade, Vector2.zero, CursorMode.Auto);
             } else if (cursorType == CursorType.REPAIR)
             {
-                Cursor.SetCursor(StaticSources.mouseSpriteRepair, Vector2.zero, CursorMode.Auto);
+                Cursor.SetCursor(GlobalList.mouseSpriteRepair, Vector2.zero, CursorMode.Auto);
             } else if (cursorType == CursorType.SENDAIRFORCES)
             {
-                Cursor.SetCursor(StaticSources.mouseSpriteSendAirforce, Vector2.zero, CursorMode.Auto);
+                Cursor.SetCursor(GlobalList.mouseSpriteSendAirforce, Vector2.zero, CursorMode.Auto);
             } else if (cursorType == CursorType.FREECAM)
             {
-                Cursor.SetCursor(StaticSources.mouseSpriteFreeCam, Vector2.zero, CursorMode.Auto);
+                Cursor.SetCursor(GlobalList.mouseSpriteFreeCam, Vector2.zero, CursorMode.Auto);
             } else if (cursorType == CursorType.SELECT)
             {
-                Cursor.SetCursor(StaticSources.mouseSpriteSelect, Vector2.zero, CursorMode.Auto);
+                Cursor.SetCursor(GlobalList.mouseSpriteSelect, Vector2.zero, CursorMode.Auto);
             }
 
             currentCursorType = cursorType;

@@ -24,6 +24,15 @@ public class GlobalList : MonoBehaviour
 
     [HideInInspector] public static Team[] teams;
 
+    //Mouse cursors
+    public static Texture2D mouseSpriteNormal;
+    public static Texture2D mouseSpriteAttack;
+    public static Texture2D mouseSpriteUpgrade;
+    public static Texture2D mouseSpriteRepair;
+    public static Texture2D mouseSpriteSendAirforce;
+    public static Texture2D mouseSpriteFreeCam;
+    public static Texture2D mouseSpriteSelect;
+
     //Format: 1. Dictionary = Category ; 2. Dictionary = Driver type from that category
     public static Dictionary<string, Dictionary<string, TeamDriver>> teamDrivers = new Dictionary<string, Dictionary<string, TeamDriver>>();
 
@@ -87,6 +96,15 @@ public class GlobalList : MonoBehaviour
         {
             teams[i] = teamList[i];
         }
+
+        //Mouse cursors
+        mouseSpriteNormal = Resources.Load<Texture2D>("UI/Cursors/normal1");
+        mouseSpriteAttack = Resources.Load<Texture2D>("UI/Cursors/attack");
+        mouseSpriteUpgrade = Resources.Load<Texture2D>("UI/Cursors/upgradeBuilding");
+        mouseSpriteRepair = Resources.Load<Texture2D>("UI/Cursors/repair");
+        mouseSpriteSendAirforce = Resources.Load<Texture2D>("UI/Cursors/sendAirforce");
+        mouseSpriteFreeCam = Resources.Load<Texture2D>("UI/Cursors/freeCamera");
+        mouseSpriteSelect = Resources.Load<Texture2D>("UI/Cursors/select");
 
         //Units
         loadUnit("commandCenter1"); //-Buildings

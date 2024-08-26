@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.19
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 796625090}
-  m_IndirectSpecularColor: {r: 0.05870032, g: 0.0698281, b: 0.082489334, a: 0.19}
+  m_IndirectSpecularColor: {r: 0.004541467, g: 0.005401807, b: 0.006381261, a: 0.19}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -954,7 +954,6 @@ GameObject:
   - component: {fileID: 40593520}
   - component: {fileID: 40593519}
   - component: {fileID: 40593522}
-  - component: {fileID: 40593521}
   m_Layer: 0
   m_Name: LEVEL_MANAGER
   m_TagString: Untagged
@@ -1039,18 +1038,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &40593521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40593518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f05c96f954307541882297d032dc501, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &40593522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10975,7 +10962,6 @@ MonoBehaviour:
   temporaryLevel: {fileID: 330997996}
   terrain: {fileID: 1596065582}
   terrainEdging: {fileID: 1596065584}
-  water: {fileID: 964679388}
   cameraPivot: {fileID: 1502582348}
   levelManager: {fileID: 40593519}
   gLevelObjective: {fileID: 230257823}
@@ -26945,7 +26931,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1294173610}
   m_HandleRect: {fileID: 1294173609}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
