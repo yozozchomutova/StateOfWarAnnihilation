@@ -64,7 +64,7 @@ Material:
     - _QueueOffset: 0
     - density: 0.001
     - densityOffset: 0
-    - godRayStrength: 1.071
+    - godRayStrength: 1.12
     - jitter: 0.993
     - lightScattering: 1
     - lightSteps: 3

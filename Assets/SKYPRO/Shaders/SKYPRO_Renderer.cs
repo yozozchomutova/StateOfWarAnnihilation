@@ -35,14 +35,17 @@ public class SKYPRO_Renderer : ScriptableRendererFeature
         // You don't have to call ScriptableRenderContext.submit, the render pipeline will call it at specific points in the pipeline.
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
-            CommandBuffer commandBuffer = CommandBufferPool.Get();
+            if (renderingData.cameraData.cameraType != CameraType.Reflection)
+            {
+                CommandBuffer commandBuffer = CommandBufferPool.Get();
 
-            commandBuffer.GetTemporaryRT(tempRenderTarget.id, renderingData.cameraData.cameraTargetDescriptor);
-            Blit(commandBuffer, source, tempRenderTarget.Identifier(), _material);
-            Blit(commandBuffer, tempRenderTarget.Identifier(), source);
-            
-            context.ExecuteCommandBuffer(commandBuffer);
-            CommandBufferPool.Release(commandBuffer);
+                commandBuffer.GetTemporaryRT(tempRenderTarget.id, renderingData.cameraData.cameraTargetDescriptor);
+                Blit(commandBuffer, source, tempRenderTarget.Identifier(), _material);
+                Blit(commandBuffer, tempRenderTarget.Identifier(), source);
+
+                context.ExecuteCommandBuffer(commandBuffer);
+                CommandBufferPool.Release(commandBuffer);
+            }
         }
 
         /// Cleanup any allocated resources that were created during the execution of this render pass.

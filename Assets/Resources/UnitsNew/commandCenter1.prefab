@@ -64,7 +64,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4056292489965555223}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.02, y: 0, z: -0.01}
 --- !u!33 &3158738498932023365
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -380,7 +380,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4056292489965555223}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.02, y: 0, z: 0.01}
 --- !u!33 &2437055503704233
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -944,7 +944,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4056292489965555223}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.02, y: 0, z: 180.01}
 --- !u!33 &1534268220774374129
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1028,7 +1028,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4056292489965555223}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.02, y: 0, z: 179.99}
 --- !u!33 &5913316100466301961
 MeshFilter:
   m_ObjectHideFlags: 0

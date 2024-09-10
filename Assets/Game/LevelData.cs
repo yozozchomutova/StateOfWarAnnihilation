@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class LevelData
 {
@@ -177,7 +178,9 @@ public class LevelData
 
         //(re)Start environemnt
         environment = new WorldEnvironment();
-        LevelData.environment.init(GameObject.Find("Sun").GetComponent<Light>());
+        LevelData.environment.init(
+            GameObject.FindObjectOfType<ReflectionProbe>(),
+            GameObject.Find("Sun").GetComponent<Light>());
     }
 
     public static void ClearGame()

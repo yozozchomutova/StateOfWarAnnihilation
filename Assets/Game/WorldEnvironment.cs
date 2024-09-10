@@ -30,48 +30,10 @@ public class WorldEnvironment
     #region [Variables] Private Game meta
     public Text linkClock;
     public Image linkIcon;
+
+    public ReflectionProbe reflectionProbe;
     public Light sun;
     #endregion
-
-    [System.Serializable] public class Weather
-    {
-        public string id, name, iconPath;
-
-        public Weather(string id, string name, string iconPath)
-        {
-            this.id = id;
-            this.name = name;
-            this.iconPath = iconPath;
-        }
-
-        public Sprite loadSprite()
-        {
-            return Resources.Load<Sprite>(iconPath);
-        }
-    }
-
-    [System.Serializable] public class Event
-    {
-        ///<summary> Weather type to happen </summary>
-        public Weather weather;
-        ///<summary> Time ranging from 0 to 1440, indicating START of the event </summary>
-        public int startTime;
-        ///<summary> Time ranging from 0 to 1440, indicating END of the event </summary>
-        public int endTime;
-
-        public Event(Weather weather, int startTime, int endTime)
-        {
-            this.weather = weather;
-            this.startTime = startTime;
-            this.endTime = endTime;
-        }
-
-        ///<summary> Returns in format: "09:30 - 12:30" (startTime - endTime) </summary>
-        public string toTextTimeRangeOutput()
-        {
-            return toTextTimeOutput(startTime) + " - " + toTextTimeOutput(endTime);
-        }
-    }
 
     public int time;
     /// <summary> Static => time won't change.</summary>
@@ -82,13 +44,14 @@ public class WorldEnvironment
 
     private bool isNight = false;
 
-    public void init(Light sun)
+    public void init(ReflectionProbe reflectionProbe, Light sun)
     {
+        this.reflectionProbe = reflectionProbe;
         this.sun = sun;
 
         time = 540;
-        weatherCurrent = GlobalList.weathers[WEATHER_PARTIALLY_SUNNY];
-        weatherDefault = GlobalList.weathers[WEATHER_PARTIALLY_SUNNY];
+        weatherCurrent = GlobalList.weathers[WEATHER_SUNNY];
+        weatherDefault = GlobalList.weathers[WEATHER_SUNNY];
         onEventCheck();
     }
 
@@ -183,5 +146,47 @@ public class WorldEnvironment
         string additiveMinutesText = (minutes < 10) ? "0" : "";
 
         return hours + ":" + additiveMinutesText + minutes;
+    }
+
+    [System.Serializable]
+    public class Weather
+    {
+        public string id, name, iconPath;
+
+        public Weather(string id, string name, string iconPath)
+        {
+            this.id = id;
+            this.name = name;
+            this.iconPath = iconPath;
+        }
+
+        public Sprite loadSprite()
+        {
+            return Resources.Load<Sprite>(iconPath);
+        }
+    }
+
+    [System.Serializable]
+    public class Event
+    {
+        ///<summary> Weather type to happen </summary>
+        public Weather weather;
+        ///<summary> Time ranging from 0 to 1440, indicating START of the event </summary>
+        public int startTime;
+        ///<summary> Time ranging from 0 to 1440, indicating END of the event </summary>
+        public int endTime;
+
+        public Event(Weather weather, int startTime, int endTime)
+        {
+            this.weather = weather;
+            this.startTime = startTime;
+            this.endTime = endTime;
+        }
+
+        ///<summary> Returns in format: "09:30 - 12:30" (startTime - endTime) </summary>
+        public string toTextTimeRangeOutput()
+        {
+            return toTextTimeOutput(startTime) + " - " + toTextTimeOutput(endTime);
+        }
     }
 }
