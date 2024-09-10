@@ -19775,9 +19775,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 6783416180022348412}
+  meshRenderersAll:
+  - {fileID: 3775613894497855941}
+  - {fileID: 2030530693512847379}
+  - {fileID: 3169102681536062058}
+  - {fileID: 3395996975248099123}
+  - {fileID: 9071792934011539946}
+  - {fileID: 2055493296090969404}
+  - {fileID: 5682947586315812359}
+  - {fileID: 1720666603862363531}
+  unitTeamMrs:
+  - {fileID: 3775613894497855941}
+  - {fileID: 2030530693512847379}
+  - {fileID: 3169102681536062058}
+  - {fileID: 9071792934011539946}
+  - {fileID: 2055493296090969404}
+  - {fileID: 5682947586315812359}
+  - {fileID: 1720666603862363531}
+  screenLCDMrs: []
+  outlineMrs: []
+  outlineMatsIndexes: 
+  meshRenderersDefault_names:
+  - Wings
+  meshRenderersDefault_materials:
+  - goldenGlass
   id: 0_carrybus1
   unitSOWCWId: -1
   bodyId: 
@@ -19787,7 +19809,7 @@ MonoBehaviour:
   unitType: 5
   value: 0
   valid: 0
-  hpMax: 150
+  hpMax: 10150
   hp: 0
   respawnOnDeath: 0
   airShield: 0
@@ -19796,18 +19818,20 @@ MonoBehaviour:
   headMaxYawRotSpeed: 0
   headVelocity: {x: 0, y: 0, z: 0}
   headRotation: {x: 0, y: 0, z: 0}
+  placementDistance: 1.2
   propertiesUI_editor: {fileID: 0}
   propertiesUI_game: {fileID: 0}
-  headBlowupVFX: 0
+  unitDeathVFXType: 0
+  unitDeathVFX: {fileID: 0}
   heightOffset_end: 14
   canBeShotDown: 1
   instantTeleportToTarget: 0
-  attackTriggerDistance: 20
+  attackTriggerDistance: 12
   actionLengthTime: 20
   fireIncludesVelocity: 0
   additionalWeaponForce: {x: 0, y: 0, z: 0}
-  approachType: 0
-  targetMode: 0
+  approachType: 3
+  targetMode: 3
   weaponTargetOffset: 0
   spawnRandomWeapons: 0
   spawnWeaponCount: 0

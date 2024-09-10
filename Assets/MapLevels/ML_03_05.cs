@@ -59,8 +59,6 @@ public class ML_03_05
         mapWidth = (int)tData.size.x;
         mapHeight = (int)tData.size.z;
 
-        navigations_agentTypeID = LevelData.navigations_agentTypeID;
-
         //2. Terrain heights
         int heightmapRes = tData.heightmapResolution;
         heightmapRes = Mathf.CeilToInt(heightmapRes / 2f);
@@ -210,9 +208,6 @@ public class ML_03_05
             tData.size = new Vector3(mapWidth * 2, tData.size.y, mapHeight * 2);
         }
 
-        //Navigation
-        LevelData.navigations_agentTypeID = navigations_agentTypeID;
-
         //2. Terrain heights
         int heightmapRes = tData.heightmapResolution;
         if (editorMode)
@@ -340,7 +335,6 @@ public class ML_03_05
 
         //Generate navigation
         LevelData.mainTerrain = terrain;
-        LevelData.buildGameNavigationMesh();
 
         //7. Buildings, Towers, Units
         for (int j = 0; j < unitData.Length; j++)

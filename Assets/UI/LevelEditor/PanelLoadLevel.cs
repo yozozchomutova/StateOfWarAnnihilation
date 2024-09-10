@@ -90,6 +90,9 @@ public class PanelLoadLevel : MonoBehaviour
         stream.Position = lui.mapLevelData_offset;
         byte[] mapLevelBytes = LevelUI.readByteSequence(br, lui.mapLevelData_length);
 
+        br.Close();
+        stream.Close();
+
         if (compareVersion(lui, 02, 12, 01) || compareVersion(lui, 02, 13, 01) || compareVersion(lui, 03, 01, 01) || compareVersion(lui, 03, 02, 01) || compareVersion(lui, 03, 03, 01) || compareVersion(lui, 03, 04, 01))
         {
             byte[] decompressedMapBytes = CompressionManager.Decompress(mapLevelBytes);
@@ -125,9 +128,6 @@ public class PanelLoadLevel : MonoBehaviour
         levelNameField.text = lui.lvlName;
 
         gameObject.SetActive(false); // Hide panel
-
-        br.Close();
-        stream.Close();
     }
 
     public static T Deserialize<T>(byte[] data)

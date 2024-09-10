@@ -59,9 +59,6 @@ public class ML_02_12
             tData.size = new Vector3(mapWidth*2, tData.size.y, mapHeight*2);
         }
 
-        //Navigation
-        LevelData.navigations_agentTypeID = navigations_agentTypeID;
-
         //2. Terrain heights
         int heightmapRes = tData.heightmapResolution;
         if (editorMode)
@@ -186,7 +183,6 @@ public class ML_02_12
 
         //Generate navigation
         LevelData.mainTerrain = terrain;
-        LevelData.buildGameNavigationMesh();
 
         //7. Buildings, Towers, Units
         for (int j = 0; j < unitIds.Length; j++)

@@ -45,8 +45,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.47, y: 0.47, z: 1.07}
+  m_Center: {x: 0, y: 0.27, z: 0}
 --- !u!114 &8283328570418564876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,14 +61,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 6438545178628885997}
+  meshRenderersAll:
+  - {fileID: 2278470101047662545}
+  - {fileID: 7089923657484753338}
+  unitTeamMrs:
+  - {fileID: 2278470101047662545}
+  - {fileID: 7089923657484753338}
+  screenLCDMrs: []
+  outlineMrs:
+  - {fileID: 7089923657484753338}
+  outlineMatsIndexes: 
+  meshRenderersDefault_names: []
+  meshRenderersDefault_materials: []
   id: 0_plasmaticT1
-  unitSOWCWId: -1
+  unitSOWCWId: 27
   bodyId: 0_towerMedium
   name: Plasmatic
   icon: {fileID: 2800000, guid: 44ea53e44b7ff7740b0ea90f71d6f2de, type: 3}
+  gridSize: {x: 5, y: 5}
   virtualSpace: 0
   unitType: 1
   value: 300
@@ -390,9 +401,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5649142554667111862, guid: e4c7e04dc04b7d749aa79da73bacacd6,
         type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649142554667111862, guid: e4c7e04dc04b7d749aa79da73bacacd6,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+    - target: {fileID: 5649142554667111862, guid: e4c7e04dc04b7d749aa79da73bacacd6,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
     - target: {fileID: 7417764169675619694, guid: e4c7e04dc04b7d749aa79da73bacacd6,
         type: 3}
       propertyPath: m_Layer
@@ -400,9 +421,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4c7e04dc04b7d749aa79da73bacacd6, type: 3}
+--- !u!23 &2278470101047662545 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -5503555675953374243, guid: e4c7e04dc04b7d749aa79da73bacacd6,
+    type: 3}
+  m_PrefabInstance: {fileID: 3171010474128804876}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3137610656895790055 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e4c7e04dc04b7d749aa79da73bacacd6,
+    type: 3}
+  m_PrefabInstance: {fileID: 3171010474128804876}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7089923657484753338 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5649142554667111862, guid: e4c7e04dc04b7d749aa79da73bacacd6,
     type: 3}
   m_PrefabInstance: {fileID: 3171010474128804876}
   m_PrefabAsset: {fileID: 0}

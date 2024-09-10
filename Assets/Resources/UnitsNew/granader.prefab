@@ -205,8 +205,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.68, y: 0.58, z: 0.7}
+  m_Center: {x: 0, y: 0.24, z: 0}
 --- !u!114 &7870120607967123918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,14 +221,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 6826024718032648696}
+  meshRenderersAll:
+  - {fileID: 840675596162697413}
+  unitTeamMrs:
+  - {fileID: 840675596162697413}
+  screenLCDMrs: []
+  outlineMrs:
+  - {fileID: 840675596162697413}
+  outlineMatsIndexes: 
+  meshRenderersDefault_names: []
+  meshRenderersDefault_materials: []
   id: 0_granaderT1
-  unitSOWCWId: -1
+  unitSOWCWId: 29
   bodyId: 0_towerLarge
   name: Granader
   icon: {fileID: 2800000, guid: 10d3f681fd8e9c249a3f09744b9ce7d0, type: 3}
+  gridSize: {x: 7, y: 7}
   virtualSpace: 0
   unitType: 1
   value: 500
@@ -352,9 +361,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: a9994278c574eb8498e0722dd49a6606,
         type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a9994278c574eb8498e0722dd49a6606,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+    - target: {fileID: -7511558181221131132, guid: a9994278c574eb8498e0722dd49a6606,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
     - target: {fileID: 919132149155446097, guid: a9994278c574eb8498e0722dd49a6606,
         type: 3}
       propertyPath: m_Name
@@ -367,6 +386,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9994278c574eb8498e0722dd49a6606, type: 3}
+--- !u!23 &840675596162697413 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: a9994278c574eb8498e0722dd49a6606,
+    type: 3}
+  m_PrefabInstance: {fileID: 2047796022444069953}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2009030792411476906 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a9994278c574eb8498e0722dd49a6606,

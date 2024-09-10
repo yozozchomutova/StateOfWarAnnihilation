@@ -16,11 +16,6 @@ public class MouseControlling : MonoBehaviour
         NONE, MOVE, ATTACK, REPAIR, UPGRADE
     }
 
-    public enum CursorType
-    {
-        NORMAL1, ATTACK, UPGRADE, REPAIR, SENDAIRFORCES, FREECAM, SELECT
-    }
-
     public static readonly Vector3 zNullate = new Vector3(1, 1, 0);
 
     private Camera mainCamera;
@@ -72,10 +67,6 @@ public class MouseControlling : MonoBehaviour
 
     public Transform unitSelector;
 
-    //Cursor
-    [HideInInspector] public CursorType cursorType = CursorType.NORMAL1;
-    private CursorType currentCursorType = CursorType.NORMAL1;
-
     //
     public Transform waterLevel;
 
@@ -96,42 +87,6 @@ public class MouseControlling : MonoBehaviour
     {
         Movement();
         cameraPivot.localRotation = Quaternion.Euler(camRotX, camRotY, 0);
-
-        UpdateCursorTexture();
-    }
-
-    private void UpdateCursorTexture()
-    {
-        //Did mouse state changed?
-        if (cursorType != currentCursorType)
-        {
-            if (cursorType == CursorType.NORMAL1)
-            {
-                Cursor.SetCursor(GlobalList.mouseSpriteNormal, Vector2.zero, CursorMode.Auto);
-            } else if (cursorType == CursorType.ATTACK)
-            {
-                Cursor.SetCursor(GlobalList.mouseSpriteAttack, Vector2.zero, CursorMode.Auto);
-            } else if (cursorType == CursorType.UPGRADE)
-            {
-                Cursor.SetCursor(GlobalList.mouseSpriteUpgrade, Vector2.zero, CursorMode.Auto);
-            } else if (cursorType == CursorType.REPAIR)
-            {
-                Cursor.SetCursor(GlobalList.mouseSpriteRepair, Vector2.zero, CursorMode.Auto);
-            } else if (cursorType == CursorType.SENDAIRFORCES)
-            {
-                Cursor.SetCursor(GlobalList.mouseSpriteSendAirforce, Vector2.zero, CursorMode.Auto);
-            } else if (cursorType == CursorType.FREECAM)
-            {
-                Cursor.SetCursor(GlobalList.mouseSpriteFreeCam, Vector2.zero, CursorMode.Auto);
-            } else if (cursorType == CursorType.SELECT)
-            {
-                Cursor.SetCursor(GlobalList.mouseSpriteSelect, Vector2.zero, CursorMode.Auto);
-            }
-
-            currentCursorType = cursorType;
-        }
-
-        cursorType = CursorType.NORMAL1; //Reset
     }
 
     void Movement()
@@ -212,10 +167,7 @@ public class MouseControlling : MonoBehaviour
             );
 
         //Decide post-processing
-        if (transform.position.y < waterLevel.position.y)
-            ppUnderwater.enabled = true;
-        else
-            ppUnderwater.enabled = false;
+        ppUnderwater.enabled = transform.position.y < waterLevel.position.y;
 
         //Zoom camera
         if (Input.GetAxis("Mouse ScrollWheel") != 0f) 
@@ -246,7 +198,7 @@ public class MouseControlling : MonoBehaviour
         }
         else if (Input.GetMouseButton(1) && !mainCamera.orthographic) //No rotation for ortographic!
         {
-            cursorType = CursorType.FREECAM;
+            CursorManager.SetCursor(CursorManager.spriteFreeCam);
 
             float curMouseX1 = Input.mousePosition.x;
             float curMouseY1 = Input.mousePosition.y;
@@ -272,7 +224,7 @@ public class MouseControlling : MonoBehaviour
         }
         else if (Input.GetMouseButton(2) && mainCamera.orthographic) //Special rotation for ortographic
         {
-            cursorType = CursorType.FREECAM;
+            CursorManager.SetCursor(CursorManager.spriteFreeCam);
 
             float curMouseX1 = Input.mousePosition.x;
             float curMouseY1 = Input.mousePosition.y;

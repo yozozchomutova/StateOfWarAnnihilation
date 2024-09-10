@@ -126,6 +126,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -159,7 +160,7 @@ GameObject:
   - component: {fileID: 477225422516492422}
   - component: {fileID: 1455786071818914728}
   m_Layer: 14
-  m_Name: BaseRadar.001
+  m_Name: lighting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -526,6 +527,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d47e35ad2a6d4264ca9be024a5309d95, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -650,32 +652,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 5476118139185856383}
+  meshRenderersAll:
+  - {fileID: 5824979902320070777}
+  - {fileID: 1704283565658850751}
+  - {fileID: 8766577532759240795}
+  - {fileID: 782841093093817162}
+  - {fileID: 8585185109371401206}
+  - {fileID: 1455786071818914728}
+  - {fileID: 6659938065110923085}
+  unitTeamMrs:
+  - {fileID: 5824979902320070777}
+  - {fileID: 8766577532759240795}
+  - {fileID: 8585185109371401206}
+  screenLCDMrs: []
+  outlineMrs:
+  - {fileID: 5824979902320070777}
+  - {fileID: 1704283565658850751}
+  - {fileID: 8766577532759240795}
+  - {fileID: 782841093093817162}
+  - {fileID: 8585185109371401206}
+  - {fileID: 6659938065110923085}
+  outlineMatsIndexes: 
+  meshRenderersDefault_names:
+  - Antena1.001
+  - Antena2.001
+  - lighting
+  - RotatingStator
+  meshRenderersDefault_materials:
+  - metallic
+  - metallic
+  - frontLightsOn
+  - metallic
   id: 0_navigator1
-  unitSOWCWId: -1
+  unitSOWCWId: 104
   bodyId: 
   name: Navigator
   icon: {fileID: 2800000, guid: 79d52d34d478fee44b1c15bfc850d02e, type: 3}
+  gridSize: {x: 11, y: 11}
   virtualSpace: 0
   unitType: 0
   value: 1
   valid: 0
   hpMax: 1500
   hp: 0
-  respawnOnDeath: 0
+  respawnOnDeath: 1
   airShield: 0
   upgradableToUnit: 
   upgradeProgress: 0
   headMaxYawRotSpeed: 0
   headVelocity: {x: 0, y: 0, z: 0}
   headRotation: {x: 0, y: 0, z: 0}
+  placementDistance: 1.2
   propertiesUI_editor: {fileID: 2591345113724391693, guid: ac51947911c141e43b5685f2097cfbc7,
     type: 3}
   propertiesUI_game: {fileID: 8010636976199725756, guid: 9a23fc3b5b835b7449a0d3f3c0c233ea,
     type: 3}
-  headBlowupVFX: 0
+  unitDeathVFXType: 0
+  unitDeathVFX: {fileID: 0}
   productionDefaultUnit: 0_jet1
   productionMax: 5
   productionCooldownDefault: 70
@@ -774,6 +808,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -858,6 +893,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -941,6 +977,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d47e35ad2a6d4264ca9be024a5309d95, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1024,6 +1061,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d47e35ad2a6d4264ca9be024a5309d95, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

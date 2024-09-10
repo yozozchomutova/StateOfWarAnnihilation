@@ -11,6 +11,9 @@ public class SettingsPanel : MonoBehaviour
     [HideInInspector] public DiscordInitializer di;
     [HideInInspector] public DiscordProfile dp;
 
+    [Header("Discord")]
+    public Slider discordRPC;
+
     //Fonts
     private Font sgrFont;
 
@@ -36,8 +39,8 @@ public class SettingsPanel : MonoBehaviour
         sgrFont = Resources.Load<Font>("Fonts/sgr");
 
         //Fetch GameObject
-        //dp = GameObject.Find("DiscordProfile").GetComponent<DiscordProfile>();
-        //di = GameObject.Find("DiscordManager").GetComponent<DiscordInitializer>();
+        dp = GameObject.Find("DiscordProfile").GetComponent<DiscordProfile>();
+        di = GameObject.Find("DiscordManager").GetComponent<DiscordInitializer>();
 
         //Game settings
         //airForceUILayout.value = PlayerPrefs.GetInt("stg_airForceUILayout", 0);
@@ -69,7 +72,7 @@ public class SettingsPanel : MonoBehaviour
         //resolutionD.value = PlayerPrefs.GetInt("stg_resolutionId", optionList.Count-1);
 
         //discord RPC
-        //discordRPC.value = PlayerPrefs.GetInt("stg_discordRpc", 0);
+        discordRPC.value = PlayerPrefs.GetInt("service_discordRP", 0);
 
         //Generate UI
         Transform rootGameStgs = AddUI_Root("game settings").transform;
@@ -123,18 +126,18 @@ public class SettingsPanel : MonoBehaviour
 
     public void hidePrivacyPanel()
     {
-
+        // # UNUSED #
         //Apply settings
-        /*PlayerPrefs.SetInt("stg_discordRpc", (int)discordRPC.value);
-        PlayerPrefs.Save();
+        //PlayerPrefs.SetInt("stg_discordRpc", (int)discordRPC.value);
+        //PlayerPrefs.Save();
 
-        if ((int)discordRPC.value == 1)
-        {
-            di.StartDiscord(dp);
-        } else
-        {
-            di.StopDiscord(dp, "Forbiden");
-        }*/
+        //if ((int)discordRPC.value == 1)
+        //{
+        //    di.StartDiscord(dp);
+        //} else
+        //{
+        //    di.StopDiscord(dp, "Forbiden");
+        //}
     }
 
     public void switchPanel(int id)
@@ -154,10 +157,8 @@ public class SettingsPanel : MonoBehaviour
             s.saveSetting();
         }
 
-        print("Volume applied!");
         AudioListener.volume = settingsList["stg_masterAudio"].loadSetting<float>();
 
-        print("QID: " + settingsList["stg_qualityPreset"].loadSetting<int>());
         QualitySettings.SetQualityLevel(settingsList["stg_qualityPreset"].loadSetting<int>());
 
         int resId = settingsList["stg_resolutionId"].loadSetting<int>();

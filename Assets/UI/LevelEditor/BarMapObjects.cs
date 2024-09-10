@@ -4,6 +4,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Drawing;
+using static BarBuildings;
+using Unity.VisualScripting;
 
 public class BarMapObjects : MonoBehaviour
 {
@@ -14,44 +17,83 @@ public class BarMapObjects : MonoBehaviour
     //UI
     public RawImage objectIcon;
     public Text objectName;
-    public Dropdown objectSelection;
 
-    public Toggle buldozeToggle;
-    public Toggle dragToDrawToggle;
+    public Button tool_build, tool_destroy;
     public Slider spacingSlider;
 
     //Settings
     private float spacingValue;
     private bool buldozeMode;
-    private bool dragToDrawValue;
 
-    //Drag to Position Mode
-    public GameObject curHoldingObject;
+    //Currently selected object
+    private int selectedID; //Only for build
+    private MapObject selectedObject;
 
-    public Transform mouseSphere;
+    [Header("UI Building references")]
+    public GameObject buildPanel;
+    public Transform uiObjectList;
+    public UIListElement1 uiElement1;
+    private UIListElement1[] objectUIElements;
 
-    void Start()
+    #region [Functions] Unity functions (Start/Update)
+    void Awake()
     {
-        //Configure dropdown - map object selection
-        List<Dropdown.OptionData> OS_data = new List<Dropdown.OptionData>();
-        for (int i = 0; i < GlobalList.mapObjects.Count; i++)
+        //Fill mapObject-selection list
+        int x = 5, y = -5;
+        objectUIElements = new UIListElement1[GlobalList.mapObjects.Count];
+        for (int i = 0; i < objectUIElements.Length; i++)
         {
-            OS_data.Add(new Dropdown.OptionData(GlobalList.mapObjects.ElementAt(i).Value.objectName));
-        }
-        objectSelection.options = OS_data;
+            MapObject obj = GlobalList.mapObjects.ElementAt(i).Value;
 
-        //Update
-        onObjectSelectionChange();
-        onDragToDrawChange();
-        onBuldozeModeChange();
-        onSpacingValueChange();
+            int finalI = i;
+            UIListElement1 newElement = Instantiate(uiElement1, uiObjectList);
+            Button.ButtonClickedEvent clickEvent = new Button.ButtonClickedEvent();
+            clickEvent.AddListener(delegate { OnObjectSelectionChange(finalI); });
+            newElement.btn.onClick = clickEvent;
+            newElement.setPosition(x, y);
+            newElement.updateParameters(obj.icon, obj.name);
+            objectUIElements[i] = newElement;
+
+            x += 53;
+            if ((i + 1) % 4 == 0)
+            {
+                x = 5;
+                y -= 69;
+            }
+        }
     }
 
     void Update()
     {
         raycastHit();
+
+        //Rotate
+        if (!buldozeMode && selectedObject)
+        {
+            Transform selectedRoot = selectedObject.transform;
+            if (Input.mouseScrollDelta.y > 0.0f)
+            { //Up
+                selectedRoot.eulerAngles = new Vector3(selectedRoot.eulerAngles.x, selectedRoot.eulerAngles.y + 15, 0);
+            }
+            else if (Input.mouseScrollDelta.y < 0.0f)
+            { //Down
+                selectedRoot.eulerAngles = new Vector3(selectedRoot.eulerAngles.x, selectedRoot.eulerAngles.y - 15, 0);
+            }
+        }
     }
 
+    private void OnEnable()
+    {
+        OnToolSelect(false);
+        onSpacingValueChange();
+    }
+
+    private void OnDisable()
+    {
+        DestroySelectedObject();
+        LevelData.gridManager.UpdateSelection(0, 0, 0, 0, true);
+    }
+    #endregion
     void raycastHit()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -60,118 +102,158 @@ public class BarMapObjects : MonoBehaviour
         //Raycasts
         if (!IsPointerOverUIElement())
         {
-            if (!buldozeMode)
-            {
-                if (Physics.Raycast(ray, out hit, 300, 1 << 13))
-                {
-                    mouseSphere.gameObject.SetActive(true);
-                    mouseSphere.transform.position = hit.point;
+            if (buldozeMode)
+                rayBuldozeMode(ray);
+            else
+                rayBuildMode(ray);
+        }
+    }
 
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        if (dragToDrawValue)
-                        {
-                            addObject(hit.point);
-                            lastPlacedTreePos = hit.point;
-                        }
-                        else
-                        {
-                            addObject(hit.point);
-                        }
-                    }
-                    else if (Input.GetMouseButton(0))
-                    {
-                        if (dragToDrawValue)
-                        {
-                            if (Vector3.Distance(hit.point, lastPlacedTreePos) > spacingValue)
-                            {
-                                addObject(hit.point);
-                                lastPlacedTreePos = hit.point;
-                            }
-                        }
-                        else
-                        {
-                            curHoldingObject.transform.position = hit.point;
-                        }
-                    }
-                    else if (Input.GetMouseButtonUp(0))
-                    {
-                        if (!dragToDrawValue)
-                        {
-                            curHoldingObject = null;
-                        }
-                    }
-                } else
+    private void rayBuildMode(Ray ray)
+    {
+        if (Physics.Raycast(ray, out hit, 300, 1 << 13))
+        {
+            selectedObject.gameObject.SetActive(true);
+
+            //Implemented from: BarBuildings.cs
+            float unitPosX, unitPosZ;
+            int unitGridX, unitGridY;
+            (unitPosX, unitPosZ) = LevelData.gridManager.AlignPosition(hit.point.x, hit.point.z);
+            (unitGridX, unitGridY) = LevelData.gridManager.SamplePosition(hit.point.x, hit.point.z);
+            selectedObject.transform.position = new Vector3(unitPosX, hit.point.y, unitPosZ);
+
+            //Check if colliding with occupied tiles in grid system
+            bool canBePlaced = selectedObject.CanBePlaced();
+
+            //Visual
+            LevelData.gridManager.UpdateSelection(unitGridX, unitGridY, selectedObject.gridSize.x, selectedObject.gridSize.y, canBePlaced, selectedObject.transform.eulerAngles.y);
+            selectedObject.SetMeshRendererMat(canBePlaced ? GlobalList.matHologramGreen : GlobalList.matHologramRed);
+
+            if (Input.GetMouseButtonDown(0) && canBePlaced)
+            {
+                AddObject(selectedObject.transform, unitGridX, unitGridY);
+                lastPlacedTreePos = hit.point;
+            }
+            else if (Input.GetMouseButton(0) && canBePlaced)
+            {
+                if (Vector3.Distance(hit.point, lastPlacedTreePos) > spacingValue)
                 {
-                    mouseSphere.gameObject.SetActive(false);
+                    AddObject(selectedObject.transform, unitGridX, unitGridY);
+                    lastPlacedTreePos = hit.point;
                 }
             }
-            else
-            {
-                if (Physics.Raycast(ray, out hit, 300, 1 << 12))
-                {
-                    mouseSphere.gameObject.SetActive(true);
-                    mouseSphere.transform.position = hit.point;
+        }
+        else
+        {
+            selectedObject.gameObject.SetActive(false);
+            LevelData.gridManager.UpdateSelection(0, 0, 0, 0, true);
+        }
+    }
 
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        LevelData.mapObjects.Remove(hit.collider.gameObject.GetComponent<MapObject>());
-                        Destroy(hit.collider.gameObject);
-                    }
-                } else
-                {
-                    mouseSphere.gameObject.SetActive(false);
-                }
+    private void rayBuldozeMode(Ray ray)
+    {
+        if (Physics.Raycast(ray, out hit, 300, 1 << 12))
+        {
+            MapObject mp = hit.collider.gameObject.GetComponent<MapObject>();
+
+            if (mp != selectedObject) //Different object
+            {
+                mp.Select();
+                if (selectedObject) selectedObject.DeSelect();
+            }
+            
+            selectedObject = mp;
+            
+            if (Input.GetMouseButtonDown(0))
+            {
+                LevelData.mapObjects.Remove(mp);
+                var (unitGridX, unitGridY) = LevelData.gridManager.SamplePosition(mp.transform.position.x, mp.transform.position.z);
+                LevelData.gridManager.RemoveMapObject(unitGridX, unitGridY);
+                Destroy(hit.collider.gameObject);
+            }
+        }
+        else
+        {
+            if (selectedObject)
+            {
+                selectedObject.DeSelect();
+                selectedObject = null;
             }
         }
     }
 
-    public void addObject(Vector3 position)
+    public void AddObject(Transform t, int gridX, int gridY)
     {
-        addObject(position, objectSelection.value);
+        MapObject mapObject = GlobalList.mapObjects.ElementAt(selectedID).Value;
+
+        MapObject newObject = Instantiate(mapObject.gameObject).GetComponent<MapObject>();
+        newObject.transform.position = t.position;
+        newObject.transform.eulerAngles = t.eulerAngles;
+        LevelData.gridManager.PlaceMapObject(newObject, gridX, gridY, t.eulerAngles.y);
+        LevelData.mapObjects.Add(newObject);
     }
 
-    public void addObject(Vector3 position, int objectIndex)
+    public void OnObjectSelectionChange(int id)
     {
-        MapObject mapObject = GlobalList.mapObjects.ElementAt(objectIndex).Value;
+        this.selectedID = id;
+        for (int i = 0; i < objectUIElements.Length; i++)
+        {
+            objectUIElements[i].setHighlight(i == selectedID);
+        }
 
-        curHoldingObject = Instantiate(mapObject.gameObject);
-        LevelData.mapObjects.Add(curHoldingObject.GetComponent<MapObject>());
+        //Destroy & initiate new object
+        DestroySelectedObject();
 
-        curHoldingObject.transform.position = position;
-    }
+        MapObject selectedMo = GlobalList.mapObjects.ElementAt(selectedID).Value;
+        selectedObject = Instantiate(selectedMo.gameObject).GetComponent<MapObject>();
 
-    public void onObjectSelectionChange()
-    {
         //Change visuals
-        MapObject selectedMo = GlobalList.mapObjects.ElementAt(objectSelection.value).Value;
-
         objectIcon.texture = selectedMo.icon;
         objectName.text = selectedMo.objectName;
     }
 
-    public void onDragToDrawChange()
+    private void DestroySelectedObject()
     {
-        dragToDrawValue = dragToDrawToggle.isOn;
+        if (selectedObject)
+            Destroy(selectedObject.gameObject);
     }
-
-    public void onBuldozeModeChange()
+    #region [Functions] On UI Change
+    public void OnToolSelect(bool buldoze)
     {
-        buldozeMode = buldozeToggle.isOn;
+        buldozeMode = buldoze;
+
+        //UI changes
+        tool_build.colors = GlobalList.btnNormal1;
+        tool_destroy.colors = GlobalList.btnNormal1;
+
+        //Reset
+        DestroySelectedObject();
+        LevelData.gridManager.UpdateSelection(0, 0, 0, 0, true);
+
+        buildPanel.SetActive(!buldoze);
+        if (!buldoze) //Place
+        {
+            tool_build.colors = GlobalList.btnHighlight1;
+
+            OnObjectSelectionChange(0);
+        }
+        else if (buldoze) //Destroy
+        {
+            tool_destroy.colors = GlobalList.btnHighlight1;
+        }
     }
 
     public void onSpacingValueChange()
     {
         spacingValue = spacingSlider.value;
     }
-
-    //Implemented
+    #endregion
+    #region [Functions] Implemented from somewhere
     //Returns 'true' if we touched or hovering on Unity UI element.
     public bool IsPointerOverUIElement()
     {
         return IsPointerOverUIElement(GetEventSystemRaycastResults());
     }
-
 
     //Returns 'true' if we touched or hovering on Unity UI element.
     private bool IsPointerOverUIElement(List<RaycastResult> eventSystemRaysastResults)
@@ -185,7 +267,6 @@ public class BarMapObjects : MonoBehaviour
         return false;
     }
 
-
     //Gets all event system raycast results of current mouse or touch position.
     static List<RaycastResult> GetEventSystemRaycastResults()
     {
@@ -195,4 +276,5 @@ public class BarMapObjects : MonoBehaviour
         EventSystem.current.RaycastAll(eventData, raysastResults);
         return raysastResults;
     }
+    #endregion
 }

@@ -48,7 +48,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.6, y: 0.2, z: 0.6}
-  m_Center: {x: 0, y: 0.47039342, z: 0}
+  m_Center: {x: 0, y: 0.13, z: 0}
 --- !u!114 &3551982103010629424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,11 +63,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 7546307306111951313}
+  meshRenderersAll:
+  - {fileID: 6080673792462643323}
+  - {fileID: 8861479363870715843}
+  unitTeamMrs: []
+  screenLCDMrs: []
+  outlineMrs:
+  - {fileID: 6080673792462643323}
+  outlineMatsIndexes: 
+  meshRenderersDefault_names:
+  - atomizer_top
+  - aura
+  meshRenderersDefault_materials:
+  - Material.001
+  - factoryFlag_flag
   id: 0_atomizer1
-  unitSOWCWId: -1
+  unitSOWCWId: 46
   bodyId: 0_tankLarge
   name: Atomizer
   icon: {fileID: 2800000, guid: bb1a34ec82b6f9a42aee55ed8daf2adc, type: 3}
@@ -368,6 +380,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -6478536213147159724, guid: 5285716e891eccc45ad684bced8237d0, type: 3}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

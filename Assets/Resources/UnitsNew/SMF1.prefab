@@ -98,9 +98,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 4943195034674294595}
+  meshRenderersAll:
+  - {fileID: 5346791698858870420}
+  unitTeamMrs:
+  - {fileID: 5346791698858870420}
+  screenLCDMrs: []
+  outlineMrs:
+  - {fileID: 5346791698858870420}
+  outlineMatsIndexes: 
+  meshRenderersDefault_names: []
+  meshRenderersDefault_materials: []
   id: 0_smf1
   unitSOWCWId: -1
   bodyId: 
@@ -119,9 +127,11 @@ MonoBehaviour:
   headMaxYawRotSpeed: 0
   headVelocity: {x: 0, y: 0, z: 0}
   headRotation: {x: 0, y: 0, z: 0}
+  placementDistance: 1.2
   propertiesUI_editor: {fileID: 0}
   propertiesUI_game: {fileID: 0}
-  headBlowupVFX: 0
+  unitDeathVFXType: 0
+  unitDeathVFX: {fileID: 0}
   floatingHeight: 7
   moveMaxSpeed: 4
   moveAcceleration: 6
@@ -1041,9 +1051,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 8b5bdb9237b807840acb933c5870b21b,
         type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 8b5bdb9237b807840acb933c5870b21b,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 8b5bdb9237b807840acb933c5870b21b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
     - target: {fileID: -5568371526223589888, guid: 8b5bdb9237b807840acb933c5870b21b,
         type: 3}
       propertyPath: m_Layer
@@ -1066,6 +1086,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b5bdb9237b807840acb933c5870b21b, type: 3}
+--- !u!23 &5346791698858870420 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 8b5bdb9237b807840acb933c5870b21b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6769485393652816400}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5851128954379970369 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8b5bdb9237b807840acb933c5870b21b,

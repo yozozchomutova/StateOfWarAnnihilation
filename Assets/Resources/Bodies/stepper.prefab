@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 8539029069379460025}
   m_Layer: 0
   m_Name: leftUpperLeg
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 3827071340218029710}
   m_Layer: 0
   m_Name: rightDownLeg
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 1813552107989316728}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -451,7 +451,7 @@ GameObject:
   - component: {fileID: 6679340649969213679}
   m_Layer: 0
   m_Name: rightUpperLeg
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -563,7 +563,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4040889776678305404}
   - component: {fileID: 8597843634743420083}
-  - component: {fileID: -2092966892833740607}
   - component: {fileID: 6692214744280362885}
   - component: {fileID: 9009792363459692075}
   m_Layer: 0
@@ -602,28 +601,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.87064886, y: 1.1667576, z: 0.6797447}
   m_Center: {x: -0.010183096, y: 0.57544065, z: -0.23314333}
---- !u!195 &-2092966892833740607
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6356318120502416985}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 1.2
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 160
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 0
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 2
 --- !u!111 &6692214744280362885
 Animation:
   m_ObjectHideFlags: 0
@@ -654,9 +631,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 8597843634743420083}
+  meshRenderersAll:
+  - {fileID: 1813552107989316728}
+  - {fileID: 8539029069379460025}
+  - {fileID: 6509131178806026410}
+  - {fileID: 6679340649969213679}
+  - {fileID: 3827071340218029710}
+  unitTeamMrs:
+  - {fileID: 1813552107989316728}
+  - {fileID: 8539029069379460025}
+  - {fileID: 6509131178806026410}
+  - {fileID: 6679340649969213679}
+  - {fileID: 3827071340218029710}
+  screenLCDMrs: []
+  outlineMrs: []
+  outlineMatsIndexes: 
+  meshRenderersDefault_names: []
+  meshRenderersDefault_materials: []
   id: 0_stepper
   rotationSpeed: 0
   targetedRotationX: 0
@@ -674,6 +666,7 @@ MonoBehaviour:
   stepPrefab: {fileID: 0}
   stepSpawnpoints: []
   stepMinimalDistance: 1
+  lights: []
 --- !u!1 &6749483742147294162
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,7 +680,7 @@ GameObject:
   - component: {fileID: 6509131178806026410}
   m_Layer: 0
   m_Name: leftDownLeg
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

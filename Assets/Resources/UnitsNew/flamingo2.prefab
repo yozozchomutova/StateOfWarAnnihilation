@@ -96,6 +96,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d47e35ad2a6d4264ca9be024a5309d95, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -178,14 +179,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 7084240140460040738}
+  meshRenderersAll:
+  - {fileID: 4302427715480188276}
+  - {fileID: 978134710520447777}
+  - {fileID: 1278385141316621555}
+  unitTeamMrs:
+  - {fileID: 978134710520447777}
+  - {fileID: 1278385141316621555}
+  screenLCDMrs: []
+  outlineMrs:
+  - {fileID: 4302427715480188276}
+  - {fileID: 1278385141316621555}
+  outlineMatsIndexes: 
+  meshRenderersDefault_names:
+  - metallic
+  meshRenderersDefault_materials:
+  - metallic
   id: 0_flamingo2
-  unitSOWCWId: -1
+  unitSOWCWId: 11
   bodyId: 0_tankMedium
   name: Flamingo 2
   icon: {fileID: 2800000, guid: 0f8837266635e674abab04d55bedb351, type: 3}
+  gridSize: {x: 3, y: 5}
   virtualSpace: 0
   unitType: 2
   value: 0
@@ -256,7 +272,7 @@ GameObject:
   - component: {fileID: 1288927056867855540}
   - component: {fileID: 978134710520447777}
   m_Layer: 14
-  m_Name: Sphere.002
+  m_Name: end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -305,7 +321,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 3f80378b03fb0ba45aeda309c580d256, type: 3}
+  - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -389,6 +405,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

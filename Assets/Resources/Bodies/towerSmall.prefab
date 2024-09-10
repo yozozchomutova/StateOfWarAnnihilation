@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 2409164148589813615}
   m_Layer: 0
   m_Name: tsSmall
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -324,7 +324,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4292107455661948360}
   - component: {fileID: 8728711840558858287}
-  - component: {fileID: 246962976695407343}
   - component: {fileID: 7419528483568797434}
   m_Layer: 0
   m_Name: towerSmall
@@ -367,22 +366,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.64, y: 0.3703272, z: 0.6700001}
   m_Center: {x: 0, y: 0.17834453, z: 0}
---- !u!208 &246962976695407343
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4973833941747164132}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.32, y: 0.1851636, z: 0.33500004}
-  m_MoveThreshold: 0.2
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0.1783445, z: 0}
-  m_TimeToStationary: 0.75
 --- !u!114 &7419528483568797434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,9 +380,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 8728711840558858287}
+  meshRenderersAll:
+  - {fileID: 2409164148589813615}
+  - {fileID: 1286837435003306983}
+  unitTeamMrs:
+  - {fileID: 2409164148589813615}
+  screenLCDMrs: []
+  outlineMrs: []
+  outlineMatsIndexes: 
+  meshRenderersDefault_names:
+  - lighting
+  meshRenderersDefault_materials:
+  - frontLightsOn
   id: 0_towerSmall
   rotationSpeed: 0
   targetedRotationX: 0
@@ -417,6 +410,7 @@ MonoBehaviour:
   stepPrefab: {fileID: 0}
   stepSpawnpoints: []
   stepMinimalDistance: 1
+  lights: []
 --- !u!1 &6844785341360845332
 GameObject:
   m_ObjectHideFlags: 0

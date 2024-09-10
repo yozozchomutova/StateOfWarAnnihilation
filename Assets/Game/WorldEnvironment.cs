@@ -30,6 +30,7 @@ public class WorldEnvironment
     #region [Variables] Private Game meta
     public Text linkClock;
     public Image linkIcon;
+    public Light sun;
     #endregion
 
     [System.Serializable] public class Weather
@@ -79,21 +80,23 @@ public class WorldEnvironment
     public Weather weatherDefault;
     public List<Event> events = new List<Event>();
 
-    public void init(Text linkClock, Image linkIcon)
-    {
-        init();
+    private bool isNight = false;
 
-        this.linkClock = linkClock;
-        this.linkIcon = linkIcon;
-        linkIcon.sprite = weatherDefault.loadSprite();
-    }
-
-    public void init()
+    public void init(Light sun)
     {
+        this.sun = sun;
+
         time = 540;
         weatherCurrent = GlobalList.weathers[WEATHER_PARTIALLY_SUNNY];
         weatherDefault = GlobalList.weathers[WEATHER_PARTIALLY_SUNNY];
         onEventCheck();
+    }
+
+    public void LinkUI(Text linkClock, Image linkIcon)
+    {
+        this.linkClock = linkClock;
+        this.linkIcon = linkIcon;
+        linkIcon.sprite = weatherDefault.loadSprite();
     }
 
     public int eventCheckCoooldown = 0;
@@ -117,60 +120,24 @@ public class WorldEnvironment
 
         //Update ui
         linkClock.text = toTextTimeOutput(time);
-        linkIcon.sprite = weatherDefault.loadSprite();
+        if (!linkIcon.sprite)
+            linkIcon.sprite = weatherDefault.loadSprite();
     }
 
-    public void updateDaylight(Light directionalLight)
+    public void OnTimeUpdate()
     {
         //Update game environment depending on current weather
         float timeNormalized = (float)LevelData.environment.time / WorldEnvironment.MAX_TIME;
-
-        //Different interpolations
-        if (timeNormalized < 0.208333f) //0:00 - 5:00
-        {
-            float progress = timeNormalized / 0.208333f;
-            timeNormalized = Mathf.Lerp(0, 0.02f, progress);
-        }
-        else if (timeNormalized < 0.4166667f) //5:00 - 10:00
-        {
-            float progress = (timeNormalized - 0.208333f) / (0.4166667f - 0.208333f);
-            timeNormalized = Mathf.Lerp(0.02f, 0.2f, progress);
-        }
-        else if (timeNormalized < 0.58333333f) //10:00 - 14:00
-        {
-            float progress = (timeNormalized - 0.4166667f) / (0.58333333f - 0.4166667f);
-            timeNormalized = Mathf.Lerp(0.2f, 1f, progress);
-        }
-        else if (timeNormalized < 0.70833333f) //14:00 - 17:00
-        {
-            float progress = (timeNormalized - 0.58333333f) / (0.70833333f - 0.58333333f);
-            timeNormalized = Mathf.Lerp(1f, 0.75f, progress);
-        }
-        else if (timeNormalized < 0.875) //17:00 - 21:00
-        {
-            float progress = (timeNormalized - 0.70833333f) / (0.875f - 0.70833333f);
-            timeNormalized = Mathf.Lerp(0.75f, 0.06f, progress);
-        }
-        else if (timeNormalized <= 1) //9:00 - 23:59
-        {
-            float progress = (timeNormalized - 0.875f) / (1f - 0.875f);
-            timeNormalized = Mathf.Lerp(0.06f, 0f, progress);
-        }
-
-        float exposure = 0.05f + timeNormalized * 1.1f;
-        float lightIntensity = 0.05f + timeNormalized * 2.0f;
-        UnityEngine.RenderSettings.skybox.SetFloat("_Exposure", exposure);
-        directionalLight.intensity = lightIntensity;
+        sun.transform.eulerAngles = new Vector3();
     }
 
-    private bool isNight = false;
     private void onEventCheck()
     {
         if (time > TIME_NIGHT_START || time <= TIME_DAY_START)
         {
             if (!isNight)
             {
-                isNight = true;
+                isNight = true; 
                 foreach (Unit u in LevelData.units)
                 {
                     if (u.body != null && u.virtualSpace == Unit.VirtualSpace.NORMAL)

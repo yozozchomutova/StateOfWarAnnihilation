@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: screenLCDMat
-  m_Shader: {fileID: -6465566751694194690, guid: b68344c982a893d488fac4d672ff3544,
+  m_Shader: {fileID: -6465566751694194690, guid: eec83338cedaa4342bf86f263072f4d7,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -69,12 +69,24 @@ Material:
         m_Texture: {fileID: 2800000, guid: 2c29ff9b987f03649bd5243cbc33cb84, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_34f3746626814e1cb815cb9d248a9ca5_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 6b737c2b59ba7ca4fbb44e6b9e56c2eb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_6e87eb957d9e45b0bc8c0a8969566ee0_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 24dce133ba9c3ca41bd05352372f23b4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2DAsset_045700069c7147f1adf862d093ae0ecc_Out_0:
         m_Texture: {fileID: 2800000, guid: 3a4b1b3ee968a6c499aaab1c3a3ab55c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - mainTexture:
+        m_Texture: {fileID: 2800000, guid: b948b9ca15413754f86bd1ed0e9297c8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -133,6 +145,7 @@ Material:
     - _Picture_tiling: {r: 1, g: 1, b: 0, a: 0}
     - _Screen_aspect_ratio: {r: 16, g: 9, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _Team: {r: 0.13679245, g: 0.22699708, b: 1, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &393353849003663850
 MonoBehaviour:

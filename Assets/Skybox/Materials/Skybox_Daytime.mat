@@ -66,13 +66,13 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Exposure: 0.24624005
+    - _Exposure: 0.23040006
     - _Glossiness: 0.5
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Rotation: 25.106152
+    - _Rotation: 4.792953
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1

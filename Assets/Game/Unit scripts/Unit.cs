@@ -34,6 +34,9 @@ public abstract class Unit : UnitReference
     /// <summary> Displayed name of the unit. </summary>
     [Tooltip("Displayed icon of the unit.")]
     public Texture icon;
+    /// <summary> How much space does it take on grid </summary>
+    [Tooltip("How much space does it take on grid")]
+    public Vector2Int gridSize;
     #endregion
     #region [Variables] Gameplay unit properties
     //Classification
@@ -251,6 +254,8 @@ public abstract class Unit : UnitReference
         if (!valid)
             return;
 
+        valid = false;
+
         onDeath(); //Call all extenders of this abstract class
 
         //Used later
@@ -292,17 +297,7 @@ public abstract class Unit : UnitReference
         }
 
         //Completely remove from game
-        valid = false;
-        LevelData.units.Remove(this);
         LevelManager.levelManager.selectedUnits.Remove(this);
-
-        //if (!headBlowupVFX)
-        //{
-        //    if (body != null)
-        //        Destroy(transform.parent.gameObject);
-        //    else
-        //        Destroy(gameObject);
-        //}
 
         //Head blowing visual effect
         if (unitDeathVFXType == DeathEffect.HEAD_BLOW)
@@ -320,17 +315,20 @@ public abstract class Unit : UnitReference
             Destroy(Instantiate(unitDeathVFX, transform.position, Quaternion.identity), 6);
         }
 
-        destroyBoth();
-
         if (unitType == UnitType.BUILDING)
         {
             if (LevelData.tsCmp(team.id))
                 GameLevelUIController.logMessage("Building lost", true, gameObject.transform.position);
         }
+
+        destroyBoth();
     }
-    public virtual bool canBePlaced()
+    public virtual bool canBePlaced(LevelData.Scene scene)
     {
-        return true;
+        var (unitGridX, unitGridY) = LevelData.gridManager.SamplePosition(transform.position.x, transform.position.z);
+        bool gridColliding = LevelData.gridManager.CheckForCollision(unitGridX, unitGridY, gridSize.x, gridSize.y, transform.eulerAngles.y);
+
+        return !gridColliding;
     }
     #endregion
     #region [Functions] Utils
@@ -386,12 +384,6 @@ public abstract class Unit : UnitReference
         team = GlobalList.teams[int.Parse(data[KEY_UNIT_TEAMID])];
 
         onUnitDeserializing(data);
-    }
-    #endregion
-    #region [Functions] Checking for collisions
-    public bool isColliding()
-    {
-        return false;
     }
     #endregion
 

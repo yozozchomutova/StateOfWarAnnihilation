@@ -228,28 +228,73 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 6106622629476027838}
+  meshRenderersAll:
+  - {fileID: 4873577807054281483}
+  - {fileID: 8661879835379286195}
+  - {fileID: 7764159218702868526}
+  - {fileID: 1562346915046454447}
+  - {fileID: 6565968418378773504}
+  - {fileID: 4727168502287949605}
+  - {fileID: 5560164964907727410}
+  - {fileID: 1776061527019048150}
+  - {fileID: 4622641537857085506}
+  - {fileID: 6927314153501649879}
+  - {fileID: 3187075374490272255}
+  - {fileID: 2523897822236743425}
+  - {fileID: 3516577594081220610}
+  - {fileID: 3998921270921032059}
+  - {fileID: 8540998758544856498}
+  unitTeamMrs:
+  - {fileID: 4873577807054281483}
+  - {fileID: 8661879835379286195}
+  - {fileID: 7764159218702868526}
+  - {fileID: 1562346915046454447}
+  - {fileID: 6565968418378773504}
+  - {fileID: 4727168502287949605}
+  - {fileID: 5560164964907727410}
+  screenLCDMrs: []
+  outlineMrs:
+  - {fileID: 5560164964907727410}
+  outlineMatsIndexes: 
+  meshRenderersDefault_names:
+  - Factory.001
+  - Factory.002
+  - Fan1
+  - Fan2
+  - Fan3
+  - Fan4
+  - Fan5
+  - Fan6
+  meshRenderersDefault_materials:
+  - frontLightsOn
+  - frontLightsOn
+  - metallic
+  - metallic
+  - metallic
+  - metallic
+  - metallic
+  - metallic
   id: 0_3rd_factory
-  unitSOWCWId: -1
+  unitSOWCWId: 103
   bodyId: 
   name: Large Factory
   icon: {fileID: 2800000, guid: 65d46c013eab96a4eb7f97a90efa8593, type: 3}
+  gridSize: {x: 15, y: 15}
   virtualSpace: 0
   unitType: 0
   value: 1
   valid: 0
   hpMax: 1600
   hp: 0
-  respawnOnDeath: 0
+  respawnOnDeath: 1
   airShield: 0
   upgradableToUnit: 
   upgradeProgress: 0
   headMaxYawRotSpeed: 0
   headVelocity: {x: 0, y: 0, z: 0}
   headRotation: {x: 0, y: 0, z: 0}
-  placementDistance: 0
+  placementDistance: 1.2
   propertiesUI_editor: {fileID: 2591345113724391693, guid: ac51947911c141e43b5685f2097cfbc7,
     type: 3}
   propertiesUI_game: {fileID: 8010636976199725756, guid: 9a23fc3b5b835b7449a0d3f3c0c233ea,
@@ -259,7 +304,22 @@ MonoBehaviour:
   productionDefaultUnit: 0_tonk1
   productionMax: 9
   productionCooldownDefault: 55
-  productionAllowedUnits: []
+  productionAllowedUnits:
+  - 0_tonk1
+  - 0_longarm1
+  - 0_heavy1
+  - 0_flamingo1
+  - 0_antiAircraft1
+  - 0_tonk2
+  - 0_longarm2
+  - 0_heavy2
+  - 0_flamingo2
+  - 0_antiAircraft2
+  - 0_tonk3
+  - 0_longarm3
+  - 0_heavy3
+  - 0_flamingo3
+  - 0_antiAircraft3
   productionCount: 3
   productionUnlocked: 1
   productionUnitsIDs:
@@ -5495,7 +5555,7 @@ GameObject:
   - component: {fileID: 6565968418378773504}
   m_Layer: 14
   m_Name: ArmR-02
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5544,7 +5604,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2926557707537190794, guid: 0dc42dfed1e1eb24590d6521f11c7421, type: 3}
+  - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5581,7 +5641,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7167060246530609689
 Transform:
   m_ObjectHideFlags: 0
@@ -5695,7 +5755,7 @@ GameObject:
   - component: {fileID: 5560164964907727410}
   m_Layer: 14
   m_Name: Factory
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5744,6 +5804,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5778,7 +5839,7 @@ GameObject:
   - component: {fileID: 7764159218702868526}
   m_Layer: 14
   m_Name: ArmL-03
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5826,7 +5887,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2926557707537190794, guid: 0dc42dfed1e1eb24590d6521f11c7421, type: 3}
+  - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5944,7 +6005,7 @@ GameObject:
   - component: {fileID: 8661879835379286195}
   m_Layer: 14
   m_Name: ArmL-02
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5993,7 +6054,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2926557707537190794, guid: 0dc42dfed1e1eb24590d6521f11c7421, type: 3}
+  - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6028,7 +6089,7 @@ GameObject:
   - component: {fileID: 4727168502287949605}
   m_Layer: 14
   m_Name: ArmR-03
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6076,7 +6137,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2926557707537190794, guid: 0dc42dfed1e1eb24590d6521f11c7421, type: 3}
+  - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6228,7 +6289,7 @@ GameObject:
   - component: {fileID: 1562346915046454447}
   m_Layer: 14
   m_Name: ArmR-01
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6277,7 +6338,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2926557707537190794, guid: 0dc42dfed1e1eb24590d6521f11c7421, type: 3}
+  - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6312,7 +6373,7 @@ GameObject:
   - component: {fileID: 4873577807054281483}
   m_Layer: 14
   m_Name: ArmL-01
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6361,7 +6422,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2926557707537190794, guid: 0dc42dfed1e1eb24590d6521f11c7421, type: 3}
+  - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

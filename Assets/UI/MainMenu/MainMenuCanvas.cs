@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class MainMenuCanvas : MonoBehaviour
 {
@@ -22,11 +23,9 @@ public class MainMenuCanvas : MonoBehaviour
     [Header("Blackscreen")]
     public CanvasGroup blackScreen;
 
-    private float blackScreenAlpha = 1f;
-
     void Start()
     {
-        blackScreen.alpha = blackScreenAlpha;
+        blackScreen.alpha = 1;
 
         versionText.text = "Major: " + GameManager.getBigPatchVer() + " |Side: " + GameManager.getSmallPatchVer() + " |Agr: " + GameManager.getAgreementVer() + " |Build: " + GameManager.getTagVersionFull();
     }
@@ -34,11 +33,8 @@ public class MainMenuCanvas : MonoBehaviour
     void Update()
     {
         //Black screen alpha
-        if (blackScreenAlpha > 0f)
-        {
-            blackScreenAlpha -= Time.deltaTime * 2;
-            blackScreen.alpha = blackScreenAlpha;
-        }
+        if (blackScreen.alpha > 0f)
+            blackScreen.alpha -= Time.deltaTime * 2;
 
         //Move submenus
         updateSubmenu(singleplayerSubmenu);
@@ -67,5 +63,11 @@ public class MainMenuCanvas : MonoBehaviour
 
         if (id == 5)
             Application.Quit(0);
+    }
+
+    public static void ShowMessage(string title, string desc)
+    {
+        MessageBox m = GameObject.FindObjectOfType<MessageBox>(true);
+        m.show(title, desc);
     }
 }

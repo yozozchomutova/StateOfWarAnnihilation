@@ -67,6 +67,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -318,6 +319,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d47e35ad2a6d4264ca9be024a5309d95, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -631,6 +633,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d47e35ad2a6d4264ca9be024a5309d95, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -713,14 +716,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 4199441536688650646}
+  meshRenderersAll:
+  - {fileID: 4597864175566761006}
+  - {fileID: 7796163410631758466}
+  - {fileID: 93123996884770292}
+  - {fileID: 3851590627778764061}
+  - {fileID: 3210668469549323534}
+  - {fileID: 516839709444561069}
+  - {fileID: 1673705690021081663}
+  unitTeamMrs:
+  - {fileID: 4597864175566761006}
+  - {fileID: 93123996884770292}
+  - {fileID: 3851590627778764061}
+  - {fileID: 516839709444561069}
+  - {fileID: 1673705690021081663}
+  screenLCDMrs: []
+  outlineMrs:
+  - {fileID: 4597864175566761006}
+  - {fileID: 7796163410631758466}
+  - {fileID: 3210668469549323534}
+  outlineMatsIndexes: 
+  meshRenderersDefault_names:
+  - gun1
+  - gun2
+  meshRenderersDefault_materials:
+  - metallic
+  - metallic
   id: 0_antiAircraft1
-  unitSOWCWId: -1
+  unitSOWCWId: 1
   bodyId: 0_tankSmall
   name: Anti-Aircraft 1
   icon: {fileID: 2800000, guid: 7f6361bca32fe6546aa5714c5de8a99a, type: 3}
+  gridSize: {x: 3, y: 5}
   virtualSpace: 0
   unitType: 2
   value: 0

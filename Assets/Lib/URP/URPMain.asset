@@ -18,7 +18,7 @@ MonoBehaviour:
   m_RendererData: {fileID: 0}
   m_RendererDataList:
   - {fileID: 11400000, guid: d80306ecd6d8de74d882ec4670cb466e, type: 2}
-  - {fileID: 11400000, guid: aea8d8431cc663b49a41d7cf7f66dc71, type: 2}
+  - {fileID: 11400000, guid: 7ca9b251a3c33c5488f9df0e074fa667, type: 2}
   m_DefaultRendererIndex: 0
   m_RequireDepthTexture: 1
   m_RequireOpaqueTexture: 1
@@ -41,15 +41,15 @@ MonoBehaviour:
   m_AdditionalLightsShadowResolutionTierLow: 128
   m_AdditionalLightsShadowResolutionTierMedium: 256
   m_AdditionalLightsShadowResolutionTierHigh: 512
-  m_ReflectionProbeBlending: 0
-  m_ReflectionProbeBoxProjection: 0
+  m_ReflectionProbeBlending: 1
+  m_ReflectionProbeBoxProjection: 1
   m_ShadowDistance: 200
   m_ShadowCascadeCount: 1
   m_Cascade2Split: 0.25
   m_Cascade3Split: {x: 0.1, y: 0.3}
   m_Cascade4Split: {x: 0.067, y: 0.2, z: 0.467}
   m_CascadeBorder: 0.315
-  m_ShadowDepthBias: 1
+  m_ShadowDepthBias: 0
   m_ShadowNormalBias: 1
   m_AnyShadowsSupported: 1
   m_SoftShadowsSupported: 1
@@ -57,7 +57,7 @@ MonoBehaviour:
   m_NumIterationsEnclosingSphere: 64
   m_AdditionalLightsCookieResolution: 2048
   m_AdditionalLightsCookieFormat: 3
-  m_UseSRPBatcher: 1
+  m_UseSRPBatcher: 0
   m_SupportsDynamicBatching: 0
   m_MixedLightingSupported: 1
   m_SupportsLightLayers: 0

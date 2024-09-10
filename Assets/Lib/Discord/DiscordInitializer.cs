@@ -38,7 +38,7 @@ public class DiscordInitializer : MonoBehaviour
 
 	public void StartDiscord(DiscordProfile dp)
     {
-		if (PlayerPrefs.GetInt("stg_discordRpc", 0) == 0)
+		if (PlayerPrefs.GetInt("service_discordRP", 0) == 0)
         {
 			PushFailure(dp, "Disabled in Privacy settings");
 			return;

@@ -288,36 +288,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 7210752647199300409}
+  meshRenderersAll:
+  - {fileID: 1630706882801219213}
+  - {fileID: 4822152417630305751}
+  - {fileID: 8499186371617027093}
+  unitTeamMrs:
+  - {fileID: 4822152417630305751}
+  - {fileID: 8499186371617027093}
+  screenLCDMrs: []
+  outlineMrs:
+  - {fileID: 4822152417630305751}
+  outlineMatsIndexes: 
+  meshRenderersDefault_names:
+  - lighting
+  meshRenderersDefault_materials:
+  - frontLightsOn
   id: 0_stepper_factory1
-  unitSOWCWId: -1
+  unitSOWCWId: 108
   bodyId: 
   name: Stepper Factory
   icon: {fileID: 2800000, guid: 48ae9e8be7919b24da305d98d867f4b5, type: 3}
+  gridSize: {x: 15, y: 15}
   virtualSpace: 0
   unitType: 0
   value: 1
   valid: 0
   hpMax: 1500
   hp: 0
-  respawnOnDeath: 0
+  respawnOnDeath: 1
   airShield: 0
   upgradableToUnit: 
   upgradeProgress: 0
   headMaxYawRotSpeed: 0
   headVelocity: {x: 0, y: 0, z: 0}
   headRotation: {x: 0, y: 0, z: 0}
+  placementDistance: 1.2
   propertiesUI_editor: {fileID: 2591345113724391693, guid: ac51947911c141e43b5685f2097cfbc7,
     type: 3}
   propertiesUI_game: {fileID: 8010636976199725756, guid: 9a23fc3b5b835b7449a0d3f3c0c233ea,
     type: 3}
-  headBlowupVFX: 0
+  unitDeathVFXType: 0
+  unitDeathVFX: {fileID: 0}
   productionDefaultUnit: 0_kodimizerS1
   productionMax: 6
   productionCooldownDefault: 67
-  productionAllowedUnits: []
+  productionAllowedUnits:
+  - 0_kodimizerS1
+  - 0_pinkyS1
+  - 0_culometS1
+  - 0_antiAircraftS1
+  - 0_shockerS1
+  - 0_atomizer1
   productionCount: 3
   productionUnlocked: 1
   productionUnitsIDs:
@@ -1239,6 +1261,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

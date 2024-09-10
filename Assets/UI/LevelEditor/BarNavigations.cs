@@ -45,7 +45,7 @@ public class BarNavigations : MonoBehaviour
 
     private void OnEnable()
     {
-        groundAngleDropdown.value = LevelData.navigations_agentTypeID;
+
     }
 
     public void groundAngleChange()
@@ -53,7 +53,6 @@ public class BarNavigations : MonoBehaviour
         checkTerrainNavMeshNull();
 
         navTerrain.agentTypeID = availableAgents[groundAngleDropdown.value];
-        LevelData.navigations_agentTypeID = groundAngleDropdown.value;
     }
 
     public void groundOffsetZChange()

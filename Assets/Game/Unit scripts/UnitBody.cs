@@ -47,8 +47,6 @@ public class UnitBody : UnitReference
     /// <summary> TODO FILL </summary>
     #endregion
     #region [Variables] Navigation system
-    private NavMeshPath navPath;
-    private NavMeshAgent navAgent;
     [HideInInspector] public bool hasDestination;
     [HideInInspector] public Vector3[] destinations;
     private int currentDestinationID;
@@ -75,14 +73,6 @@ public class UnitBody : UnitReference
         base.init();
         //InvokeRepeating("updateNavigation", updateNavigationDelay, updateNavigationDelay);
 
-        //Get navAgent
-        navAgent = gameObject.GetComponent<NavMeshAgent>();
-        if (navAgent != null)
-        {
-            navAgent.agentTypeID = BarNavigations.availableAgents[LevelData.navigations_agentTypeID];
-            navAgent.enabled = unit.virtualSpace == Unit.VirtualSpace.NORMAL;
-        }
-
         //Decide which lighting configuration to use
         LevelData.environment.callBodyTimeCallback(this);
     }
@@ -91,12 +81,6 @@ public class UnitBody : UnitReference
     {
         if (unit == null)
             return;
-
-        if (navAgent != null && LevelData.scene == LevelData.Scene.EDITOR)
-        {
-            Destroy(navAgent);
-            navAgent = null;
-        }
 
         updateNavigation();
     }
@@ -117,7 +101,7 @@ public class UnitBody : UnitReference
 
             //Destination
             Vector3 destination = destinations[currentDestinationID];
-            rotationSpeed = navAgent.angularSpeed * Time.deltaTime;
+            rotationSpeed = Time.deltaTime;
 
             //Reached destination?
             float distance = Vector3.Distance(destination, gameObject.transform.position);
@@ -177,7 +161,7 @@ public class UnitBody : UnitReference
             //If rotated properly -> Proceed to move
             if (Mathf.Abs(curRotationY - targetedRotationY) < 3f)
             {
-                transform.position += transform.forward * navAgent.speed * Time.deltaTime;
+                //transform.position += transform.forward * navAgent.speed * Time.deltaTime;
                 //navAgent.Move(transform.forward * navAgent.speed * Time.deltaTime);
             }
 
@@ -203,11 +187,6 @@ public class UnitBody : UnitReference
                     }
                 }
             }
-
-            for (int j = 0; j < navPath.corners.Length - 1; j++)
-            {
-                Debug.DrawLine(navPath.corners[j], navPath.corners[j+1], Color.red);
-            }
         }
     }
     #endregion
@@ -227,45 +206,41 @@ public class UnitBody : UnitReference
 
     IEnumerator updatePath(Vector3 position)
     {
-        bool pathFound;
-        NavMeshHit nHit;
+        /* bool pathFound;
+         NavMeshHit nHit;
 
-        if (!navAgent.isOnNavMesh)
-        {
-            NavMesh.SamplePosition(gameObject.transform.position, out nHit, 100, NavMesh.AllAreas);
-            warp(nHit.position);
-        }
+         if (!navAgent.isOnNavMesh)
+         {
+             NavMesh.SamplePosition(gameObject.transform.position, out nHit, 100, NavMesh.AllAreas);
+             warp(nHit.position);
+         }
 
-        NavMesh.SamplePosition(position, out nHit, 100, NavMesh.AllAreas);
-        navPath = new NavMeshPath();
-        pathFound = navAgent.CalculatePath(nHit.position, navPath);
-        while (!pathFound)
-        {
-            yield return new WaitForSeconds(0.5f);
-        }
+         NavMesh.SamplePosition(position, out nHit, 100, NavMesh.AllAreas);
+         navPath = new NavMeshPath();
+         pathFound = navAgent.CalculatePath(nHit.position, navPath);
+         while (!pathFound)
+         {
+             yield return new WaitForSeconds(0.5f);
+         }
 
-        destinations = navPath.corners;
-        currentDestinationID = 0;
-        hasDestination = true; //Begin moving
+         destinations = navPath.corners;
+         currentDestinationID = 0;
+         hasDestination = true; //Begin moving
 
-        if (animUnitMoving != null)
-            animUnitMoving.Play();
+         if (animUnitMoving != null)
+             animUnitMoving.Play();*/
+        return null;
     }
 
     public void warp(Vector3 pos)
     {
-        if (navAgent != null)
-            navAgent.Warp(pos);
-        else
-            transform.localPosition = pos;
+        transform.localPosition = pos;
     }
 
     public void setAutopath(Vector3 destination, float maxSpeed)
     {
-        navAgent.speed = maxSpeed;
         warp(transform.position);
         //moveTo(destination);
-        navAgent.SetDestination(destination);
         interruptable = false; //Lock -> Player won't be able to controll it
     }
 

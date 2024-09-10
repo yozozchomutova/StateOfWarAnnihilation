@@ -25,9 +25,8 @@ public class YZCH_TerrainEditor : MonoBehaviour
 
     public EditorManager editorManager;
 
-    public Transform brushImage;
-    public Transform buildTarget;
-    public Vector3 buildTargPos;
+    public TerrainImage brushImage;
+    public LineRenderer brushImageLR;
     public float buildTargetScaleMultiplier = 1f;
 
     private Terrain t;
@@ -35,11 +34,6 @@ public class YZCH_TerrainEditor : MonoBehaviour
     [HideInInspector] public Mode mode;
     [HideInInspector] public TerrainEditMode editTerrainMode;
 
-    private int xRes, yRes;
-    private float[,] savedHeights;
-    private float[,,] savedAlphamaps;
-
-    private Texture2D deformTexture;
     private float[,] influencingPoints;
     public float strength = 1;
     private float area = 1;
@@ -50,9 +44,7 @@ public class YZCH_TerrainEditor : MonoBehaviour
     [Header("UI")]
     public Text brushSizeTxt;
     public Text pointingHeightTxt;
-
-    //Mouse
-    private float x, y;
+    public Slider brushHeight;
 
     private int selectedTextureIndex = 0;
 
@@ -61,30 +53,6 @@ public class YZCH_TerrainEditor : MonoBehaviour
     {
         t = FindObjectOfType<Terrain>();
         tData = t.terrainData;
-
-        //Save original height data
-        xRes = tData.heightmapResolution;
-        yRes = tData.heightmapResolution;
-        savedHeights = tData.GetHeights(0, 0, xRes, yRes);
-        savedAlphamaps = tData.GetAlphamaps(0, 0, tData.alphamapResolution, tData.alphamapResolution);
-    }
-
-    private void heavyWorkTest(int alphamapRes, float[,,] fetchAlphamaps)
-    {
-        byte[][] data = new byte[alphamapRes * alphamapRes * fetchAlphamaps.GetLength(2)][];
-
-        for (int i = 0; i < fetchAlphamaps.GetLength(2); i++)
-        {
-            for (int x = 0; x < fetchAlphamaps.GetLength(0); x++)
-            {
-                for (int y = 0; y < fetchAlphamaps.GetLength(1); y++)
-                {
-                    data[x * alphamapRes + y + (alphamapRes * alphamapRes * i)] = BitConverter.GetBytes(fetchAlphamaps[x, y, i]);
-                }
-            }
-        }
-
-        editorManager.createUndoAction(EditorManager.UndoType.TERRAIN_PAINT, data);
     }
 
     // Update is called once per frame
@@ -92,35 +60,67 @@ public class YZCH_TerrainEditor : MonoBehaviour
     {
         if (mode != Mode.NONE && !BarBuildings.IsPointerOverUIElement())
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                buildTargPos = buildTarget.position - t.GetPosition();
-                x = Mathf.Clamp01(buildTargPos.x / tData.size.x);
-                y = Mathf.Clamp01(buildTargPos.z / tData.size.z);
-
-                //if (mode == Mode.PAINT_TERRAIN)
-                //{
-                //    int alphamapRes = tData.alphamapResolution;
-                //    float[,,] fetchAlphamaps = tData.GetAlphamaps(0, 0, alphamapRes, alphamapRes);
-
-                //    Thread backgroundThread = new Thread(() => heavyWorkTest(alphamapRes, fetchAlphamaps));
-                //    backgroundThread.Start();
-                //}
-            }
-
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit = new RaycastHit();
             if (Physics.Raycast(ray, out hit, 300, 1 << 13))
             {
-                buildTarget.position = hit.point;
-                brushImage.position = new Vector3(hit.point.x, brushImage.position.y, hit.point.z);
+
+                if (editTerrainMode == TerrainEditMode.FLATTEN_BY_HEIGHT)
+                {
+                    brushImage.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                    brushImage.mode = TerrainImage.Mode.FLAT;
+
+                    brushImageLR.enabled = true;
+                    brushImageLR.SetPosition(0, hit.point);
+                    brushImageLR.SetPosition(1, brushImage.transform.position);
+                } else if (editTerrainMode == TerrainEditMode.FLATTEN_BY_VALUE)
+                {
+                    float height = brushHeight.value * tData.size.y;
+                    brushImage.transform.position = new Vector3(hit.point.x, height, hit.point.z);
+                    brushImage.mode = TerrainImage.Mode.NONE;
+
+                    brushImageLR.enabled = true;
+                    brushImageLR.SetPosition(0, hit.point);
+                    brushImageLR.SetPosition(1, brushImage.transform.position);
+                }
+                else
+                {
+                    brushImage.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                    brushImage.mode = TerrainImage.Mode.TERRAIN;
+                    brushImageLR.enabled = false;
+                }
 
                 //Get height data
                 lastHeight = hit.point.y / tData.size.y;
                 pointingHeightTxt.text = string.Format("Pointing height : {0:0.00}", lastHeight);
 
+                if (Input.GetMouseButtonDown(0))
+                {
+                    //UNDO
+                    if (mode == Mode.EDIT_TERRAIN)
+                    {
+                        float[,] heights = tData.GetHeights(0, 0, tData.heightmapResolution, tData.heightmapResolution);
+                        byte[] data = ArrayWorker.Float2DToByte1D(heights);
+                        editorManager.createUndoAction(EditorManager.UndoType.TERRAIN_EDIT, data, 0);
+                    } else if (mode == Mode.PAINT_TERRAIN)
+                    {
+                        float[,,] textures = tData.GetAlphamaps(0, 0, tData.alphamapResolution, tData.alphamapResolution);
+                        byte[] data = ArrayWorker.Float3DToByte1D(textures);
+                        editorManager.createUndoAction(EditorManager.UndoType.TERRAIN_PAINT, data, 0);
+                    }
+                }
+
+                //Changing terrain
                 if (Input.GetMouseButton(0))
                 {
+                    //Copy terrain height
+                    if (Input.GetKey(KeyCode.C))
+                    {
+                        float h = t.SampleHeight(hit.point) / tData.size.y;
+                        brushHeight.value = h;
+                        return;
+                    }
+
                     if (Input.GetKey(KeyCode.LeftShift))
                     {
                         strengthSave = -strength;
@@ -142,8 +142,6 @@ public class YZCH_TerrainEditor : MonoBehaviour
                             float expectedWidth = endX - startX;
                             float expectedHeight = endY - startY;
 
-                            //print("x: " + hitPoint.x + " |y: " + hitPoint.z + "SX: " + startX + " |SY: " + startY + " |EX: " + endX + " |EY: " + endY + " |WI: " + expectedWidth + " |HE: " + expectedHeight);
-
                             float[,] heightmaps = tData.GetHeights(
                                 Mathf.Max(startX, 0),
                                 Mathf.Max(startY, 0),
@@ -157,6 +155,10 @@ public class YZCH_TerrainEditor : MonoBehaviour
                             int hmX = heightmaps.GetLength(0);
                             int hmY = heightmaps.GetLength(1);
 
+                            //Remove anything in grid
+                            //var (gridX, gridY) = LevelData.gridManager.SamplePosition(hitPoint.x, hitPoint.z);
+                            //LevelData.gridManager.DestroyInBrush(gridX, gridY);
+
                             for (int i = 0; i < hmX; i++)
                             {
                                 for (int j = 0; j < hmY; j++)
@@ -166,9 +168,15 @@ public class YZCH_TerrainEditor : MonoBehaviour
                                     
                                     //print("I: " + i + " |J: " + j + " |PX: " + influencePointX + " |PY: " + influencePointY + " |HX: " + heightmaps.GetLength(0) + " |HY: " + heightmaps.GetLength(1));
                                     float influenceAmount = influencingPoints[influencePointX, influencePointY] * strength;
+
+                                    if (influenceAmount <= 0.001f)
+                                        continue;
+                                    var (gridX, gridY) = LevelData.gridManager.SamplePosition(hitPoint.x, hitPoint.z);
+                                    LevelData.gridManager.DestroyInBrush(gridX, gridY);
+
                                     if (editTerrainMode == TerrainEditMode.RAISE_LOWER)
                                     {
-                                        heightmaps[i, j] += influenceAmount * strengthSave / 6f * Time.deltaTime;
+                                        heightmaps[i, j] += influenceAmount * strengthSave / 2f * Time.deltaTime;
                                     }
                                     else if (editTerrainMode == TerrainEditMode.FLATTEN_BY_VALUE)
                                     {
@@ -244,7 +252,7 @@ public class YZCH_TerrainEditor : MonoBehaviour
                             {
                                 for (int j = 0; j < details.GetLength(1); j++)
                                 {
-                                    details[i, j] = UnityEngine.Random.Range(0f, 1f) < strength / 25f ? 1 : 0;
+                                    details[i, j] = UnityEngine.Random.Range(0f, 1f) < strength ? 1 : 0;
                                 }
                             }
 
@@ -274,14 +282,16 @@ public class YZCH_TerrainEditor : MonoBehaviour
                 influencingPoints[x, y] = brushPixels[x + y * newBrush.width].r;
             }
         }
+
+        //Change brush image
+        brushImage.GetComponent<MeshRenderer>().material.mainTexture = newBrush;
     }
 
     public void setBrushSize(int area)
     {
         this.area = area;
         brushSizeTxt.text = "Brush Size [" + area + "]";
-        brushImage.localScale = new Vector3(area * buildTargetScaleMultiplier, 1, area * buildTargetScaleMultiplier);
-        buildTarget.localScale = new Vector3(area * buildTargetScaleMultiplier, 1, area * buildTargetScaleMultiplier);
+        brushImage.transform.localScale = new Vector3(area * buildTargetScaleMultiplier, 1, area * buildTargetScaleMultiplier);
     }
 
     public void setSelectedTextureId(int id)

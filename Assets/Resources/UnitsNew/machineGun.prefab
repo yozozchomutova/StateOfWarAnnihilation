@@ -94,7 +94,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: d5a6699720066c444962fe4ed3e4dca2, type: 3}
+  - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -420,6 +420,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -567,6 +568,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d47e35ad2a6d4264ca9be024a5309d95, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -650,6 +652,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d47e35ad2a6d4264ca9be024a5309d95, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -801,8 +804,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.87, y: 0.49, z: 0.88}
+  m_Center: {x: 0, y: 0.06, z: -0.14}
 --- !u!114 &2157530317175122337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,14 +820,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 2748098389752769331}
+  meshRenderersAll:
+  - {fileID: 8407771912571275172}
+  - {fileID: 6416005985684703583}
+  - {fileID: 2964541983146099229}
+  - {fileID: 5559864108185039541}
+  - {fileID: 6821931412307159308}
+  unitTeamMrs:
+  - {fileID: 6416005985684703583}
+  - {fileID: 2964541983146099229}
+  - {fileID: 5559864108185039541}
+  screenLCDMrs: []
+  outlineMrs:
+  - {fileID: 8407771912571275172}
+  - {fileID: 6416005985684703583}
+  - {fileID: 6821931412307159308}
+  outlineMatsIndexes: 
+  meshRenderersDefault_names:
+  - metallic
+  - metallic.001
+  meshRenderersDefault_materials:
+  - metallic
+  - metallic
   id: 0_machineGunT1
-  unitSOWCWId: -1
+  unitSOWCWId: 28
   bodyId: 0_towerLarge
   name: Machine Gun
   icon: {fileID: 2800000, guid: d1f1bfc3cb919db4086ed8956b4e55c7, type: 3}
+  gridSize: {x: 7, y: 7}
   virtualSpace: 0
   unitType: 1
   value: 400

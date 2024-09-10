@@ -62,6 +62,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a32296300f84ddd4b93478ae8af473bc, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -260,7 +261,6 @@ GameObject:
   - component: {fileID: 5009406551714823613}
   - component: {fileID: 940691905902580366}
   - component: {fileID: -6815171170465899176}
-  - component: {fileID: 5839018288856762126}
   - component: {fileID: 5052955923856901473}
   m_Layer: 12
   m_Name: tree1
@@ -277,7 +277,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5009406551715111325}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.39, y: 0.01999998, z: 12.86}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -314,23 +314,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectId: 0_tree1
   objectName: Tree
-  icon: {fileID: 2800000, guid: 2805eefb2e67d534ab29c37a8d68e98c, type: 3}
---- !u!208 &5839018288856762126
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5009406551715111325}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 1.225, y: 1.7209646, z: 1.225}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 1.602235, z: 0}
-  m_TimeToStationary: 0.5
+  icon: {fileID: 2800000, guid: 8649c3ef91bbb174683e8ca5b80d9d72, type: 3}
+  gridSize: {x: 7, y: 7}
 --- !u!111 &5052955923856901473
 Animation:
   m_ObjectHideFlags: 0

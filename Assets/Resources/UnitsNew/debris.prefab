@@ -60,9 +60,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
+  collider: {fileID: 3519367648668570327}
   meshRenderersAll: []
-  meshRenderersDefault: []
+  unitTeamMrs: []
+  screenLCDMrs: []
+  outlineMrs: []
+  outlineMatsIndexes: 
+  meshRenderersDefault_names: []
+  meshRenderersDefault_materials: []
   id: 0_debris1
   unitSOWCWId: -1
   bodyId: 
@@ -81,9 +86,11 @@ MonoBehaviour:
   headMaxYawRotSpeed: 0
   headVelocity: {x: 0, y: 0, z: 0}
   headRotation: {x: 0, y: 0, z: 0}
+  placementDistance: 1.2
   propertiesUI_editor: {fileID: 0}
   propertiesUI_game: {fileID: 0}
-  headBlowupVFX: 0
+  unitDeathVFXType: 0
+  unitDeathVFX: {fileID: 0}
   heightOffset_end: 30
   canBeShotDown: 0
   instantTeleportToTarget: 1
@@ -91,8 +98,8 @@ MonoBehaviour:
   actionLengthTime: 6
   fireIncludesVelocity: 0
   additionalWeaponForce: {x: 0, y: 0, z: 0}
-  approachType: 0
-  targetMode: 0
+  approachType: 2
+  targetMode: 2
   weaponTargetOffset: 7.5
   spawnRandomWeapons: 1
   spawnWeaponCount: 16

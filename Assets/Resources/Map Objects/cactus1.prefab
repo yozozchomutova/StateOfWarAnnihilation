@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8221183924726305922}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
@@ -64,6 +64,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d7a3b9e8c82b74441af81910bc1823b4, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,8 +97,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.013579103, y: 0.0036984107, z: 0.023399115}
-  m_Center: {x: 0.0002311822, y: 0, z: 0.011699557}
+  m_Size: {x: 0.013579102, y: 0.023941904, z: 0.0029011616}
+  m_Center: {x: 0.00023118197, y: 0.010121745, z: 0.00020645365}
 --- !u!114 &1699195823084942035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,4 +113,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectId: 0_cactus1
   objectName: Cactus
-  icon: {fileID: 2800000, guid: f74b01702e7a1334690161e3f71e214a, type: 3}
+  icon: {fileID: 2800000, guid: 189929479a97f734086947d4fded766a, type: 3}
+  gridSize: {x: 7, y: 7}
+  meshRenderers: []

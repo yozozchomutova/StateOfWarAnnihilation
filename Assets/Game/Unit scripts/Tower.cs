@@ -13,33 +13,36 @@ public class Tower : AttackingUnit
     #endregion
 
     #region [Overriden functions] Can be placed
-    public override bool canBePlaced()
+    public override bool canBePlaced(LevelData.Scene scene)
     {
-        bool neighbourUnitsFactor = Physics.OverlapSphere(transform.position, placementDistance, 1 << 14).Length <= 1;
-        bool groundFactor = NavMesh.SamplePosition(getRoot().position, out _, 1.0f, NavMesh.AllAreas);
-        bool costFactor = LevelData.scene == LevelData.Scene.GAME ? LevelData.ts.money >= value : true;
-        bool teamUnitNear = false;
+        bool gridFreeSpace = base.canBePlaced(scene);
 
-        Collider[] units = Physics.OverlapSphere(getRoot().position, 5, 1 << 14);
-        foreach (Collider c in units)
+        if (scene == LevelData.Scene.GAME)
         {
-            Unit u = c.GetComponent<Unit>();
-            if (u.team.id == LevelData.ts.teamId)
+            bool costFactor = LevelData.scene == LevelData.Scene.GAME ? LevelData.ts.money >= value : true;
+            bool teamUnitNear = false;
+
+            Collider[] units = Physics.OverlapSphere(getRoot().position, 5, 1 << 14);
+            foreach (Collider c in units)
             {
-                if (u.unitType == UnitType.BUILDING || u.unitType == UnitType.TOWER)
+                Unit u = c.GetComponent<Unit>();
+                if (u.team.id == LevelData.ts.teamId)
                 {
-                    if (u != this)
+                    if (u.unitType == UnitType.BUILDING || u.unitType == UnitType.TOWER)
                     {
-                        teamUnitNear = true;
-                        break;
+                        if (u != this)
+                        {
+                            teamUnitNear = true;
+                            break;
+                        }
                     }
                 }
             }
+
+            return gridFreeSpace && costFactor && teamUnitNear;
         }
 
-        //Debug.Log("" + neighbourUnitsFactor + " " + groundFactor + " " + costFactor);
-
-        return neighbourUnitsFactor && groundFactor && costFactor && teamUnitNear;
+        return gridFreeSpace;
     }
     #endregion
 

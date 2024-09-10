@@ -7,6 +7,8 @@ public class BarTerrainPaint : MonoBehaviour
 {
     private bool painting = false;
 
+    public Terrain terrain;
+
     [Header("Editor manager")]
     public YZCH_TerrainEditor terrainEditor;
 
@@ -183,5 +185,6 @@ public class BarTerrainPaint : MonoBehaviour
     {
         terrainEditor.setBrushImageVisibility(false);
         terrainEditor.mode = YZCH_TerrainEditor.Mode.NONE;
+        LevelData.gridManager.BuildGrid(terrain.terrainData);
     }
 }

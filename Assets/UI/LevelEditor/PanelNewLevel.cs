@@ -9,7 +9,7 @@ public class PanelNewLevel : MonoBehaviour
     public static int normalMapSize = 128;
 
     public static float terrainHeightLvl0 = 0f;
-    public static float terrainHeightLvl1 = 0.3f;
+    public static float terrainHeightLvl1 = 0.4f;
     public static float terrainHeightLvl2 = 0.6f;
     public static float terrainHeightLvl3 = 1f;
 

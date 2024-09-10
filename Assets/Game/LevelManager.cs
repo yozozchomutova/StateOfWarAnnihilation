@@ -230,7 +230,7 @@ public class LevelManager : MonoBehaviour
                 }
             }
 
-            mouseController.cursorType = MouseControlling.CursorType.SENDAIRFORCES;
+            CursorManager.SetCursor(CursorManager.spriteAirforces);
         }
 
         //Unit selected?
@@ -241,7 +241,7 @@ public class LevelManager : MonoBehaviour
                 if (hoveredBuilding.team.id != LevelData.ts.teamId || Input.GetKey(KeyCode.LeftControl))
                 {
                     selectedActionType = MouseControlling.SelectedActionType.ATTACK;
-                    mouseController.cursorType = MouseControlling.CursorType.ATTACK;
+                    CursorManager.SetCursor(CursorManager.spriteAttack);
                 } else
                 {
                     if (selectedUnits[0] is SMF)
@@ -276,9 +276,9 @@ public class LevelManager : MonoBehaviour
 
                         //Decide cursor 
                         if (selectedActionType == MouseControlling.SelectedActionType.UPGRADE)
-                            mouseController.cursorType = MouseControlling.CursorType.UPGRADE;
+                            CursorManager.SetCursor(CursorManager.spriteUpgrade);
                         else if (selectedActionType == MouseControlling.SelectedActionType.REPAIR)
-                            mouseController.cursorType = MouseControlling.CursorType.REPAIR;
+                            CursorManager.SetCursor(CursorManager.spriteRepair);
                     }
                 }
             }
@@ -532,7 +532,7 @@ public class LevelManager : MonoBehaviour
         {
             if (buildMode)
             {//PLACE
-                mouseController.cursorType = MouseControlling.CursorType.SELECT;
+                CursorManager.SetCursor(CursorManager.spriteSelect);
                 if (Physics.Raycast(ray, out hit, 300, 1 << 13))
                 {
                     if (selectedUnits.Count > 0) selectedUnits[0].gameObject.SetActive(true);
@@ -540,7 +540,7 @@ public class LevelManager : MonoBehaviour
                     selectedRoot.position = hit.point + rootOffset;
 
                     //Place?
-                    if (selectedUnits[0].canBePlaced())
+                    if (selectedUnits[0].canBePlaced(LevelData.Scene.GAME))
                     {
                         selectedUnits[0].setMeshRendererMat(GlobalList.matHologramGreen);
                         if (Input.GetMouseButtonDown(0))
@@ -570,7 +570,7 @@ public class LevelManager : MonoBehaviour
             { //SELECT
                 if (Physics.Raycast(ray, out hit, 300, 1 << 14))
                 {
-                    mouseController.cursorType = MouseControlling.CursorType.SELECT;
+                    CursorManager.SetCursor(CursorManager.spriteSelect);
 
                     Unit newHoveredUnit;
                     if (hit.collider.gameObject.TryGetComponent<UnitBody>(out _))

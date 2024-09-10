@@ -53,47 +53,11 @@ public class GameLevelMenu : MonoBehaviour
     //Exit confirm panel
     public void OnExitDialogYes()
     {
-        lsPanel.EngageLoading("Main Menu", "", "TIP: \"LongArm\" tanks are not aggresive units. Use their range properly.", startLoading(), 0.5f, 0.5f);
+        lsPanel.EngageLoading("Main Menu", "", "Canvas", 4, 1);
     }
 
     public void OnExitDialogNo()
     {
         exitConfirmPanel.OnClose();
-    }
-
-    IEnumerator startLoading()
-    {
-        AsyncOperation lsg = SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive); //Loading screen Gate
-
-        while (!lsg.isDone)
-        {
-            yield return null;
-        }
-
-        lsPanel.transform.SetParent(GameObject.Find("LSG_mainCanvas").transform); //Retach from main scene to gate
-        AsyncOperation mainMenuUnloader = SceneManager.UnloadSceneAsync(4); //Unload main menu
-
-        while (!mainMenuUnloader.isDone)
-        {
-            yield return null;
-        }
-
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-
-        while (!asyncOperation.isDone)
-        {
-            yield return null;
-        }
-
-        lsPanel.transform.SetParent(GameObject.Find("Canvas").transform); //Retach from gate to scene
-        lsg = SceneManager.UnloadSceneAsync(2); //Unload loading screen gate
-
-        while (!lsg.isDone)
-        {
-            yield return null;
-        }
-
-        //Finish
-        lsPanel.FinishLoading();
     }
 }

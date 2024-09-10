@@ -178,14 +178,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 8132791095807332690}
+  meshRenderersAll:
+  - {fileID: 3150735423739528043}
+  - {fileID: 669384889982860896}
+  - {fileID: 8569698571606926364}
+  - {fileID: 3508531601590195300}
+  unitTeamMrs:
+  - {fileID: 669384889982860896}
+  - {fileID: 8569698571606926364}
+  screenLCDMrs: []
+  outlineMrs:
+  - {fileID: 8569698571606926364}
+  outlineMatsIndexes: 
+  meshRenderersDefault_names:
+  - Cannon
+  - metallic
+  meshRenderersDefault_materials:
+  - metallic
+  - metallic
   id: 0_tonk1
-  unitSOWCWId: -1
+  unitSOWCWId: 7
   bodyId: 0_tankSmall
   name: Tonk 1
   icon: {fileID: 2800000, guid: 6e17f43e2acf408468822ff552ff3be6, type: 3}
+  gridSize: {x: 3, y: 5}
   virtualSpace: 0
   unitType: 2
   value: 0
@@ -256,7 +273,7 @@ GameObject:
   - component: {fileID: 8569698571606926364}
   m_Layer: 14
   m_Name: Cube.011
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -305,6 +322,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -572,7 +590,7 @@ GameObject:
   - component: {fileID: 669384889982860896}
   m_Layer: 14
   m_Name: Cube.002
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -620,7 +638,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 8ecc2a58208d4a042877fbdbe5b0e631, type: 3}
+  - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

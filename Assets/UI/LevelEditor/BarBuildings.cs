@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static EditorManager;
 using static MapLevelManager;
 using static MapLevelManager.UnitSerializable;
 
@@ -34,8 +36,6 @@ public class BarBuildings : MonoBehaviour
     public Button tool_build, tool_select, tool_destroy;
     public Button ut_buildings, ut_towers, ut_units;
 
-    private ColorBlock tool_btn_normal, tool_btn_highlighted;
-
     //Building global properties
     [Header("Global properties")]
     public SelectUnitPanel buildingSelectionPanel;
@@ -51,7 +51,6 @@ public class BarBuildings : MonoBehaviour
 
     //Editing
     [HideInInspector] private RaycastHit hit;
-    public Transform mouseSphere;
     public Transform objectTrans;
 
     [Header("Effects")]
@@ -70,22 +69,11 @@ public class BarBuildings : MonoBehaviour
     [HideInInspector] private bool currentAdditionalPropertiesInitalized = true;
     [HideInInspector] private bool currentAdditionalPropertiesInitalized_HoveredUnit = true;
     
-    [HideInInspector] private Unit hoveredBuilding;
+    [HideInInspector] private Unit newHoveredUnit, lastHoveredUnit;
 
     void Start()
     {
-        //init color blocks
-        tool_btn_normal = new ColorBlock();
-        tool_btn_normal.colorMultiplier = 1;
-        tool_btn_normal.normalColor = new Color32(0, 0, 0, byte.MaxValue);
-        tool_btn_normal.highlightedColor = new Color32(240, 240, 240, byte.MaxValue);
-        tool_btn_normal.selectedColor = new Color32(240, 240, 240, byte.MaxValue);
 
-        tool_btn_highlighted = new ColorBlock();
-        tool_btn_highlighted.colorMultiplier = 1;
-        tool_btn_highlighted.normalColor = new Color32(240, 240, 240, byte.MaxValue);
-        tool_btn_highlighted.highlightedColor = new Color32(240, 240, 240, byte.MaxValue);
-        tool_btn_highlighted.selectedColor = new Color32(240, 240, 240, byte.MaxValue);
     }
 
     void Update()
@@ -95,9 +83,9 @@ public class BarBuildings : MonoBehaviour
         //Rotate
         if (toolType == ToolType.PLACE) {
             if (Input.mouseScrollDelta.y > 0.0f) { //Up
-                selectedRoot.eulerAngles = new Vector3(selectedRoot.eulerAngles.x, selectedRoot.eulerAngles.y + 10, 0);
+                selectedRoot.eulerAngles = new Vector3(selectedRoot.eulerAngles.x, selectedRoot.eulerAngles.y + 15, 0);
             } else if (Input.mouseScrollDelta.y < 0.0f) { //Down
-                selectedRoot.eulerAngles = new Vector3(selectedRoot.eulerAngles.x, selectedRoot.eulerAngles.y - 10, 0);
+                selectedRoot.eulerAngles = new Vector3(selectedRoot.eulerAngles.x, selectedRoot.eulerAngles.y - 15, 0);
             }
         }
     }
@@ -116,9 +104,9 @@ public class BarBuildings : MonoBehaviour
             setTeamID(selectedTeamID);
             currentAdditionalPropertiesInitalized = true;
         }
-        if (!currentAdditionalPropertiesInitalized_HoveredUnit && hoveredBuilding != null && (currentAdditionalProperties != null || hoveredBuilding.propertiesUI_editor == null))
+        if (!currentAdditionalPropertiesInitalized_HoveredUnit && lastHoveredUnit != null && (currentAdditionalProperties != null || lastHoveredUnit.propertiesUI_editor == null))
         {
-            hoveredBuilding.getValues(unitHealthSlider, out selectedTeamID, currentAdditionalProperties);
+            lastHoveredUnit.getValues(unitHealthSlider, out selectedTeamID, currentAdditionalProperties);
             setTeamID(selectedTeamID);
             currentAdditionalPropertiesInitalized_HoveredUnit = true;
         }
@@ -132,108 +120,172 @@ public class BarBuildings : MonoBehaviour
         //Raycasts
         if (!IsPointerOverUIElement()) {
             if (toolType == ToolType.PLACE) {//PLACE
-                if (Physics.Raycast(ray, out hit, 300, 1 << 13)) {
-                    if (selectedUnit != null) selectedUnit.gameObject.SetActive(true);
-                    selectedRoot.position = hit.point + rootOffset;
-
-                    float mapSize = LevelData.mainTerrain.terrainData.size.x / 4f;
-                    globalInfo.text = String.Format("XYZ: {0:F1}, {1:F1}, {2:F1}", selectedRoot.position.x - mapSize, selectedRoot.position.y, selectedRoot.position.z - mapSize);
-
-                    //Place?
-                    if (Input.GetMouseButtonDown(0) && !selectedUnit.isColliding()) {
-                        Destroy(Instantiate(buildSmoke_particle, selectedUnit.transform.position, buildSmoke_particle.transform.localRotation), 1);
-                        build_wav.Play();
-
-                        UnitSerializable data = selectedUnit.serializeUnit();
-                        data.setI(KEY_UNIT_TEAMID, getSelectedTeam().id);
-                        data.setF(KEY_UNIT_HP, unitHealthSlider.value);
-                        Unit newUnit = MapLevel.spawnUnit(data);
-
-                        //Save unit values
-                        newUnit.setValues(unitHealthSlider.value, getSelectedTeam(), currentAdditionalProperties);
-                    }
-                } else {
-                    if (selectedUnit != null) selectedUnit.gameObject.SetActive(false);
-                }
+                rayPlaceUnit(ray);
             } else if (toolType == ToolType.SELECT) { //SELECT
-                if (Physics.Raycast(ray, out hit, 300, 1 << 14)) {
-                    mouseSphere.gameObject.SetActive(true);
-                    mouseSphere.transform.position = hit.point;
-
-                    Unit newHoveredUnit = Unit.getUnit(hit.collider);
-
-                    globalInfo.text = "Unit ID: " + LevelData.units.IndexOf(newHoveredUnit);
-
-                    if (selectedUnit == null) {
-                        if (hoveredBuilding != newHoveredUnit) {
-                            unitName.text = newHoveredUnit.name;
-                            unitIcon.texture = newHoveredUnit.icon;
-
-                            unitTab.SetActive(true);
-
-                            showAdditionalProps(newHoveredUnit, true);
-                        }
-                    }
-
-                    hoveredBuilding = newHoveredUnit;
-
-                    //Select?
-                    if (Input.GetMouseButtonDown(0)) {
-                        showAdditionalProps(hoveredBuilding);
-                        selectedUnit = hoveredBuilding;
-                    }
-                } else {
-                    mouseSphere.gameObject.SetActive(false);
-
-                    if (selectedUnit == null) {
-                        unitName.text = "";
-                        unitTab.SetActive(false);
-
-                        if (currentAdditionalProperties != null)
-                            Destroy(currentAdditionalProperties);
-                    }
-
-                    //Deselect?
-                    if (Input.GetMouseButtonDown(0) && selectedUnit != null) {
-                        //Save unit values
-                        selectedUnit.setValues(unitHealthSlider.value, getSelectedTeam(), currentAdditionalProperties);
-
-                        //Save body values
-                        selectedUnit.restoreMeshRendererMat(getSelectedTeam());
-
-                        selectedUnit = null; //NULLate
-
-                        unitTab.SetActive(false); //Hide
-                    }
-
-                    hoveredBuilding = null; //Reset
-                }
+                raySelectUnit(ray);
             } else if (toolType == ToolType.DESTROY) {//DESTROY
-                if (Physics.Raycast(ray, out hit, 300, 1 << 14)) {
-                    mouseSphere.gameObject.SetActive(true);
-                    mouseSphere.transform.position = hit.point;
+                rayDestroyUnit(ray);
+            }
+        }
+    }
 
-                    //Destroy?
-                    if (Input.GetMouseButtonDown(0)) {
-                        Destroy(Instantiate(buildSmoke_particle, hit.collider.gameObject.transform.position, buildSmoke_particle.transform.localRotation), 1);
-                        remove_wav.Play();
+    private void rayPlaceUnit(Ray ray)
+    {
+        if (Physics.Raycast(ray, out hit, 300, 1 << 13))
+        {
+            CursorManager.SetCursor(CursorManager.spriteBuild);
 
-                        Unit u = Unit.getUnit(hit.collider);
-                        if (Unit.getUnit(hit.collider).hasBodyID())
-                        {
-                            Destroy(hit.collider.transform.parent.parent.gameObject);
+            if (selectedUnit != null)
+            {
+                selectedUnit.gameObject.SetActive(true);
+            }
 
-                        } else
-                        {
-                            Destroy(hit.collider.gameObject);
-                        }
-                        LevelData.units.Remove(u);
-                    }
-                } else {
-                    mouseSphere.gameObject.SetActive(false);
+            float unitPosX, unitPosZ;
+            int unitGridX, unitGridY;
+            (unitPosX, unitPosZ) = LevelData.gridManager.AlignPosition(hit.point.x, hit.point.z);
+            (unitGridX, unitGridY) = LevelData.gridManager.SamplePosition(hit.point.x, hit.point.z);
+            selectedRoot.position = new Vector3(unitPosX, hit.point.y, unitPosZ) + rootOffset;
+
+            //Check if colliding with occupied tiles in grid system
+            bool canBePlaced = selectedUnit.canBePlaced(LevelData.Scene.EDITOR);
+            LevelData.gridManager.UpdateSelection(unitGridX, unitGridY, selectedUnit.gridSize.x, selectedUnit.gridSize.y, canBePlaced, selectedRoot.eulerAngles.y);
+
+            globalInfo.text = String.Format("XYZ: {0:F1}, {1:F1}, {2:F1}", selectedRoot.position.x, selectedRoot.position.y, selectedRoot.position.z);
+
+            //Place?
+            if (Input.GetMouseButtonDown(0) && canBePlaced)
+            {
+                Destroy(Instantiate(buildSmoke_particle, selectedUnit.transform.position, buildSmoke_particle.transform.localRotation), 1);
+                build_wav.Play();
+
+                UnitSerializable data = selectedUnit.serializeUnit();
+                data.setI(KEY_UNIT_TEAMID, getSelectedTeam().id);
+                data.setF(KEY_UNIT_HP, unitHealthSlider.value);
+                Unit newUnit = MapLevel.spawnUnit(data);
+
+                LevelData.gridManager.PlaceUnit(newUnit, unitGridX, unitGridY, selectedRoot.eulerAngles.y);
+                LevelData.gridManager.ShowGrid();
+
+                //Save unit values
+                newUnit.setValues(unitHealthSlider.value, getSelectedTeam(), currentAdditionalProperties);
+
+                //Undo
+                byte[] undoData = new byte[8];
+                BitConverter.GetBytes(unitGridX).CopyTo(undoData, 0); //GridX
+                BitConverter.GetBytes(unitGridY).CopyTo(undoData, 4); //GridY
+                EditorManager.self.createUndoAction(EditorManager.UndoType.PLACE_UNIT, undoData, 0);
+            }
+
+            selectedUnit.setMeshRendererMat(canBePlaced ? GlobalList.matHologramGreen : GlobalList.matHologramRed);
+        }
+        else
+        {
+            if (selectedUnit != null) selectedUnit.gameObject.SetActive(false);
+            LevelData.gridManager.UpdateSelection(0, 0, 0, 0, true);
+        }
+    }
+
+    private void raySelectUnit(Ray ray)
+    {
+        //Cast ray to hit unit collider
+        newHoveredUnit = null;
+        bool success = Physics.Raycast(ray, out hit, 300, 1 << 14);
+        if (success)
+            newHoveredUnit = Unit.getUnit(hit.collider);
+
+        if (newHoveredUnit != null)
+        {
+            globalInfo.text = "Unit ID: " + LevelData.units.IndexOf(newHoveredUnit);
+            CursorManager.SetCursor(CursorManager.spriteSelect);
+        }
+
+        if (selectedUnit == null)
+        {
+            if (lastHoveredUnit != newHoveredUnit)
+            { //New unit being hovered on
+                if (lastHoveredUnit)
+                {
+                    lastHoveredUnit.DeSelectUnit();
+
+                    unitName.text = "";
+                    unitTab.SetActive(false);
+
+                    if (currentAdditionalProperties != null)
+                        Destroy(currentAdditionalProperties);
+                }
+
+                if (newHoveredUnit)
+                {
+                    newHoveredUnit.SelectUnit();
+
+                    unitName.text = newHoveredUnit.name;
+                    unitIcon.texture = newHoveredUnit.icon;
+
+                    unitTab.SetActive(true);
+
+                    showAdditionalProps(newHoveredUnit, true);
                 }
             }
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (selectedUnit != null)
+            {
+                selectedUnit.DeSelectUnit(); //Deselect effect
+                selectedUnit.setValues(unitHealthSlider.value, getSelectedTeam(), currentAdditionalProperties); //Save unit values
+                selectedUnit.restoreMeshRendererMat(getSelectedTeam()); //Restore body material
+
+                selectedUnit = null; //NULLate
+                unitTab.SetActive(false); //Hide
+            } else if (newHoveredUnit != null) //Selects unit
+            {
+                selectedUnit = newHoveredUnit;
+                showAdditionalProps(newHoveredUnit);
+            }
+        }
+
+        lastHoveredUnit = newHoveredUnit;
+    }
+
+    private void rayDestroyUnit(Ray ray)
+    {
+        newHoveredUnit = null;
+        if (Physics.Raycast(ray, out hit, 300, 1 << 14))
+        {
+            newHoveredUnit = Unit.getUnit(hit.collider);
+
+            CursorManager.SetCursor(CursorManager.spriteAttack); //DESTROY
+
+            if (lastHoveredUnit != newHoveredUnit)
+                newHoveredUnit.SelectUnit();
+
+            //Destroy?
+            if (Input.GetMouseButtonDown(0))
+            {
+                var (unitGridX, unitGridY) = LevelData.gridManager.SamplePosition(newHoveredUnit.transform.position.x, newHoveredUnit.transform.position.z);
+
+                //Undo
+                byte[] undoData = ArrayWorker.SerializableToBytes<UnitSerializable>(newHoveredUnit.serializeUnit());
+                EditorManager.self.createUndoAction(EditorManager.UndoType.REMOVE_UNIT, undoData, 0);
+
+                //Remove from game
+                Destroy(Instantiate(buildSmoke_particle, hit.collider.gameObject.transform.position, buildSmoke_particle.transform.localRotation), 1);
+                remove_wav.Play();
+
+                LevelData.gridManager.RemoveUnit(unitGridX, unitGridY);
+                //LevelData.gridManager.ShowGrid();
+
+                newHoveredUnit.destroyBoth();
+            }
+        }
+
+        if (lastHoveredUnit && (lastHoveredUnit != newHoveredUnit)) //Deselects
+        {
+            lastHoveredUnit.DeSelectUnit();
+        }
+
+        lastHoveredUnit = newHoveredUnit;
     }
 
     private void OnEnable()
@@ -246,8 +298,6 @@ public class BarBuildings : MonoBehaviour
             //Update UI
             onBuildingSelectionChange();
         }
-
-        mouseSphere.gameObject.SetActive(true);
     }
 
     private void OnDisable()
@@ -257,12 +307,11 @@ public class BarBuildings : MonoBehaviour
         {
             if (selectedUnit != null)
                 selectedUnit.destroyBoth();
+            LevelData.gridManager.UpdateSelection(0, 0, 0, 0, true);
         } else if (toolType == ToolType.SELECT) {
             selectedUnit = null; //NULLate
             unitTab.SetActive(false); //Hide
         }
-
-        mouseSphere.gameObject.SetActive(false);
     }
 
     public void onToolTypeChange(int toolID)
@@ -270,25 +319,23 @@ public class BarBuildings : MonoBehaviour
         toolType = (ToolType) toolID;
 
         unitName.text = "";
-        mouseSphere.gameObject.SetActive(false);
         unitIcon.texture = null;
         unitTab.SetActive(false);
         unitTypeSelectRoot.SetActive(false);
 
         //UI changes
-        tool_build.colors = tool_btn_normal;
-        tool_select.colors = tool_btn_normal;
-        tool_destroy.colors = tool_btn_normal;
+        tool_build.colors = GlobalList.btnNormal1;
+        tool_select.colors = GlobalList.btnNormal1;
+        tool_destroy.colors = GlobalList.btnNormal1;
 
         //Reset
         if (selectedUnit != null)
             selectedUnit.destroyBoth();
+        LevelData.gridManager.UpdateSelection(0, 0, 0, 0, true);
 
         if (toolType == ToolType.PLACE) //Place
         {
-            tool_build.colors = tool_btn_highlighted;
-
-            mouseSphere.gameObject.SetActive(false);
+            tool_build.colors = GlobalList.btnHighlight1;
 
             unitTab.SetActive(true);
             unitTypeSelectRoot.SetActive(true);
@@ -296,10 +343,10 @@ public class BarBuildings : MonoBehaviour
             onBuildingSelectionChange();
         } else if (toolType == ToolType.SELECT) //Select
         {
-            tool_select.colors = tool_btn_highlighted;
+            tool_select.colors = GlobalList.btnHighlight1;
         } else if (toolType == ToolType.DESTROY) //Destroy
         {
-            tool_destroy.colors = tool_btn_highlighted;
+            tool_destroy.colors = GlobalList.btnHighlight1;
         }
     }
 
@@ -308,18 +355,18 @@ public class BarBuildings : MonoBehaviour
         unitType = (UnitType) unitTypeID;
 
         //UI changes
-        ut_buildings.colors = tool_btn_normal;
-        ut_towers.colors = tool_btn_normal;
-        ut_units.colors = tool_btn_normal;
+        ut_buildings.colors = GlobalList.btnNormal1;
+        ut_towers.colors = GlobalList.btnNormal1;
+        ut_units.colors = GlobalList.btnNormal1;
 
         if (unitType == UnitType.BUILDING) {
-            ut_buildings.colors = tool_btn_highlighted;
+            ut_buildings.colors = GlobalList.btnHighlight1;
             onBuildingSelectionChange("0_commandCenter1");
         } else if (unitType == UnitType.TOWER) {
-            ut_towers.colors = tool_btn_highlighted;
+            ut_towers.colors = GlobalList.btnHighlight1;
             onBuildingSelectionChange("0_antT1");
         } else if (unitType == UnitType.UNIT) {
-            ut_units.colors = tool_btn_highlighted;
+            ut_units.colors = GlobalList.btnHighlight1;
             onBuildingSelectionChange("0_tonk1");
         }
     }
@@ -465,6 +512,22 @@ public class BarBuildings : MonoBehaviour
         List<RaycastResult> raysastResults = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, raysastResults);
         return raysastResults;
+    }
+
+    public static Vector3 GetTerrainNormal(Vector3 position, Terrain terrain)
+    {
+        // Convert world position to terrain position
+        Vector3 terrainPosition = position - terrain.transform.position;
+
+        // Get the normalized terrain coordinates (from 0 to 1)
+        Vector3 normalizedPos = new Vector3(
+            terrainPosition.x / terrain.terrainData.size.x,
+            terrainPosition.y / terrain.terrainData.size.y,
+            terrainPosition.z / terrain.terrainData.size.z
+        );
+
+        // Get the terrain normal at the given position
+        return terrain.terrainData.GetInterpolatedNormal(normalizedPos.x, normalizedPos.z);
     }
 
     public enum ToolType

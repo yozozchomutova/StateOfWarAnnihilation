@@ -6,6 +6,9 @@ TagManager:
   tags:
   - UnitBody
   - Unit
+  - terrain
+  - mat_unit_default
+  - mat_unit_lights_on
   layers:
   - Default
   - TransparentFX

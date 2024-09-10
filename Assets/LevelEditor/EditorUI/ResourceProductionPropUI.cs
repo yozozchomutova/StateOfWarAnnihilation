@@ -68,10 +68,13 @@ public class ResourceProductionPropUI : MonoBehaviour
     {
         this.pu_ui_image_Id = pu_ui_image_Id;
 
-        selectUnit.setSelectCallback(new SC_SUP_ResourceUnit(this));
-        selectUnit.disableFilter();
-        selectUnitPanel.show();
-        selectUnit.enableFilter(allowedUnits);
+        if (selectUnit != null)
+        {
+            selectUnit.setSelectCallback(new SC_SUP_ResourceUnit(this));
+            selectUnit.disableFilter();
+            selectUnitPanel.show();
+            selectUnit.enableFilter(allowedUnits);
+        }
     }
 
     public void ChangeCurImageIdUnit(string puId)

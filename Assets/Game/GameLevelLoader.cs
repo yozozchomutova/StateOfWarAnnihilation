@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameLevelLoader : MonoBehaviour
@@ -63,142 +65,159 @@ public class GameLevelLoader : MonoBehaviour
         while (!GlobalList.loadFinished)
             yield return null;
 
-        //Apply temporary level (for editor)
-        if (LoadLevelPanel.onGoingLoadingLvl == null)
+        try
         {
-            temporaryLevel.Init();
-            LoadLevelPanel.onGoingLoadingLvl = temporaryLevel.d;
-        }
-
-        MapLevel.setStaticParentTrans(levelManager.transform);
-
-        LevelData.mainTerrain = terrain;
-
-        LevelData.Init();
-
-        //Initialize time/clock/environment
-        LevelData.environment.init(weatherClock, weatherIcon);
-
-        //Switch main scene status
-        LevelData.scene = LevelData.Scene.GAME;
-
-        //Fill menu UI
-        menu_mapNameBcg.text = LoadLevelPanel.onGoingLoadingLvl.lvlName;
-        menu_mapName.text = LoadLevelPanel.onGoingLoadingLvl.lvlName;
-        if (!string.IsNullOrEmpty(DiscordProfile.lastUserName))
-        {
-            menu_userName.text = DiscordProfile.lastUserName;
-            menu_userName.color = Color.white;
-            menu_userIcon.texture = DiscordProfile.lastAvatar;
-        }
-
-        //Load level - Implemented*
-        LevelUI.Data lui = LoadLevelPanel.onGoingLoadingLvl;
-        FileStream stream = new FileStream(lui.fileLvlPath, FileMode.Open);
-        BinaryReader br = new BinaryReader(stream);
-
-        stream.Position = LoadLevelPanel.onGoingLoadingLvl.mapLevelData_offset;
-        byte[] mapLevelBytes = LevelUI.readByteSequence(br, lui.mapLevelData_length);
-        
-        if (PanelLoadLevel.compareVersion(lui, 03, 06, 01))
-        {
-            byte[] decompressedMapBytes = CompressionManager.Decompress(mapLevelBytes);
-
-            ML_03_05 mapLevel = PanelLoadLevel.Deserialize<ML_03_05>(decompressedMapBytes);
-            mapLevel.mapWidth = (int)(mapLevel.mapWidth / 2f);
-            mapLevel.mapHeight = (int)(mapLevel.mapHeight / 2f);
-            mapLevel.LoadData(terrain, gameObject.transform, false);
-        }
-        else
-        {
-            Debug.LogError("THIS LEVEL SHOULDN'T BE LOADED... IT'S OUTDATED OR NOT ADDED AND CONFIGURED!\nMinor: " + lui.big_patch + "_" + lui.small_patch + "_" + lui.build_code);
-        }
-
-        LevelData.ResizeTerrain((int)terrain.terrainData.size.x, terrainEdging, (int)terrain.terrainData.size.x, false);
-
-        br.Close();
-        stream.Close();
-
-        TerrainData td = terrain.terrainData;
-
-        //First weather update
-        weatherUpdate();
-        InvokeRepeating("weatherUpdate", WorldEnvironment.FRAME_UPDATE_TIME, WorldEnvironment.FRAME_UPDATE_TIME);
-
-        //Generate radar img
-        GenerateRadarMinimap();
-
-        //Reset all teamstats
-        for (int i = 0; i < LevelData.units.Count; i++) //Check if team is going to somehow partipiciated in game
-        {
-            Unit t = LevelData.units[i];
-            if (t.id == "0_commandCenter1")
-                LevelData.teamStats[t.team.id].activeTeam = true;
-        }
-        for (int i = 0; i < LevelData.teamStats.Length; i++)
-        {
-            TeamStats02_12 t = LevelData.teamStats[i];
-            t.OnDeserialize();
-            t.clearStats();
-        }
-
-        //Change UI Coloring
-        changePlayerTeam(LoadLevelPanel.selectedTeamID);
-
-        // Init objectives
-        gLevelObjective.Init();
-
-        //Teleport Camera to some headquarter
-        cameraPivot.position = new Vector3(td.size.x / 2f, 1f, td.size.z / 2f);
-        foreach (Unit unit in LevelData.units)
-        {
-            if (unit.id == "0_commandCenter1" && unit.team.id == LevelData.ts.teamId)
+            //Apply temporary level (for editor)
+            if (LoadLevelPanel.onGoingLoadingLvl == null)
             {
-                cameraPivot.position = new Vector3(unit.transform.position.x, 1f, unit.transform.position.z);
-                break;
+                temporaryLevel.Init();
+                LoadLevelPanel.onGoingLoadingLvl = temporaryLevel.d;
             }
-        }
 
-        //Initiate team drivers
-        if (LoadLevelPanel.teamPlaySettings == null) //If loading directly from gamelevel scene / set default values
-        {
-            LoadLevelPanel.teamPlaySettings = new TeamPlaySettings[GlobalList.teams.Length];
-            /*for (int i = 0; i < GlobalList.teams.Length; i++)
+            MapLevel.setStaticParentTrans(levelManager.transform);
+
+            LevelData.mainTerrain = terrain;
+            LevelData.Init();
+            LevelData.environment.LinkUI(weatherClock, weatherIcon);
+
+            //Switch main scene status
+            LevelData.scene = LevelData.Scene.GAME;
+
+            //Fill menu UI
+            menu_mapNameBcg.text = LoadLevelPanel.onGoingLoadingLvl.lvlName;
+            menu_mapName.text = LoadLevelPanel.onGoingLoadingLvl.lvlName;
+            if (!string.IsNullOrEmpty(DiscordProfile.lastUserName))
             {
-                LoadLevelPanel.teamPlaySettings[i] = new TeamPlaySettings(i, SingleplayerTeamSettings.DRIVER_CATEGORY_AI, "aiClassic");
+                menu_userName.text = DiscordProfile.lastUserName;
+                menu_userName.color = Color.white;
+                menu_userIcon.texture = DiscordProfile.lastAvatar;
             }
-            LoadLevelPanel.teamPlaySettings[LevelData.ts.teamId] = new TeamPlaySettings(LevelData.ts.teamId, SingleplayerTeamSettings.DRIVER_CATEGORY_PLAYER, "playerMain");*/
 
-            for (int i = 0; i < GlobalList.teams.Length; i++)
+            //Load level - Implemented*
+            LevelUI.Data lui = LoadLevelPanel.onGoingLoadingLvl;
+            FileStream stream = new FileStream(lui.fileLvlPath, FileMode.Open);
+            BinaryReader br = new BinaryReader(stream);
+
+            stream.Position = LoadLevelPanel.onGoingLoadingLvl.mapLevelData_offset;
+            byte[] mapLevelBytes = LevelUI.readByteSequence(br, lui.mapLevelData_length);
+
+            br.Close();
+            stream.Close();
+
+            if (PanelLoadLevel.compareVersion(lui, 03, 06, 01))
             {
-                //LoadLevelPanel.teamPlaySettings[i] = new TeamPlaySettings(i, SingleplayerTeamSettings.DRIVER_CATEGORY_AI, i % 2 == 0 ? "aiClassic" : "aiClassic");
-                LoadLevelPanel.teamPlaySettings[i] = new TeamPlaySettings(i, SingleplayerTeamSettings.DRIVER_CATEGORY_AI, i % 2 == 0 ? "aiClassic" : "aiAdvanced");
+                byte[] decompressedMapBytes = CompressionManager.Decompress(mapLevelBytes);
+
+                ML_03_05 mapLevel = PanelLoadLevel.Deserialize<ML_03_05>(decompressedMapBytes);
+                mapLevel.mapWidth = (int)(mapLevel.mapWidth / 2f);
+                mapLevel.mapHeight = (int)(mapLevel.mapHeight / 2f);
+                mapLevel.LoadData(terrain, gameObject.transform, false);
             }
-            LoadLevelPanel.teamPlaySettings[LevelData.ts.teamId] = new TeamPlaySettings(LevelData.ts.teamId, SingleplayerTeamSettings.DRIVER_CATEGORY_PLAYER, "playerMain");
-        }
-
-        for (int i = 0; i < LoadLevelPanel.teamPlaySettings.Length; i++)
-        {
-            TeamPlaySettings tps = LoadLevelPanel.teamPlaySettings[i];
-            GameObject newDriver = Instantiate(GlobalList.teamDrivers[tps.teamDriverCategoryId][tps.teamDriverId].gameObject, transform);
-            newDriver.name = GlobalList.teams[i].name + " TeamDriver";
-            newDriver.GetComponent<TeamDriver>().controllingTeam = GlobalList.teams[i];
-        }
-
-        //Unpause game
-        levelManager.timeWarp_1();
-
-        //Trigger all starting nodes
-        for (int i = 0; i < LevelData.teamStats.Length; i++)
-        {
-            for (int j = 0; j < GameLevelObjectives.allObjectives[i].Count; j++)
+            else
             {
-                if (GameLevelObjectives.allObjectives[i][j].ser.nodeId == BarTaskTriggers.NODE_START_BASE)
+                throw new Exception("THIS LEVEL SHOULDN'T BE LOADED... IT'S OUTDATED OR NOT ADDED AND CONFIGURED!\nMinor: " + lui.big_patch + "_" + lui.small_patch + "_" + lui.build_code);
+            }
+
+            LevelData.ResizeTerrain((int)terrain.terrainData.size.x, terrainEdging, (int)terrain.terrainData.size.x, false);
+
+            TerrainData td = terrain.terrainData;
+
+            //First weather update
+            weatherUpdate();
+            InvokeRepeating("weatherUpdate", WorldEnvironment.FRAME_UPDATE_TIME, WorldEnvironment.FRAME_UPDATE_TIME);
+
+            //Generate radar img
+            GenerateRadarMinimap();
+
+            //Reset all teamstats
+            for (int i = 0; i < LevelData.units.Count; i++) //Check if team is going to somehow partipiciated in game
+            {
+                Unit t = LevelData.units[i];
+                if (t.id == "0_commandCenter1")
+                    LevelData.teamStats[t.team.id].activeTeam = true;
+            }
+            for (int i = 0; i < LevelData.teamStats.Length; i++)
+            {
+                TeamStats02_12 t = LevelData.teamStats[i];
+                t.OnDeserialize();
+                t.clearStats();
+            }
+
+            //Change UI Coloring
+            changePlayerTeam(LoadLevelPanel.selectedTeamID);
+
+            // Init objectives
+            gLevelObjective.Init();
+
+            //Teleport Camera to some headquarter
+            cameraPivot.position = new Vector3(td.size.x / 2f, 1f, td.size.z / 2f);
+            foreach (Unit unit in LevelData.units)
+            {
+                if (unit.id == "0_commandCenter1" && unit.team.id == LevelData.ts.teamId)
                 {
-                    GameLevelObjectives.allObjectives[i][j].triggerNode();
+                    cameraPivot.position = new Vector3(unit.transform.position.x, 1f, unit.transform.position.z);
+                    break;
                 }
             }
+
+            //Initiate team drivers
+            if (LoadLevelPanel.teamPlaySettings == null) //If loading directly from gamelevel scene / set default values
+            {
+                LoadLevelPanel.teamPlaySettings = new TeamPlaySettings[GlobalList.teams.Length];
+                /*for (int i = 0; i < GlobalList.teams.Length; i++)
+                {
+                    LoadLevelPanel.teamPlaySettings[i] = new TeamPlaySettings(i, SingleplayerTeamSettings.DRIVER_CATEGORY_AI, "aiClassic");
+                }
+                LoadLevelPanel.teamPlaySettings[LevelData.ts.teamId] = new TeamPlaySettings(LevelData.ts.teamId, SingleplayerTeamSettings.DRIVER_CATEGORY_PLAYER, "playerMain");*/
+
+                for (int i = 0; i < GlobalList.teams.Length; i++)
+                {
+                    //LoadLevelPanel.teamPlaySettings[i] = new TeamPlaySettings(i, SingleplayerTeamSettings.DRIVER_CATEGORY_AI, i % 2 == 0 ? "aiClassic" : "aiClassic");
+                    LoadLevelPanel.teamPlaySettings[i] = new TeamPlaySettings(i, SingleplayerTeamSettings.DRIVER_CATEGORY_AI, i % 2 == 0 ? "aiClassic" : "aiAdvanced");
+                }
+                LoadLevelPanel.teamPlaySettings[LevelData.ts.teamId] = new TeamPlaySettings(LevelData.ts.teamId, SingleplayerTeamSettings.DRIVER_CATEGORY_PLAYER, "playerMain");
+            }
+
+            for (int i = 0; i < LoadLevelPanel.teamPlaySettings.Length; i++)
+            {
+                TeamPlaySettings tps = LoadLevelPanel.teamPlaySettings[i];
+                GameObject newDriver = Instantiate(GlobalList.teamDrivers[tps.teamDriverCategoryId][tps.teamDriverId].gameObject, transform);
+                newDriver.name = GlobalList.teams[i].name + " TeamDriver";
+                newDriver.GetComponent<TeamDriver>().controllingTeam = GlobalList.teams[i];
+            }
+
+            //Unpause game
+            levelManager.timeWarp_1();
+
+            //Trigger all starting nodes
+            for (int i = 0; i < LevelData.teamStats.Length; i++)
+            {
+                for (int j = 0; j < GameLevelObjectives.allObjectives[i].Count; j++)
+                {
+                    if (GameLevelObjectives.allObjectives[i][j].ser.nodeId == BarTaskTriggers.NODE_START_BASE)
+                    {
+                        GameLevelObjectives.allObjectives[i][j].triggerNode();
+                    }
+                }
+            }
+        } catch (Exception e)
+        {
+            Debug.LogException(e);
+            StartCoroutine(MainMenuShowMsg("Failed to load level", e.Message));
         }
+    }
+
+    IEnumerator MainMenuShowMsg(string title, string desc)
+    {
+        levelManager.timeWarp_1();
+        AsyncOperation operation = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+        
+        while (!operation.isDone)
+            yield return new WaitForEndOfFrame();
+        
+        MainMenuCanvas.ShowMessage(title, desc);
+
+        SceneManager.UnloadSceneAsync(4);
     }
 
     public void changePlayerTeam(int newTeamId)
@@ -308,6 +327,6 @@ public class GameLevelLoader : MonoBehaviour
     private void weatherUpdate()
     {
         LevelData.environment.onFrameUpdate();
-        LevelData.environment.updateDaylight(directionalLight);
+        LevelData.environment.OnTimeUpdate();
     }
 }

@@ -4,10 +4,14 @@ using System.Data.Common;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using TMPro;
 using UnityEngine;
+using static MapLevelManager;
 
 public class EditorManager : MonoBehaviour
 {
+    public static EditorManager self;
+
     [SerializeField, SerializeReference] public SelectUnitPanel[] inactiveStartCallers;
 
     public SelectUnitPanel unitsPanel;
@@ -48,15 +52,19 @@ public class EditorManager : MonoBehaviour
     [Header("Reference")]
     public BarTerrainEdit barTerrainEdit;
 
-    //Undo/Redo system
-    public volatile List<UndoType> undoTypes = new List<UndoType>();
-    public volatile List<byte[][]> undoTypesData = new List<byte[][]>();
+    [Header("Undo/Redo")]
+    public TMP_Text undoText;
+    public TMP_Text redoText;
 
-    public volatile List<UndoType> redoTypes = new List<UndoType>();
-    public volatile List<byte[][]> redoTypesData = new List<byte[][]>();
+    public volatile List<byte[]> undosData = new List<byte[]>();
+    public volatile List<UndoType> undosDataType = new List<UndoType>();
+    public volatile List<byte[]> redosData = new List<byte[]>();
+    public volatile List<UndoType> redosDataType = new List<UndoType>();
 
     void Start()
     {
+        self = this;
+
         //Connect with LevelData
         LevelData.mainTerrain = terrain;
 
@@ -120,14 +128,39 @@ public class EditorManager : MonoBehaviour
 
                 }*/
                 panelSaveLevel.gameObject.SetActive(true);
-            } else if (Input.GetKeyDown(KeyCode.J))
-            {
-                actionUndo();
-            } else if (Input.GetKeyDown(KeyCode.H))
-            {
-                actionRedo();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            actionUndo();
+        }
+        else if (Input.GetKeyDown(KeyCode.Y))
+        {
+            actionRedo();
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            if (GlobalList.gridParent.activeSelf)
+                LevelData.gridManager.HideGrid();
+            else
+                LevelData.gridManager.ShowGrid();
+        }
+    }
+
+    public void DestroyUnit(int gridX, int gridY)
+    {
+        Unit u = LevelData.gridManager.tiles[gridX, gridY].unit;
+        LevelData.gridManager.RemoveUnit(gridX, gridY);
+        u.destroyBoth();
+    }
+
+    public void DestroyMapObject(int gridX, int gridY)
+    {
+        MapObject m = LevelData.gridManager.tiles[gridX, gridY].mapObject;
+        LevelData.gridManager.RemoveMapObject(gridX, gridY);
+        LevelData.mapObjects.Remove(m);
     }
 
     public void showPlayerSettingsTabs()
@@ -186,15 +219,11 @@ public class EditorManager : MonoBehaviour
             //Random bird sound
             float randomBirdSound = UnityEngine.Random.Range(0f, 1f);
             if (randomBirdSound < 0.333f)
-            {
                 bird1.Play();
-            } else if (randomBirdSound < 0.666f)
-            {
+            else if (randomBirdSound < 0.666f)
                 bird2.Play();
-            } else
-            {
+            else
                 bird3.Play();
-            }
         }
     }
 
@@ -263,73 +292,172 @@ public class EditorManager : MonoBehaviour
         return (int)((float)blueUnitCount / allUnitCount * 100f);
     }
 
-    public void createUndoAction(UndoType undoType, byte[][] data)
+    private void UpdateUndoRedoUI()
     {
-        if (undoTypes.Count > 4) //Limit to 5 undo max
-        {
-            undoTypes.RemoveAt(0);
-            undoTypesData.RemoveAt(0);
-        }
-
-        undoTypes.Add(undoType);
-        undoTypesData.Add(data);
+        undoText.text = "" + undosDataType.Count;
+        redoText.text = "" + redosDataType.Count;
     }
 
-    public void createRedoAction(UndoType redoType, byte[][] data)
+    public void createUndoAction(UndoType uType, byte[] data, int arrayPos, bool terminateRedos = true)
     {
-        if (redoTypes.Count > 4) //Limit to 5 redo max
+        if (terminateRedos)
         {
-            redoTypes.RemoveAt(0);
-            redoTypesData.RemoveAt(0);
+            redosData.Clear();
+            redosDataType.Clear();
         }
 
-        redoTypes.Add(redoType);
-        redoTypesData.Add(data);
+        if (undosData.Count >= 10) {//Limit to 10 undos max
+            int lastIndex = undosData.Count - 1;
+            undosData.RemoveAt(lastIndex);
+            undosDataType.RemoveAt(lastIndex);
+        }
+        undosData.Insert(arrayPos, data);
+        undosDataType.Insert(arrayPos, uType);
+        UpdateUndoRedoUI();
+    }
+
+    public void createRedoAction(UndoType rType, byte[] data)
+    {
+        if (redosData.Count >= 10) {//Limit to 10 redos max
+            int lastIndex = redosData.Count - 1;
+            redosData.RemoveAt(lastIndex);
+            redosDataType.RemoveAt(lastIndex);
+        }
+        redosData.Insert(0, data);
+        redosDataType.Insert(0, rType);
+        UpdateUndoRedoUI();
     }
 
     public void actionUndo()
     {
-        if (undoTypes.Count == 0)
-            return;
+        if (undosData.Count == 0) return;
+        UndoType undoType = undosDataType[0];
+        byte[] data = undosData[0];
 
-        UndoType undoType = undoTypes[undoTypes.Count - 1];
-        byte[][] data = undoTypesData[undoTypesData.Count - 1];
+        TerrainData tData = terrain.terrainData;
 
-        if (undoType == UndoType.TERRAIN_PAINT)
+        switch (undoType)
         {
-            TerrainData tData = terrain.terrainData;
+            case UndoType.TERRAIN_EDIT:
+                //Generate redo option
+                float[,] heights = tData.GetHeights(0, 0, tData.heightmapResolution, tData.heightmapResolution);
+                byte[] newData = ArrayWorker.Float2DToByte1D(heights);
+                createRedoAction(UndoType.TERRAIN_EDIT, newData);
 
-            int alphamapRes = tData.alphamapResolution;
-            float[,,] fetchAlphamaps = tData.GetAlphamaps(0, 0, alphamapRes, alphamapRes);
+                //Process undo
+                int heightsmapRes = tData.heightmapResolution;
+                heights = ArrayWorker.Byte1DToFloat2D(data, heightsmapRes, heightsmapRes);
+                tData.SetHeights(0, 0, heights);
+                break;
+            case UndoType.TERRAIN_PAINT:
+                //Generate redo option
+                float[,,] textures = tData.GetAlphamaps(0, 0, tData.alphamapResolution, tData.alphamapResolution);
+                newData = ArrayWorker.Float3DToByte1D(textures);
+                createRedoAction(UndoType.TERRAIN_PAINT, newData);
 
-            for (int i = 0; i < fetchAlphamaps.GetLength(2); i++)
-            {
-                for (int x = 0; x < fetchAlphamaps.GetLength(0); x++)
-                {
-                    for (int y = 0; y < fetchAlphamaps.GetLength(1); y++)
-                    {
-                        fetchAlphamaps[x, y, i] = BitConverter.ToSingle(data[x * alphamapRes + y + (alphamapRes * alphamapRes * i)]);
-                    }
-                }
-            }
+                //Process undo
+                int alphamapRes = tData.alphamapResolution;
+                textures = ArrayWorker.Byte1DToFloat3D(data, alphamapRes, alphamapRes, tData.alphamapLayers);
+                tData.SetAlphamaps(0, 0, textures);
+                break;
+            case UndoType.PLACE_UNIT:
+                int gridX = BitConverter.ToInt32(data, 0);
+                int gridY = BitConverter.ToInt32(data, 4);
 
-            terrain.terrainData.SetAlphamaps(0, 0, fetchAlphamaps);
+                //Generate redo option
+                Unit u = LevelData.gridManager.tiles[gridX, gridY].unit;
+                UnitSerializable unitS = u.serializeUnit();
+                newData = ArrayWorker.SerializableToBytes(unitS);
+                createRedoAction(UndoType.PLACE_UNIT, newData);
+
+                //Process undo - remove unit again
+                DestroyUnit(gridX, gridY);
+                break;
+            case UndoType.REMOVE_UNIT:
+                //Process undo - spawn unit back
+                unitS = ArrayWorker.BytesToSerializable<UnitSerializable>(data);
+                MapLevel.spawnUnit(unitS);
+
+                //Generate redo option
+                Vector3 unitPos = unitS.getV(UnitSerializable.KEY_BODY_POSITION);
+                (gridX, gridY) = LevelData.gridManager.SamplePosition(unitPos.x, unitPos.z);
+                
+                newData = new byte[8];
+                BitConverter.GetBytes(gridX).CopyTo(newData, 0); //GridX
+                BitConverter.GetBytes(gridY).CopyTo(newData, 4); //GridY
+                createRedoAction(UndoType.REMOVE_UNIT, newData);
+                break;
         }
 
-        undoTypes.RemoveAt(undoTypes.Count - 1);
-        undoTypesData.RemoveAt(undoTypesData.Count - 1);
+        undosData.RemoveAt(0);
+        undosDataType.RemoveAt(0);
+        UpdateUndoRedoUI();
     }
 
     public void actionRedo()
     {
-        if (redoTypes.Count == 0)
-            return;
+        if (redosData.Count == 0) return;
+        UndoType redoType = redosDataType[0];
+        byte[] data = redosData[0];
 
-        UndoType redoType = redoTypes[redoTypes.Count - 1];
-        byte[][] data = redoTypesData[redoTypesData.Count - 1];
+        TerrainData tData = terrain.terrainData;
 
-        redoTypes.RemoveAt(redoTypes.Count - 1);
-        redoTypesData.RemoveAt(redoTypesData.Count - 1);
+        switch (redoType)
+        {
+            case UndoType.TERRAIN_EDIT:
+                //Generate undo option
+                float[,] heights = tData.GetHeights(0, 0, tData.heightmapResolution, tData.heightmapResolution);
+                byte[] newData = ArrayWorker.Float2DToByte1D(heights);
+                createUndoAction(UndoType.TERRAIN_EDIT, newData, 0, false);
+
+                //Process redo
+                int heightsmapRes = tData.heightmapResolution;
+                heights = ArrayWorker.Byte1DToFloat2D(data, heightsmapRes, heightsmapRes);
+                tData.SetHeights(0, 0, heights);
+                break;
+            case UndoType.TERRAIN_PAINT:
+                //Create undo option
+                float[,,] textures = tData.GetAlphamaps(0, 0, tData.alphamapResolution, tData.alphamapResolution);
+                newData = ArrayWorker.Float3DToByte1D(textures);
+                createUndoAction(UndoType.TERRAIN_PAINT, newData, 0, false);
+
+                //Process redo
+                int alphamapRes = tData.alphamapResolution;
+                textures = ArrayWorker.Byte1DToFloat3D(data, alphamapRes, alphamapRes, tData.alphamapLayers);
+                tData.SetAlphamaps(0, 0, textures);
+                break;
+            case UndoType.PLACE_UNIT:
+                //Process redo - new unit
+                UnitSerializable unitS = ArrayWorker.BytesToSerializable<UnitSerializable>(data);
+                MapLevel.spawnUnit(unitS);
+
+                //Create undo option
+                Vector3 unitPos = unitS.getV(UnitSerializable.KEY_BODY_POSITION);
+                var (gridX, gridY) = LevelData.gridManager.SamplePosition(unitPos.x, unitPos.z);
+
+                newData = new byte[8];
+                BitConverter.GetBytes(gridX).CopyTo(newData, 0); //GridX
+                BitConverter.GetBytes(gridY).CopyTo(newData, 4); //GridY
+                createUndoAction(UndoType.PLACE_UNIT, newData, 0, false);
+                break;
+            case UndoType.REMOVE_UNIT:
+                gridX = BitConverter.ToInt32(data, 0);
+                gridY = BitConverter.ToInt32(data, 4);
+
+                //Create undo option
+                Unit u = LevelData.gridManager.tiles[gridX, gridY].unit;
+                unitS = u.serializeUnit();
+                newData = ArrayWorker.SerializableToBytes(unitS);
+                createUndoAction(UndoType.REMOVE_UNIT, newData, 0, false);
+
+                //Process redo - destroy unit again
+                DestroyUnit(gridX, gridY);
+                break;
+        }
+
+        redosData.RemoveAt(0);
+        redosDataType.RemoveAt(0);
+        UpdateUndoRedoUI();
     }
 
     public interface InactiveStartCaller
@@ -341,7 +469,6 @@ public class EditorManager : MonoBehaviour
     {
         TERRAIN_EDIT,
         TERRAIN_PAINT,
-        WATER_LEVEL,
         PLACE_UNIT,
         REMOVE_UNIT
     }

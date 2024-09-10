@@ -17,15 +17,6 @@ public class SC_EditorFlyCamera : MonoBehaviour
     private float camRotX = 0;
     private float camRotY = 0;
 
-    //Terrain edge
-    public GameObject terrainEdge;
-    public Material TE_mat;
-
-    private double maxTE_alpha = 0.08627451f;
-    private double minTE_alpha = 0.03627451f;
-    private double curTE_alpha;
-    private bool TE_alpha_rising = false;
-
     //PostProcessing
     public Transform waterLevel;
 
@@ -36,33 +27,12 @@ public class SC_EditorFlyCamera : MonoBehaviour
     void Start()
     {
         rotationY = -transform.localEulerAngles.x;
-
-        //Starting properties for Terrain edge
-        curTE_alpha = maxTE_alpha;
-        TE_mat.color = new Color(1f, 0.962297f, 0f, (float)maxTE_alpha);
     }
 
     // Update is called once per frame
     void Update()
     {
         Movement();
-
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            terrainEdge.SetActive(!terrainEdge.activeSelf);
-        }
-
-        //Terrain edge breathe effect
-        if (curTE_alpha > maxTE_alpha)
-        {
-            TE_alpha_rising = false;
-        } else if (curTE_alpha < minTE_alpha)
-        {
-            TE_alpha_rising = true;
-        }
-
-        curTE_alpha += TE_alpha_rising ? Time.deltaTime / 45 : -Time.deltaTime / 45;
-        TE_mat.color = new Color(1f, 0.962297f, 0f, (float)curTE_alpha);
     }
 
     void Movement()
@@ -113,14 +83,13 @@ public class SC_EditorFlyCamera : MonoBehaviour
                     camRotY += differenceX / 6f;
 
                     transform.localRotation = Quaternion.Euler(camRotX, camRotY, 0);
-                    //editorCamera.localRotation = Quaternion.Euler(differenceY / 3f, differenceX / 3f, 0);
-                    //editorCamera.localRotation = Quaternion.Euler(editorCamera.localRotation.x, editorCamera.localRotation.y, 0);
                 }
 
                 lastMouseX = curMouseX;
                 lastMouseY = curMouseY;
 
                 rightButtonHeldDown = true;
+                CursorManager.SetCursor(CursorManager.spriteFreeCam);
             }
             else
             {
@@ -129,34 +98,6 @@ public class SC_EditorFlyCamera : MonoBehaviour
         }
 
         //Decide post-processing
-        if (transform.position.y < waterLevel.position.y)
-        {
-            ppUnderwater.enabled = true;
-        } else
-        {
-            ppUnderwater.enabled = false;
-        }
-
-        /*if (Input.GetMouseButtonDown(1))
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        freeLook = Input.GetMouseButton(1);
-        if (Input.GetMouseButtonUp(1))
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-
-        if (freeLook)
-        {
-            float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * turnSpeed;
-
-            rotationY += Input.GetAxis("Mouse Y") * turnSpeed;
-            rotationY = Mathf.Clamp(rotationY, -90, 90);
-
-            transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
-        }*/
+        ppUnderwater.enabled = transform.position.y < waterLevel.position.y;
     }
 }

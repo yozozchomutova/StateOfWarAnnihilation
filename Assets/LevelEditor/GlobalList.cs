@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GlobalList : MonoBehaviour
 {
     //Materials
     public static Material matHologramGreen;
     public static Material matHologramRed;
+    public static Material matUnitTeam;
     public static Material matUnitConstructing;
     public static Material matLCDScreen;
 
@@ -19,19 +21,15 @@ public class GlobalList : MonoBehaviour
     public static Dictionary<string, TTNode> eventNodes = new Dictionary<string, TTNode>();
     public static Dictionary<string, WorldEnvironment.Weather> weathers = new Dictionary<string, WorldEnvironment.Weather>();
 
+    //Grid
+    public GameObject gridParent_;
+    public static GameObject gridParent;
+
     //UI
+    public static ColorBlock btnNormal1, btnHighlight1;
     public static List<ProducingUnit> airForecsPU = new List<ProducingUnit>();
 
     [HideInInspector] public static Team[] teams;
-
-    //Mouse cursors
-    public static Texture2D mouseSpriteNormal;
-    public static Texture2D mouseSpriteAttack;
-    public static Texture2D mouseSpriteUpgrade;
-    public static Texture2D mouseSpriteRepair;
-    public static Texture2D mouseSpriteSendAirforce;
-    public static Texture2D mouseSpriteFreeCam;
-    public static Texture2D mouseSpriteSelect;
 
     //Format: 1. Dictionary = Category ; 2. Dictionary = Driver type from that category
     public static Dictionary<string, Dictionary<string, TeamDriver>> teamDrivers = new Dictionary<string, Dictionary<string, TeamDriver>>();
@@ -51,6 +49,9 @@ public class GlobalList : MonoBehaviour
 
     private void Awake()
     {
+        //Grid
+        gridParent = gridParent_;
+
         loadFinished = false;
         if (loadOnStart)
             initLoading();
@@ -60,6 +61,7 @@ public class GlobalList : MonoBehaviour
     {
         if (loadFinished)
             return;
+
         //Save instance
         //DontDestroyOnLoad(gameObject);
         units.Clear();
@@ -74,6 +76,7 @@ public class GlobalList : MonoBehaviour
         //Materials
         matHologramGreen = Resources.Load<Material>("Materials/unitHologramGreen");
         matHologramRed = Resources.Load<Material>("Materials/unitHologramRed");
+        matUnitTeam = Resources.Load<Material>("Materials/unitTeamMat");
         matUnitConstructing = Resources.Load<Material>("Materials/unitMatConstruction");
         matLCDScreen = Resources.Load<Material>("Materials/screenLCDMat");
         matUnitRangeDebug = Resources.Load<Material>("Materials/unitRangeDebugMat");
@@ -86,7 +89,7 @@ public class GlobalList : MonoBehaviour
         teamList.Add(new Team(Team.YELLOW, -1, new Color(0.93f, 0.988f, 0.012f), "Yellow", "yellow"));
         teamList.Add(new Team(Team.PURPLE, -1, new Color(0.51f, 0, 0.93f), "Purple", "purple"));
         teamList.Add(new Team(Team.PINK, -1, new Color(0.953f, 0.06f, 1f), "Pink", "pink"));
-        teamList.Add(new Team(Team.ORANGE, -1, new Color(1f, 0.616f, 0), "Orange", "orange"));
+        teamList.Add(new Team(Team.ORANGE, -1, new Color(0.988f, 0.32f, 0.011f), "Orange", "orange"));
         teamList.Add(new Team(Team.BROWN, -1, new Color(0.549f, 0.294f, 0), "Brown", "brown"));
         teamList.Add(new Team(Team.BLACK, -1, new Color(0, 0, 0), "Black", "black"));
 
@@ -96,15 +99,6 @@ public class GlobalList : MonoBehaviour
         {
             teams[i] = teamList[i];
         }
-
-        //Mouse cursors
-        mouseSpriteNormal = Resources.Load<Texture2D>("UI/Cursors/normal1");
-        mouseSpriteAttack = Resources.Load<Texture2D>("UI/Cursors/attack");
-        mouseSpriteUpgrade = Resources.Load<Texture2D>("UI/Cursors/upgradeBuilding");
-        mouseSpriteRepair = Resources.Load<Texture2D>("UI/Cursors/repair");
-        mouseSpriteSendAirforce = Resources.Load<Texture2D>("UI/Cursors/sendAirforce");
-        mouseSpriteFreeCam = Resources.Load<Texture2D>("UI/Cursors/freeCamera");
-        mouseSpriteSelect = Resources.Load<Texture2D>("UI/Cursors/select");
 
         //Units
         loadUnit("commandCenter1"); //-Buildings
@@ -201,6 +195,9 @@ public class GlobalList : MonoBehaviour
 
         //Map objects
         loadMapObject("tree1");
+        loadMapObject("rock1");
+        loadMapObject("rock2");
+        loadMapObject("rock3");
         loadMapObject("cactus1");
 
         //Event nodes
@@ -252,6 +249,19 @@ public class GlobalList : MonoBehaviour
         airForecsPU.Add(producingUnits["0_cyclone1"]);
         airForecsPU.Add(producingUnits["0_carrybus1"]);
         airForecsPU.Add(producingUnits["0_debris1"]);
+
+        //Color blocks
+        btnNormal1 = new ColorBlock();
+        btnNormal1.colorMultiplier = 1;
+        btnNormal1.normalColor = new Color32(0, 0, 0, byte.MaxValue);
+        btnNormal1.highlightedColor = new Color32(240, 240, 240, byte.MaxValue);
+        btnNormal1.selectedColor = new Color32(240, 240, 240, byte.MaxValue);
+
+        btnHighlight1 = new ColorBlock();
+        btnHighlight1.colorMultiplier = 1;
+        btnHighlight1.normalColor = new Color32(240, 240, 240, byte.MaxValue);
+        btnHighlight1.highlightedColor = new Color32(240, 240, 240, byte.MaxValue);
+        btnHighlight1.selectedColor = new Color32(240, 240, 240, byte.MaxValue);
 
         //Load finished!
         loadFinished = true;

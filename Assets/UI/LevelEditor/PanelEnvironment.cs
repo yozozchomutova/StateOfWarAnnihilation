@@ -73,7 +73,7 @@ public class PanelEnvironment : MonoBehaviour, SimpleListView1_Item.IDeleteReque
         LevelData.environment.weatherDefault = GlobalList.weathers.Values.ElementAt(defaultWeather.value);
         LevelData.environment.setTime(int.Parse(startingHours.text) * 60 + int.Parse(startingMinutes.text));
 
-        LevelData.environment.updateDaylight(directionalLight);
+        LevelData.environment.OnTimeUpdate();
 
         //Hide panel
         gameObject.SetActive(false);

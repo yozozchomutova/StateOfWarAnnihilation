@@ -61,6 +61,12 @@ public class MapLevel
             unit.restoreMeshRendererMat(unit.team);
 
         LevelData.units.Add(unit);
+
+        if (virtualSpace == VirtualSpace.NORMAL)
+        {
+            var (originX, originY) = LevelData.gridManager.SamplePosition(unit.transform.position.x, unit.transform.position.z);
+            LevelData.gridManager.PlaceUnit(unit, originX, originY, unit.transform.rotation.y);
+        }
         return unit;
     }
     #endregion

@@ -64,6 +64,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d47e35ad2a6d4264ca9be024a5309d95, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -232,6 +233,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d47e35ad2a6d4264ca9be024a5309d95, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -383,6 +385,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -551,6 +554,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d47e35ad2a6d4264ca9be024a5309d95, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -672,6 +676,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d47e35ad2a6d4264ca9be024a5309d95, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -821,7 +826,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.85, y: 1, z: 0.4}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4420298305639361799
 MonoBehaviour:
@@ -837,14 +842,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 5251969938172738979}
+  meshRenderersAll:
+  - {fileID: 6575986547636961339}
+  - {fileID: 8205188987656716963}
+  - {fileID: 4019655400458739087}
+  - {fileID: 5897022552768115764}
+  - {fileID: 3558322336554517807}
+  - {fileID: 679011832624291346}
+  - {fileID: 1334817370850334077}
+  - {fileID: 1295440643460226656}
+  - {fileID: 2643965315243281645}
+  - {fileID: 7034033772276379522}
+  - {fileID: 2228428992328921671}
+  - {fileID: 8451512102465754709}
+  - {fileID: 319096146731887508}
+  unitTeamMrs:
+  - {fileID: 6575986547636961339}
+  - {fileID: 4019655400458739087}
+  - {fileID: 5897022552768115764}
+  - {fileID: 679011832624291346}
+  - {fileID: 1334817370850334077}
+  - {fileID: 2643965315243281645}
+  - {fileID: 7034033772276379522}
+  - {fileID: 8451512102465754709}
+  - {fileID: 319096146731887508}
+  screenLCDMrs: []
+  outlineMrs:
+  - {fileID: 6575986547636961339}
+  - {fileID: 8205188987656716963}
+  - {fileID: 3558322336554517807}
+  - {fileID: 1295440643460226656}
+  - {fileID: 2228428992328921671}
+  outlineMatsIndexes: 
+  meshRenderersDefault_names:
+  - gun1
+  - gun2
+  - gun3
+  - gun4
+  meshRenderersDefault_materials:
+  - metallic
+  - metallic
+  - metallic
+  - metallic
   id: 0_antiAircraftT1
-  unitSOWCWId: -1
+  unitSOWCWId: 26
   bodyId: 0_towerMedium
   name: Anti-Aircraft
   icon: {fileID: 2800000, guid: f8aa7b6ca084a9042b4e07649331efc0, type: 3}
+  gridSize: {x: 5, y: 5}
   virtualSpace: 0
   unitType: 1
   value: 200

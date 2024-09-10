@@ -8,6 +8,13 @@ public class TerrainImage : MonoBehaviour
         XZY
     }
 
+    public enum Mode
+    {
+        TERRAIN,
+        FLAT,
+        NONE
+    }
+
     public Terrain t;
     public MeshFilter meshF;
     public MeshRenderer meshR;
@@ -15,6 +22,7 @@ public class TerrainImage : MonoBehaviour
     private Vector3[] vertices;
 
     public TransformMethod transformMethod;
+    public Mode mode;
 
     public Vector2 positionMultiplier;
     public float heightOffset;
@@ -42,29 +50,43 @@ public class TerrainImage : MonoBehaviour
         if (!isStatic)
         {
             offsetY = transform.position.y;
-            //float objectY = t.SampleHeight(gameObject.transform.position) + 0.1f;
-
-            //transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-            //transform.localPosition = new Vector3(transform.localPosition.x, 0, transform.localPosition.z);
 
             float objectScale = transform.localScale.x;
 
             //Align vertices to terrain
-            if (transformMethod == TransformMethod.XYZ)
+            if (mode == Mode.TERRAIN)
             {
+                if (transformMethod == TransformMethod.XYZ)
+                {
+                    for (int i = 0; i < vertices.Length; i++)
+                    {
+                        float newY = t.SampleHeight(gameObject.transform.position + new Vector3(vertices[i].x * objectScale, vertices[i].y, vertices[i].z * objectScale));
+                        newY += heightOffset;
+                        vertices[i] = new Vector3(vertices[i].x, newY - offsetY, vertices[i].z);
+                    }
+                }
+                else if (transformMethod == TransformMethod.XZY)
+                {
+                    for (int i = 0; i < vertices.Length; i++)
+                    {
+                        float newY = t.SampleHeight(gameObject.transform.position + new Vector3(vertices[i].x * objectScale, vertices[i].z, vertices[i].y * objectScale));
+                        newY += heightOffset;
+                        vertices[i] = new Vector3(vertices[i].x, vertices[i].y, -(newY - offsetY));
+                    }
+                }
+            } else if (mode == Mode.FLAT)
+            {
+                float newY = t.SampleHeight(gameObject.transform.position);
+                newY += heightOffset;
                 for (int i = 0; i < vertices.Length; i++)
                 {
-                    float newY = t.SampleHeight(gameObject.transform.position + new Vector3(vertices[i].x * objectScale, vertices[i].y, vertices[i].z * objectScale));
-                    newY += heightOffset;
                     vertices[i] = new Vector3(vertices[i].x, newY - offsetY, vertices[i].z);
                 }
-            } else if (transformMethod == TransformMethod.XZY)
+            } else if (mode == Mode.NONE)
             {
                 for (int i = 0; i < vertices.Length; i++)
                 {
-                    float newY = t.SampleHeight(gameObject.transform.position + new Vector3(vertices[i].x * objectScale, vertices[i].z, vertices[i].y * objectScale));
-                    newY += heightOffset;
-                    vertices[i] = new Vector3(vertices[i].x, vertices[i].y, -(newY - offsetY));
+                    vertices[i] = new Vector3(vertices[i].x, 0, vertices[i].z);
                 }
             }
 

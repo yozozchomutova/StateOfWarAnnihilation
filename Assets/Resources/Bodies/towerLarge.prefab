@@ -274,7 +274,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1597651079340340418}
   - component: {fileID: 1858537289921843598}
-  - component: {fileID: -1827186427036852616}
   - component: {fileID: 8954887036615818395}
   m_Layer: 0
   m_Name: towerLarge
@@ -316,22 +315,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.04, y: 0.6155278, z: 1.04}
   m_Center: {x: 0, y: 0.30592492, z: 0}
---- !u!208 &-1827186427036852616
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4570267877512818794}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.52, y: 0.3077639, z: 0.52}
-  m_MoveThreshold: 0.2
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0.3059249, z: 0}
-  m_TimeToStationary: 0.75
 --- !u!114 &8954887036615818395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,9 +329,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 1858537289921843598}
+  meshRenderersAll:
+  - {fileID: 742803602193009124}
+  - {fileID: 3086845484166536192}
+  unitTeamMrs:
+  - {fileID: 3086845484166536192}
+  screenLCDMrs: []
+  outlineMrs: []
+  outlineMatsIndexes: 
+  meshRenderersDefault_names:
+  - lighting
+  meshRenderersDefault_materials:
+  - frontLightsOn
   id: 0_towerLarge
   rotationSpeed: 0
   targetedRotationX: 0
@@ -366,6 +359,7 @@ MonoBehaviour:
   stepPrefab: {fileID: 0}
   stepSpawnpoints: []
   stepMinimalDistance: 1
+  lights: []
 --- !u!1 &8736421197132443325
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,8 +704,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: ts_large
       objectReference: {fileID: 0}
+    - target: {fileID: 5288213621616380266, guid: cb7f6fb09eec8b549ba4ed0099575840,
+        type: 3}
+      propertyPath: m_TagString
+      value: mat_unit_default
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb7f6fb09eec8b549ba4ed0099575840, type: 3}
+--- !u!23 &742803602193009124 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3060918373750249845, guid: cb7f6fb09eec8b549ba4ed0099575840,
+    type: 3}
+  m_PrefabInstance: {fileID: 6902779096615235439}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3086845484166536192 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -784412928878185617, guid: cb7f6fb09eec8b549ba4ed0099575840,
+    type: 3}
+  m_PrefabInstance: {fileID: 6902779096615235439}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6359399854732691588 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cb7f6fb09eec8b549ba4ed0099575840,

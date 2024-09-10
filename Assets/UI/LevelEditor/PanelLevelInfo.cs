@@ -34,7 +34,6 @@ public class PanelLevelInfo : MonoBehaviour
     IEnumerator ShowImageLoadDialog()
     {
         yield return FileBrowser.WaitForLoadDialog(FileBrowser.PickMode.FilesAndFolders, false, null, null, "Load Image for Level", "Load");
-        Debug.Log(FileBrowser.Success);
 
         if (FileBrowser.Success)
         {

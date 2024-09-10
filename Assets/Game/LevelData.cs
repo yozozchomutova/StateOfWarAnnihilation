@@ -8,6 +8,8 @@ public class LevelData
     public static Scene scene = Scene.NONE;
 
     //Map data
+    public static GridManager gridManager = new GridManager();
+
     public static List<Unit> units = new List<Unit>();
 
     public static List<MapObject> mapObjects = new List<MapObject>();
@@ -19,8 +21,6 @@ public class LevelData
 
     //Terrain
     public static Terrain mainTerrain;
-
-    public static int navigations_agentTypeID;
 
     //Environment
     public static WorldEnvironment environment;
@@ -68,15 +68,15 @@ public class LevelData
                     u.transform.position = relativePos;
             }
 
-            for (int i = LevelData.mapObjects.Count - 1; i >= 0; i--)
+            for (int i = mapObjects.Count - 1; i >= 0; i--)
             {
-                MapObject m = LevelData.mapObjects[i];
+                MapObject m = mapObjects[i];
                 Vector3 oldPos = m.gameObject.transform.position;
                 Vector3 relativePos = new Vector3((oldPos.x - quarterMapSize) / halfMapSize, oldPos.y, (oldPos.z - quarterMapSize) / halfMapSize);
                 if (relativePos.x < 0 || relativePos.x > 1 || relativePos.z < 0 || relativePos.z > 1)
                 {
-                    LevelData.mapObjects.Remove(m);
-                    MonoBehaviour.Destroy(m.gameObject);
+                    mapObjects.Remove(m);
+                    GameObject.Destroy(m.gameObject);
                     continue;
                 }
 
@@ -89,6 +89,9 @@ public class LevelData
 
         //Size
         tData.size = new Vector3(mapSize, tData.size.y, mapSize);
+
+        //Grid
+        gridManager.NewGrid(tData, mapSize, mapSize);
 
         //Terrain edging update
         if (te != null)
@@ -166,18 +169,19 @@ public class LevelData
 
     public static void ResetGame(int mapSize)
     {
+        LevelData.gridManager.Nullate();
+
         //Clear terrain
         ResizeTerrain(mapSize, mainTerrain.GetComponent<TerrainEdging>(), mapSize, false);
         ClearGame();
 
         //(re)Start environemnt
         environment = new WorldEnvironment();
-        LevelData.environment.init();
+        LevelData.environment.init(GameObject.Find("Sun").GetComponent<Light>());
     }
 
     public static void ClearGame()
     {
-        LevelData.navigations_agentTypeID = 0;
         clearTerrain();
 
         //Clear all units
@@ -193,13 +197,6 @@ public class LevelData
         {
             teamStats[i].clear();
         }
-    }
-
-    public static void buildGameNavigationMesh()
-    {
-        mainTerrain.GetComponent<NavMeshSurface>().agentTypeID = BarNavigations.availableAgents[navigations_agentTypeID];
-        mainTerrain.GetComponent<NavMeshSurface>().useGeometry = NavMeshCollectGeometry.PhysicsColliders;
-        mainTerrain.GetComponent<NavMeshSurface>().BuildNavMesh();
     }
 
     //Compares teamStats/Ids

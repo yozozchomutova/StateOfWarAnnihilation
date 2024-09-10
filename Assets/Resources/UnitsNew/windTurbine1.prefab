@@ -651,36 +651,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 9065600817669332035}
+  meshRenderersAll:
+  - {fileID: 5982670464698819124}
+  - {fileID: 1550601942627769451}
+  - {fileID: 2815527133428114769}
+  unitTeamMrs:
+  - {fileID: 5982670464698819124}
+  screenLCDMrs: []
+  outlineMrs:
+  - {fileID: 5982670464698819124}
+  outlineMatsIndexes: 
+  meshRenderersDefault_names:
+  - lighting
+  - coil
+  meshRenderersDefault_materials:
+  - frontLightsOn
+  - metallic
   id: 0_windTurbine1
-  unitSOWCWId: -1
+  unitSOWCWId: 107
   bodyId: 
   name: Wind Turbine
   icon: {fileID: 2800000, guid: cf08faee006528f48a92c7108c247e0c, type: 3}
+  gridSize: {x: 9, y: 9}
   virtualSpace: 0
   unitType: 0
   value: 1
   valid: 0
   hpMax: 1500
   hp: 0
-  respawnOnDeath: 0
+  respawnOnDeath: 1
   airShield: 0
   upgradableToUnit: 
   upgradeProgress: 0
   headMaxYawRotSpeed: 0
   headVelocity: {x: 0, y: 0, z: 0}
   headRotation: {x: 0, y: 0, z: 0}
+  placementDistance: 1.2
   propertiesUI_editor: {fileID: 2591345113724391693, guid: 8dddb4acc74c6624bbe974a613eb140a,
     type: 3}
   propertiesUI_game: {fileID: 3595848855637158183, guid: fbfaa6a02baabfc47a85ec48e1f1b0c6,
     type: 3}
-  headBlowupVFX: 0
+  unitDeathVFXType: 0
+  unitDeathVFX: {fileID: 0}
   productionDefaultUnit: 0_energy1
   productionMax: 3
   productionCooldownDefault: 0.3
-  productionAllowedUnits: []
+  productionAllowedUnits:
+  - 0_energy1
   productionCount: 3
   productionUnlocked: 1
   productionUnitsIDs:
@@ -737,7 +755,7 @@ GameObject:
   - component: {fileID: 5982670464698819124}
   m_Layer: 14
   m_Name: Building
-  m_TagString: Untagged
+  m_TagString: mat_unit_default
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -786,6 +804,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

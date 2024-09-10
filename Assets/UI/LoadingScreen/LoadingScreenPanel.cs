@@ -1,62 +1,26 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadingScreenPanel : MonoBehaviour
 {
+    //UI
+    public CanvasGroup alphaCG;
+
     public Text title;
     public Text subTitle;
     public Text tip;
 
-    private float curAlpha = 0f;
-    private float curScale = 1.1f;
-
-    private bool changing = false;
-    private bool risingByShowing = false;
-
-    //Callback
-    private IEnumerator startLoadingCB;
-
-    //Delaying
-    private float startDelay;
-    private float endDelay;
-
-    //UI
-    public CanvasGroup alphaCG;
+    private float curAlpha;
+    private float curScale;
 
     void Start()
     {
         transform.localScale = new Vector3(curScale, curScale, curScale);
     }
 
-    void Update()
-    {
-        if (changing && risingByShowing)
-        {
-            curAlpha += Time.deltaTime * 2f;
-            curScale -= Time.deltaTime / 5f;
-            updateUI();
-
-            if (curAlpha == 1f)
-            {
-                changing = false;
-                StartCoroutine(perfomStartDelay());
-            }
-        } else if (changing && !risingByShowing)
-        {
-            curAlpha -= Time.deltaTime * 2f;
-            curScale += Time.deltaTime / 5f;
-            updateUI();
-
-            if (curAlpha == 0f)
-            {
-                changing = false;
-                gameObject.SetActive(false);
-            }
-        }
-    }
-
-    private void updateUI()
+    private void UpdateUI()
     {
         curAlpha = Mathf.Clamp(curAlpha, 0, 1);
         curScale = Mathf.Clamp(curScale, 1.0f, 1.1f);
@@ -65,43 +29,69 @@ public class LoadingScreenPanel : MonoBehaviour
         transform.localScale = new Vector3(curScale, curScale, curScale);
     }
 
-    public void EngageLoading(string titleText, string subTitleText, string tipText, IEnumerator startLoadingCB, float startDelay, float endDelay)
+    public void EngageLoading(string titleText, string subTitleText, string canvasName, int unloadScene, int loadScene)
     {
         title.text = titleText;
         subTitle.text = subTitleText;
-        tip.text = tipText;
+        tip.text = "White Command Centers are obtainable...";
 
-        updateUI();
         gameObject.SetActive(true);
 
-        this.startLoadingCB = startLoadingCB;
-
-        this.startDelay = startDelay;
-        this.endDelay = endDelay;
-
-        changing = true;
-        risingByShowing = true;
+        StartCoroutine(StartLoading(canvasName, unloadScene, loadScene, 1f));
     }
 
-    public void FinishLoading()
+    IEnumerator StartLoading(string canvasName, int unloadScene, int loadScene, float delay)
     {
+        //1st part -> showing
+        curAlpha = 0f;
+        curScale = 1.1f;
+
+        UpdateUI();
+
+        while (curAlpha != 1)
+        {
+            curAlpha += Time.deltaTime * 2f;
+            curScale -= Time.deltaTime / 5f;
+            UpdateUI();
+            yield return new WaitForEndOfFrame();
+        }
+
+        yield return new WaitForSeconds(delay);
+
+        //Loading, scene switching
+        AsyncOperation lsg = SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive); //Loading screen Gate
+        while (!lsg.isDone)
+            yield return null;
+
+        transform.SetParent(GameObject.Find("LSG_mainCanvas").transform); //Retach from main scene to gate
+
+        AsyncOperation mainMenuUnloader = SceneManager.UnloadSceneAsync(unloadScene); //Unload old scene
+        while (!mainMenuUnloader.isDone)
+            yield return null;
+
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(loadScene, LoadSceneMode.Additive); //Load new scene
+        while (!asyncOperation.isDone)
+            yield return null;
+
+        transform.SetParent(GameObject.Find(canvasName).transform, false); //Retach from gate to scene
+
+        lsg = SceneManager.UnloadSceneAsync(2); //Unload loading screen gate
+        while (!lsg.isDone)
+            yield return null;
+
+        //2nd part -> hiding
         curAlpha = 1f;
         curScale = 1.0f;
-        StartCoroutine(perfomEndDelay());
-    }
 
-    IEnumerator perfomStartDelay()
-    {
-        yield return new WaitForSeconds(startDelay);
+        while (curAlpha != 0)
+        {
+            curAlpha -= Time.deltaTime * 2f;
+            curScale += Time.deltaTime / 5f;
+            UpdateUI();
+            yield return new WaitForEndOfFrame();
+        }
 
-        StartCoroutine(startLoadingCB);
-    }
-
-    IEnumerator perfomEndDelay()
-    {
-        yield return new WaitForSeconds(endDelay);
-
-        risingByShowing = false;
-        changing = true;
+        gameObject.SetActive(false);
+        yield return new WaitForSeconds(delay);
     }
 }

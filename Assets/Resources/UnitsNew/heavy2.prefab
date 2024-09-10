@@ -155,7 +155,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 510285040aadb86419c8a708f30d8c6d, type: 3}
+  - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -239,6 +239,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: f002d13c86a8dce42be2b523c19e2f04, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -420,14 +421,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   body: {fileID: 0}
-  collider: {fileID: 0}
-  meshRenderersAll: []
-  meshRenderersDefault: []
+  collider: {fileID: 7157380580048846598}
+  meshRenderersAll:
+  - {fileID: 5667711309387433675}
+  - {fileID: 9075944475698462340}
+  - {fileID: 6241670769920969477}
+  unitTeamMrs:
+  - {fileID: 9075944475698462340}
+  - {fileID: 6241670769920969477}
+  screenLCDMrs: []
+  outlineMrs:
+  - {fileID: 5667711309387433675}
+  - {fileID: 6241670769920969477}
+  outlineMatsIndexes: 
+  meshRenderersDefault_names:
+  - metallic
+  meshRenderersDefault_materials:
+  - metallic
   id: 0_heavy2
-  unitSOWCWId: -1
+  unitSOWCWId: 14
   bodyId: 0_tankMedium
   name: Heavy 2
   icon: {fileID: 2800000, guid: 642430568d82c9e4f89ce2ce4c4f2d04, type: 3}
+  gridSize: {x: 3, y: 5}
   virtualSpace: 0
   unitType: 2
   value: 0
@@ -549,6 +565,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d47e35ad2a6d4264ca9be024a5309d95, type: 2}
+  - {fileID: 2100000, guid: 84e46accd9dbcf841a59c6b60cc37156, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

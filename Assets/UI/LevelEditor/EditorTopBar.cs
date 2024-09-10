@@ -3,8 +3,7 @@ using UnityEngine;
 public class EditorTopBar : MonoBehaviour {
 
     [Header("List of editing Panels/Sidebars")]
-    public GameObject terrainEditBarBcg;
-    public GameObject terrainPaintBarBcg;
+    public GameObject terrainEditBar;
     public GameObject navigationsBarBcg;
     public GameObject mapObjectsBarBcg;
     public GameObject unitsBarBcg;
@@ -24,20 +23,39 @@ public class EditorTopBar : MonoBehaviour {
 
     private void Start()
     {
-        barTerrainPaint = terrainPaintBarBcg.GetComponent<BarTerrainPaint>();
+        barTerrainPaint = terrainEditBar.GetComponent<BarTerrainPaint>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && currentPanel != null)
-        {
-            currentPanel.SetActive(false);
-            currentPanel = null;
-        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+            ShowElement("");
+        else if (Input.GetKeyDown(KeyCode.Alpha1))
+            ShowElement("terrain_edit");
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+            ShowElement("terrain_paint");
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+            ShowElement("");
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+            ShowElement("map_objects");
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+            ShowElement("units");
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+            ShowElement("events");
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+            ShowElement("level_info");
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+            ShowElement("environment");
     }
 
     public void ShowElement(string id)
     {
+        if (currentPanel != null)
+        {
+            currentPanel.SetActive(false);
+            currentPanel = null;
+        }
+
         if (id == "terrain_edit")
         {
             barTerrainPaint.modeSelector.value = 0;
@@ -48,8 +66,8 @@ public class EditorTopBar : MonoBehaviour {
             barTerrainPaint.onModeChange();
         }
 
-        currentPanel = id == "terrain_edit" ? terrainPaintBarBcg :
-            id == "terrain_paint" ? terrainPaintBarBcg :
+        currentPanel = id == "terrain_edit" ? terrainEditBar :
+            id == "terrain_paint" ? terrainEditBar :
             id == "navigations" ? navigationsBarBcg :
             id == "map_objects" ? mapObjectsBarBcg :
             id == "units" ? unitsBarBcg :
@@ -63,6 +81,7 @@ public class EditorTopBar : MonoBehaviour {
             id == "exit_editor" ? exitConfirmPanel :
             null;
 
-        currentPanel.SetActive(true);
+        if (currentPanel != null)
+            currentPanel.SetActive(true);
     }
  }

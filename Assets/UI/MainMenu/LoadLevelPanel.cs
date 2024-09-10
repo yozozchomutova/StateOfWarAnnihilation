@@ -133,42 +133,6 @@ public class LoadLevelPanel : MonoBehaviour
             }
         }
 
-        lsPanel.EngageLoading(levelName.text, "Custom-made mission", "White Command Centers are obtainable...", startLoading(), 1f, 1f);
-    }
-
-    IEnumerator startLoading()
-    {
-        AsyncOperation lsg = SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive); //Loading screen Gate
-
-        while (!lsg.isDone)
-        {
-            yield return null;
-        }
-
-        lsPanel.transform.SetParent(GameObject.Find("LSG_mainCanvas").transform); //Retach from main scene to gate
-        AsyncOperation mainMenuUnloader = SceneManager.UnloadSceneAsync(1); //Unload main menu
-
-        while (!mainMenuUnloader.isDone)
-        {
-            yield return null;
-        }
-
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(4, LoadSceneMode.Additive);
-
-        while (!asyncOperation.isDone)
-        {
-            yield return null;
-        }
-
-        lsPanel.transform.SetParent(GameObject.Find("PlayerCanvas").transform); //Retach from gate to scene
-        lsg = SceneManager.UnloadSceneAsync(2); //Unload loading screen gate
-
-        while (!lsg.isDone)
-        {
-            yield return null;
-        }
-
-        //Finish
-        lsPanel.FinishLoading();
+        lsPanel.EngageLoading(levelName.text, "Custom-made mission", "PlayerCanvas", 1, 4);
     }
 }
