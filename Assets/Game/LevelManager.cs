@@ -497,7 +497,7 @@ public class LevelManager : MonoBehaviour
         AirForce af = MapLevel.spawnUnit(afData) as AirForce;
         af.transform.position = new Vector3(p.x, p.y + referenceAF.heightOffset_end, -40);
         //AirForceLE af = Instantiate(holdingAF.gameObject, new Vector3(p.x, p.y + holdingAF.heightOffset_end, -55), Quaternion.identity).GetComponent<AirForceLE>();
-        af.commandLaunch(p.x, LevelData.mainTerrain.terrainData.size.x + 55, p.x, p.z, airForceAdjustment);
+        af.commandLaunch(p.x, Terrain.activeTerrain.terrainData.size.x + 55, p.x, p.z, airForceAdjustment);
         LevelData.ts.airForcesSent++;
     }
 

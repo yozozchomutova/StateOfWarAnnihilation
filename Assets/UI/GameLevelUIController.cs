@@ -239,7 +239,7 @@ public class GameLevelUIController : MonoBehaviour
                 float normalizedY = Mathf.InverseLerp(0, rectTransform.rect.height, localMousePos.y);
 
                 //Apply to camera
-                Vector3 tSize = LevelData.mainTerrain.terrainData.size;
+                Vector3 tSize = Terrain.activeTerrain.terrainData.size;
                 Vector3 camPivot = playerCamera.transform.parent.position;
 
                 camPivot = new Vector3(normalizedX * tSize.x, camPivot.y, normalizedY * tSize.z);
@@ -251,7 +251,7 @@ public class GameLevelUIController : MonoBehaviour
 
     public void UpdateMinimapOverlay()
     {
-        Vector3 tSize = LevelData.mainTerrain.terrainData.size;
+        Vector3 tSize = Terrain.activeTerrain.terrainData.size;
         int mSize = 221;
 
         minimapOTexture.SetPixels(minimapBcg);

@@ -334,8 +334,8 @@ public class ML_03_05
         }
 
         //Generate navigation
-        LevelData.mainTerrain = terrain;
-
+        //-No navigation
+        
         //7. Buildings, Towers, Units
         for (int j = 0; j < unitData.Length; j++)
         {

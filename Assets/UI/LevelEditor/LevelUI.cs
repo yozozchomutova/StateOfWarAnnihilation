@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,17 +18,7 @@ public class LevelUI : MonoBehaviour
     public Button playBtn;
     public Text playBtnText;
 
-    public Data d;
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-        
-    }
+    public Level.Header header;
 
     public void SetValues(LoadLevelPanel loadLevelPanel, string fileLvlPath)
     {
@@ -51,11 +40,52 @@ public class LevelUI : MonoBehaviour
 
     private void Init(string fileLvlPath)
     {
-        d = new Data();
-        d.lvlName = Path.GetFileNameWithoutExtension(fileLvlPath);
-        d.fileLvlPath = fileLvlPath;
+        string lvlName = Path.GetFileNameWithoutExtension(fileLvlPath);
 
-        //Load main info
+        try
+        {
+            using (BinaryReader br = Level.OpenFileReader(fileLvlPath))
+            {
+                var (major, minor, fix) = Level.GetVersion(br);
+                Level level = Level.GetMapLevelInstance(major, minor, fix);
+
+                if (level == null)
+                {
+                    Debug.Log("LevelUI Init() unsupported for version: " + major + "." + minor + "." + fix + "");
+                    playBtn.interactable = false;
+                    playBtnText.text = "Unsupported";
+                    levelName.text = lvlName;
+                    levelInfo.text = "Version: " + major + "." + minor + "." + fix;
+                    return;
+                }
+
+                header = level.LoadHeader(br);
+                header.lvlName = lvlName;
+                header.fileLvlPath = fileLvlPath;
+
+                //Write information to local memory
+                if (levelName != null)
+                    levelName.text = lvlName;
+
+                if (levelInfo != null)
+                {
+                    //Icon
+                    Texture2D imgTex = new Texture2D(2, 2);
+                    ImageConversion.LoadImage(imgTex, header.imgData);
+                    icon.texture = imgTex;
+
+                    //Map info:
+                    levelInfo.text = "Version: " + header.major + "." + header.minor + "." + header.fix + "\nSize: " + header.mapWidth + "x" + header.mapHeight + "\nDifficulty: " + header.difficulty + " / 10";
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Error for level: " + lvlName);
+            Debug.LogError(e);
+        }
+
+        /*
         using (FileStream stream = new FileStream(fileLvlPath, FileMode.Open, FileAccess.Read))
         {
             using (BinaryReader br = new BinaryReader(stream))
@@ -86,12 +116,7 @@ public class LevelUI : MonoBehaviour
                     }
                 }
             }
-        }
-    }
-
-    public void OnInfo()
-    {
-
+        }*/
     }
 
     public void OnLoad()
@@ -99,7 +124,7 @@ public class LevelUI : MonoBehaviour
         try
         {
             if (panelLoadLevel != null)
-                panelLoadLevel.LoadLevel(d.fileLvlPath, d); //FOR EDITOR
+                panelLoadLevel.LoadLevel(header); //FOR EDITOR
             else
                 loadLevelPanel.prepareLevel(this); //FOR MAIN MENU / SINGLEPLAYER
         } catch(Exception e)
@@ -122,6 +147,7 @@ public class LevelUI : MonoBehaviour
     }
 
     //LOADING FOR DIFFERENT VERSIONS
+    /*
     public void LoadVer_01_02___AV(FileStream stream, BinaryReader br)
     {
         d.difficulty = (int) br.ReadSingle()*10;
@@ -208,7 +234,7 @@ public class LevelUI : MonoBehaviour
             levelInfo.text = "Version: " + d.big_patch + "-" + d.small_patch + "-" + d.build_code + "\nSize: " + d.mapWidth + "x" + d.mapHeight + "\nDifficulty: " + d.difficulty + "%";
         }
     }
-
+    */
     public class Data
     {
         public string lvlName;

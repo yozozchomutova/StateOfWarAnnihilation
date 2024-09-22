@@ -15,6 +15,8 @@ public abstract class UnitReference : MonoBehaviour
 
     #region [Variables] Rendering properties
     //Texture managing
+    /// <summary>  </summary>
+    [HideInInspector] public MaterialPropertyBlock mrMpb;
     /// <summary> All mesh renderers combined together </summary>
     [HideInInspector] public MeshRenderer[] meshRenderersAll;
     /// <summary> Mesh renderers that have outline-shader material </summary>
@@ -33,7 +35,7 @@ public abstract class UnitReference : MonoBehaviour
 
     public virtual void init()
     {
-
+        mrMpb = new MaterialPropertyBlock();
     }
 
     public void EditorsInit()
@@ -61,7 +63,7 @@ public abstract class UnitReference : MonoBehaviour
     {
         LevelData.units.Remove(unit);
 
-        if (unit.virtualSpace == Unit.VirtualSpace.NORMAL && unit.unitDeathVFXType == Unit.DeathEffect.HEAD_BLOW)
+        if (unit.virtualSpace == Unit.VirtualSpace.NORMAL && unit.unitDeathVFXType == Unit.DeathEffect.HEAD_BLOW && LevelData.scene == LevelData.Scene.GAME)
         {
             body.stopMoving();
             Destroy(body.gameObject, 6);
@@ -140,15 +142,17 @@ public abstract class UnitReference : MonoBehaviour
     /// <summary> Restores default material </summary>
     private void restoreMeshRendererMat(Team team, Unit.UnitType unitType)
     {
+        mrMpb.SetColor("_Team", team.minimapColor);
+
         //Unit Team material
         for (int i = 0; i < unitTeamMrs.Length; i++)
         {
             MeshRenderer mr = unitTeamMrs[i];
 
-            Material[] mats = mr.materials;
-            mats[0] = Instantiate(GlobalList.matUnitTeam);
-            mats[0].SetColor("_Team", team.minimapColor);
-            mr.materials = mats;
+            Material[] mats = mr.sharedMaterials;
+            mats[0] = GlobalList.matUnitTeam;
+            mr.sharedMaterials = mats;
+            mr.SetPropertyBlock(mrMpb);
         }
 
         //Screen LCD material
@@ -156,10 +160,10 @@ public abstract class UnitReference : MonoBehaviour
         {
             MeshRenderer mr = screenLCDMrs[i];
 
-            Material[] mats = mr.materials;
-            mats[0] = Instantiate(GlobalList.matLCDScreen);
-            mats[0].SetColor("_Team", team.minimapColor);
-            mr.materials = mats;
+            Material[] mats = mr.sharedMaterials;
+            mats[0] = GlobalList.matLCDScreen;
+            mr.sharedMaterials = mats;
+            mr.SetPropertyBlock(mrMpb);
         }
 
         return;
@@ -189,18 +193,21 @@ public abstract class UnitReference : MonoBehaviour
     /// <summary> Sets specific material (to unit + body) </summary>
     public void setMeshRendererMat(Material mat)
     {
+        mrMpb.SetColor("_Team", unit.team.minimapColor);
+
         setMeshRendererMatPriv(unit.meshRenderersAll);
         if (body != null)
             setMeshRendererMatPriv(body.meshRenderersAll);
 
         void setMeshRendererMatPriv(MeshRenderer[] mrs)
         {
+
             foreach (MeshRenderer mr in mrs)
             {
-                Material[] mats = mr.materials;
+                Material[] mats = mr.sharedMaterials;
                 mats[0] = mat;
-                mats[0].SetColor("_Team", unit.team.minimapColor);
-                mr.materials = mats;
+                mr.sharedMaterials = mats;
+                mr.SetPropertyBlock(mrMpb);
                 //mr.material.SetTexture("mainTexture", mat.mainTexture);
             }
         }
@@ -208,6 +215,8 @@ public abstract class UnitReference : MonoBehaviour
 
     public void SelectUnit()
     {
+        mrMpb.SetFloat("_Selected_Overlay", 0.25f);
+        mrMpb.SetInt("_Enabled", 1);
         process(unit.outlineMrs);
         if (body)
             process(body.outlineMrs);
@@ -216,16 +225,17 @@ public abstract class UnitReference : MonoBehaviour
         {
             foreach (MeshRenderer mr in meshRends)
             {
-                Material[] mats = mr.materials;
-                mats[0].SetFloat("_Selected_Overlay", 0.25f);
-                mats[1].SetInt("_Enabled", 1);
-                mr.materials = mats;
+                //Material[] mats = mr.materials;
+                //mr.materials = mats;
+                mr.SetPropertyBlock(mrMpb);
             }
         }
     }
 
     public void DeSelectUnit()
     {
+        mrMpb.SetFloat("_Selected_Overlay", 0);
+        mrMpb.SetInt("_Enabled", 0);
         process(unit.outlineMrs);
         if (body)
             process(body.outlineMrs);
@@ -235,9 +245,8 @@ public abstract class UnitReference : MonoBehaviour
             foreach (MeshRenderer mr in meshRends)
             {
                 Material[] mats = mr.materials;
-                mats[0].SetFloat("_Selected_Overlay", 0);
-                mats[1].SetInt("_Enabled", 0);
-                mr.materials = mats;
+                //mr.materials = mats;
+                mr.SetPropertyBlock(mrMpb);
             }
         }
     }

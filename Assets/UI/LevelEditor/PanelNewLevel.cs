@@ -19,17 +19,17 @@ public class PanelNewLevel : MonoBehaviour
     public BarBuildings barBuildings;
     public BarTaskTriggers barTaskTriggers;
 
+    /// <summary>Creates completely new clean level</summary>
     public void Create()
     {
+        //New save
+        PanelSaveConfirm.savedLevelName = "";
+
         //Reset game
         editorManager.ResetGame();
 
         //Set default nodes
-        //for (int i = 0; i < LevelData.teamStats.Length; i++)
-        //{
-            barTaskTriggers.resetDefaultNodesEveryone();
-            //barTaskTriggers.AddNode("0_start_base", LevelData.teamStats[i], 75, -60);
-        //}
+        barTaskTriggers.resetDefaultNodesEveryone();
 
         //Set default icon again
         panelLevelInfo.setDefaultIcon();

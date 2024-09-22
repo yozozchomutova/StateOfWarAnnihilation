@@ -222,7 +222,7 @@ public class SMF : Unit
     }
     public void commandMove(float x, float z)
     {
-        float calculatedY = LevelData.mainTerrain.SampleHeight(new Vector3(x, 0, z)) + floatingHeight;
+        float calculatedY = Terrain.activeTerrain.SampleHeight(new Vector3(x, 0, z)) + floatingHeight;
         moveToPosition = new Vector3(x, calculatedY, z);
         state = State.MOVING;
         taskOnTargetUnit = State.IDLE;

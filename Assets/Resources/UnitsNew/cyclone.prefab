@@ -25587,6 +25587,7 @@ MonoBehaviour:
   bodyId: 
   name: Cyclone
   icon: {fileID: 2800000, guid: efb7d01b26601474187d584b6c487bca, type: 3}
+  gridSize: {x: 0, y: 0}
   virtualSpace: 0
   unitType: 5
   value: 0

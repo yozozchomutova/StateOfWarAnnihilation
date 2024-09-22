@@ -161,9 +161,9 @@ public class MouseControlling : MonoBehaviour
 
         //Border camera movement
         cameraPivot.localPosition = new Vector3(
-            Mathf.Clamp(cameraPivot.localPosition.x, 0, LevelData.mainTerrain.terrainData.size.x),
+            Mathf.Clamp(cameraPivot.localPosition.x, 0, Terrain.activeTerrain.terrainData.size.x),
             cameraPivot.localPosition.y,
-            Mathf.Clamp(cameraPivot.localPosition.z, 0, LevelData.mainTerrain.terrainData.size.z)
+            Mathf.Clamp(cameraPivot.localPosition.z, 0, Terrain.activeTerrain.terrainData.size.z)
             );
 
         //Decide post-processing

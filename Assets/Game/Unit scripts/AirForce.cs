@@ -255,7 +255,7 @@ public class AirForce : Unit
         targettedEnd = new Vector3(endX, transform.position.y, endZ);
 
         //Targets
-        float calculatedY = LevelData.mainTerrain.SampleHeight(new Vector3(targetX, 0, targetZ));
+        float calculatedY = Terrain.activeTerrain.SampleHeight(new Vector3(targetX, 0, targetZ));
         Vector3 mainTargetPoint = new Vector3(targetX, calculatedY, targetZ);
         centerTargetTrigger = new Vector3(targetX, calculatedY + heightOffset_end, targetZ);
 

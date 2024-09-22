@@ -158,7 +158,7 @@ public class ClassicSOWExporter
         writeToList(byteList, toInt(toMapSize, Order.LITTLE_ENDIAN)); //Map height
 
         //Main data
-        TerrainData td = LevelData.mainTerrain.terrainData;
+        TerrainData td = Terrain.activeTerrain.terrainData;
         int halfAS = (int)((float)td.alphamapWidth / 2f);
         int quadAS = (int)((float)td.alphamapWidth / 4f);
         float[,,] alphaTextures = td.GetAlphamaps(quadAS, quadAS, halfAS, halfAS);
@@ -185,7 +185,7 @@ public class ClassicSOWExporter
                 int tY = (int)(nY * halfAS); //Terrain Y
                 Vector3 magicPoint = new Vector3(
                     (nY / 2f + 0.25f) * td.size.x, 
-                    LevelData.mainTerrain.SampleHeight(new Vector3((nY / 2f + 0.25f) * td.size.x, 0, (nX / 2f + 0.25f) * td.size.x)), 
+                    Terrain.activeTerrain.SampleHeight(new Vector3((nY / 2f + 0.25f) * td.size.x, 0, (nX / 2f + 0.25f) * td.size.x)), 
                     (nX / 2f + 0.25f) * td.size.x);
 
                 bool condition1 = (alphaTextures[tX, tY, 1] + alphaTextures[tX, tY, 4] + alphaTextures[tX, tY, 6] > 0.1f); //Is there any kind of rock texture
@@ -381,7 +381,7 @@ public class ClassicSOWExporter
         byteArrayOutputStream.AddRange(srfHeaderBytes);
 
         //Apply textures
-        float[,,] textures = LevelData.mainTerrain.terrainData.GetAlphamaps(128, 128, 256, 256);
+        float[,,] textures = Terrain.activeTerrain.terrainData.GetAlphamaps(128, 128, 256, 256);
         //File.WriteAllBytes("C:/Users/danek/AppData/Local/Result5.png", snowText.EncodeToPNG());
         //Color[] snowColors = snowText.GetPixels(0, 0, snowText.width, snowText.height);
         for (int x = 0; x < bcgImg.width; x++)

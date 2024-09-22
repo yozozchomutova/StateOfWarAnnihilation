@@ -19805,6 +19805,7 @@ MonoBehaviour:
   bodyId: 
   name: Carrybus
   icon: {fileID: 2800000, guid: d8c882ffbc5fd2244a9defa8e25dbfe5, type: 3}
+  gridSize: {x: 0, y: 0}
   virtualSpace: 0
   unitType: 5
   value: 0

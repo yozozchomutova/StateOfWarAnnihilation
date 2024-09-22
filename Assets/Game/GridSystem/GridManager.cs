@@ -240,7 +240,7 @@ public class GridManager
                     tiles[x, y].terrainWalkable = false;
                 }
                 else if (
-                    Mathf.Abs(steepnes) > 30 ||
+                    Mathf.Abs(steepnes) > 22 ||
                     heights[terPointY, terPointX] < 0.3f
                     )
                 {

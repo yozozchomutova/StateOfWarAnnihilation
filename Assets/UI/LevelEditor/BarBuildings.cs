@@ -163,9 +163,6 @@ public class BarBuildings : MonoBehaviour
                 data.setF(KEY_UNIT_HP, unitHealthSlider.value);
                 Unit newUnit = MapLevel.spawnUnit(data);
 
-                LevelData.gridManager.PlaceUnit(newUnit, unitGridX, unitGridY, selectedRoot.eulerAngles.y);
-                LevelData.gridManager.ShowGrid();
-
                 //Save unit values
                 newUnit.setValues(unitHealthSlider.value, getSelectedTeam(), currentAdditionalProperties);
 

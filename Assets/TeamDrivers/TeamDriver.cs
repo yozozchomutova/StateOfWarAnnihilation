@@ -57,9 +57,9 @@ public abstract class TeamDriver : MonoBehaviour
 
                 //Make sure that points is within map bounds
                 float offset = 2;
-                nearP.x = Mathf.Clamp(nearP.x, offset, LevelData.mainTerrain.terrainData.size.x - offset);
-                nearP.z = Mathf.Clamp(nearP.z, offset, LevelData.mainTerrain.terrainData.size.z - offset);
-                nearP = new Vector3(nearP.x, LevelData.mainTerrain.SampleHeight(nearP), nearP.z);
+                nearP.x = Mathf.Clamp(nearP.x, offset, Terrain.activeTerrain.terrainData.size.x - offset);
+                nearP.z = Mathf.Clamp(nearP.z, offset, Terrain.activeTerrain.terrainData.size.z - offset);
+                nearP = new Vector3(nearP.x, Terrain.activeTerrain.SampleHeight(nearP), nearP.z);
 
                 if (!Physics.CheckBox(nearP + GlobalList.bodies[tower.bodyId].collider.center, GlobalList.bodies[tower.bodyId].collider.size, Quaternion.identity, 1 << 14))
                 {
@@ -83,8 +83,8 @@ public abstract class TeamDriver : MonoBehaviour
     {
         //Make sure that points is within map bounds
         float offset = 2;
-        p.x = Mathf.Clamp(p.x, offset, LevelData.mainTerrain.terrainData.size.x - offset);
-        p.z = Mathf.Clamp(p.z, offset, LevelData.mainTerrain.terrainData.size.z - offset);
+        p.x = Mathf.Clamp(p.x, offset, Terrain.activeTerrain.terrainData.size.x - offset);
+        p.z = Mathf.Clamp(p.z, offset, Terrain.activeTerrain.terrainData.size.z - offset);
 
         AirForce referenceAF = GlobalList.units[airForceID] as AirForce;
         UnitSerializable afData = referenceAF.serializeUnit();
@@ -93,7 +93,7 @@ public abstract class TeamDriver : MonoBehaviour
         AirForce af = MapLevel.spawnUnit(afData) as AirForce;
         af.transform.position = new Vector3(p.x, p.y + referenceAF.heightOffset_end, -40);
 
-        af.commandLaunch(p.x, LevelData.mainTerrain.terrainData.size.x + 55, p.x, p.z, 0.5f);
+        af.commandLaunch(p.x, Terrain.activeTerrain.terrainData.size.x + 55, p.x, p.z, 0.5f);
         LevelData.teamStats[controllingTeam.id].airForcesSent++;
     }
 }

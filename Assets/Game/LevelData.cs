@@ -10,18 +10,12 @@ public class LevelData
 
     //Map data
     public static GridManager gridManager = new GridManager();
-
     public static List<Unit> units = new List<Unit>();
-
     public static List<MapObject> mapObjects = new List<MapObject>();
 
+    //Player stats
     public static TeamStats02_12[] teamStats;
-
-    //Current player
-    public static TeamStats02_12 ts;
-
-    //Terrain
-    public static Terrain mainTerrain;
+    public static TeamStats02_12 ts;  //Current player
 
     //Environment
     public static WorldEnvironment environment;
@@ -46,8 +40,8 @@ public class LevelData
         //Adapt all map objects position to terrain size
         if (scaleMapObjects)
         {
-            float quarterMapSize = (int)(mainTerrain.terrainData.size.x / 4f);
-            float halfMapSize = (int)(mainTerrain.terrainData.size.x / 2f);
+            float quarterMapSize = (int)(Terrain.activeTerrain.terrainData.size.x / 4f);
+            float halfMapSize = (int)(Terrain.activeTerrain.terrainData.size.x / 2f);
 
             float newQuarterMapSize = (int)(mapSize / 4f);
             float newHalfMapSize = (int)(mapSize / 2f);
@@ -86,7 +80,7 @@ public class LevelData
         }
 
         //Create new level:
-        TerrainData tData = mainTerrain.terrainData;
+        TerrainData tData = Terrain.activeTerrain.terrainData;
 
         //Size
         tData.size = new Vector3(mapSize, tData.size.y, mapSize);
@@ -103,7 +97,7 @@ public class LevelData
 
     public static void clearTerrain()
     {
-        TerrainData tData = mainTerrain.terrainData;
+        TerrainData tData = Terrain.activeTerrain.terrainData;
 
         //Flatten terrain
         int heightMapRes = tData.heightmapResolution;
@@ -173,7 +167,7 @@ public class LevelData
         LevelData.gridManager.Nullate();
 
         //Clear terrain
-        ResizeTerrain(mapSize, mainTerrain.GetComponent<TerrainEdging>(), mapSize, false);
+        ResizeTerrain(mapSize, Terrain.activeTerrain.GetComponent<TerrainEdging>(), mapSize, false);
         ClearGame();
 
         //(re)Start environemnt
@@ -186,20 +180,14 @@ public class LevelData
     public static void ClearGame()
     {
         clearTerrain();
-
-        //Clear all units
         clearUnits();
-
-        //Clear team stats
         clearTeamStats();
     }
 
     public static void clearTeamStats()
     {
         for (int i = 0; i < teamStats.Length; i++)
-        {
             teamStats[i].clear();
-        }
     }
 
     //Compares teamStats/Ids

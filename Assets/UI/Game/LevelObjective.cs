@@ -104,7 +104,7 @@ public class LevelObjective : MonoBehaviour
                 int afID_int = BitConverter.ToInt32(ser.data, 0); //Air force ID
                 float x = BitConverter.ToInt32(ser.data, sizeof(Int32)); //Impact X
                 float z = BitConverter.ToInt32(ser.data, sizeof(Int32) * 2); //Impact Z
-                float y = LevelData.mainTerrain.SampleHeight(new Vector3(x, 0, z)); //Impact Y
+                float y = Terrain.activeTerrain.SampleHeight(new Vector3(x, 0, z)); //Impact Y
 
                 string afID = afID_int == 0 ? "0_jet1" :
                     afID_int == 1 ? "0_destroyer1" :
@@ -148,7 +148,7 @@ public class LevelObjective : MonoBehaviour
                     x = BitConverter.ToInt32(ser.data, sizeof(Int32));
                     z = BitConverter.ToInt32(ser.data, sizeof(Int32) * 2);
                     float range = BitConverter.ToInt32(ser.data, sizeof(Int32) * 3);
-                    y = LevelData.mainTerrain.SampleHeight(new Vector3(x, 0, z)); //Y
+                    y = Terrain.activeTerrain.SampleHeight(new Vector3(x, 0, z)); //Y
 
                     if (Vector3.Distance(startUnit.transform.position, new Vector3(x, y, z)) <= range)
                         triggerNodesAll();
@@ -159,7 +159,7 @@ public class LevelObjective : MonoBehaviour
                 x = BitConverter.ToInt32(ser.data, sizeof(Int32));
                 z = BitConverter.ToInt32(ser.data, sizeof(Int32) * 2);
                 float maxSpeed = (float) BitConverter.ToDouble(ser.data, sizeof(Int32) * 3);
-                y = LevelData.mainTerrain.SampleHeight(new Vector3(x, 0, z)); //Y
+                y = Terrain.activeTerrain.SampleHeight(new Vector3(x, 0, z)); //Y
                 unit.body.setAutopath(new Vector3(x,y,z), maxSpeed);
 
                 isActive = false;

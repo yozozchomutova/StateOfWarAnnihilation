@@ -508,7 +508,7 @@ public abstract class Unit : UnitReference
         unitSOWCW.HPpercentage = getHpNormalized();
         // Debug.Log("H: " + unitSOWCW.HPpercentage);
 
-        Vector3 tSize = LevelData.mainTerrain.terrainData.size;
+        Vector3 tSize = Terrain.activeTerrain.terrainData.size;
         float halfMSize = tSize.x / 2f;
         float quaterMSize = tSize.x / 4f;
         int fullMapSize = mapSize * 32;

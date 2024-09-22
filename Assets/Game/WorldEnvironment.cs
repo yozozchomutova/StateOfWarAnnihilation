@@ -10,8 +10,8 @@ public class WorldEnvironment
     #region [Variables] Static general parameters
     public const float FRAME_UPDATE_TIME = 1.0f; //Default: 1.0f
     public const float CHECK_EVENTS_TIME = 10.0f;
-    public const int TIME_NIGHT_START = 1320;
-    public const int TIME_DAY_START = 480;
+    public const int TIME_NIGHT_START = 1040;
+    public const int TIME_DAY_START = 360;
     #endregion
     #region [Variables] Weather IDs
     public static readonly string WEATHER_SUNNY = "0_sunny";
@@ -35,9 +35,10 @@ public class WorldEnvironment
     public Light sun;
     #endregion
 
+    /// <summary>Actuall game time</summary>
     public int time;
     /// <summary> Static => time won't change.</summary>
-    public bool timeStatic;
+    public bool timeStatic = true;
     public Weather weatherCurrent;
     public Weather weatherDefault;
     public List<Event> events = new List<Event>();
@@ -49,10 +50,9 @@ public class WorldEnvironment
         this.reflectionProbe = reflectionProbe;
         this.sun = sun;
 
-        time = 540;
         weatherCurrent = GlobalList.weathers[WEATHER_SUNNY];
         weatherDefault = GlobalList.weathers[WEATHER_SUNNY];
-        onEventCheck();
+        setTime(540);
     }
 
     public void LinkUI(Text linkClock, Image linkIcon)
@@ -70,16 +70,10 @@ public class WorldEnvironment
         {
             time++;
             if (time >= MAX_TIME)
-            {
                 time = 0;
-            }
-        }
 
-        //Check events every 10 game minutes
-        if (time % 10 == 0)
-        {
-            onEventCheck();
-        }
+            OnTimeUpdate();
+        }        
 
         //Update ui
         linkClock.text = toTextTimeOutput(time);
@@ -91,7 +85,8 @@ public class WorldEnvironment
     {
         //Update game environment depending on current weather
         float timeNormalized = (float)LevelData.environment.time / WorldEnvironment.MAX_TIME;
-        sun.transform.eulerAngles = new Vector3();
+        float sunAngle = timeNormalized * 360 - 90;
+        sun.transform.eulerAngles = new Vector3(sunAngle, -70, -70);
     }
 
     private void onEventCheck()
@@ -133,7 +128,7 @@ public class WorldEnvironment
     public void setTime(int newTime)
     {
         this.time = newTime;
-        //eventCheckCoooldown = 10;
+        OnTimeUpdate();
         onEventCheck();
     }
 

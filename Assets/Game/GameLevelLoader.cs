@@ -71,12 +71,11 @@ public class GameLevelLoader : MonoBehaviour
             if (LoadLevelPanel.onGoingLoadingLvl == null)
             {
                 temporaryLevel.Init();
-                LoadLevelPanel.onGoingLoadingLvl = temporaryLevel.d;
+                LoadLevelPanel.onGoingLoadingLvl = temporaryLevel.header;
             }
 
             MapLevel.setStaticParentTrans(levelManager.transform);
 
-            LevelData.mainTerrain = terrain;
             LevelData.Init();
             LevelData.environment.LinkUI(weatherClock, weatherIcon);
 
@@ -94,8 +93,20 @@ public class GameLevelLoader : MonoBehaviour
             }
 
             //Load level - Implemented*
-            LevelUI.Data lui = LoadLevelPanel.onGoingLoadingLvl;
-            FileStream stream = new FileStream(lui.fileLvlPath, FileMode.Open);
+            Level.Header header = LoadLevelPanel.onGoingLoadingLvl;
+
+            using (BinaryReader br = Level.OpenFileReader(header.fileLvlPath))
+            {
+                var (major, minor, fix) = Level.GetVersion(br);
+                Level level = Level.GetMapLevelInstance(major, minor, fix);
+
+                if (level == null)
+                    throw new System.Exception("Load unsupported for version: " + major + "." + minor + "." + fix + "");
+
+
+            }
+
+            /*FileStream stream = new FileStream(lui.fileLvlPath, FileMode.Open);
             BinaryReader br = new BinaryReader(stream);
 
             stream.Position = LoadLevelPanel.onGoingLoadingLvl.mapLevelData_offset;
@@ -116,15 +127,11 @@ public class GameLevelLoader : MonoBehaviour
             else
             {
                 throw new Exception("THIS LEVEL SHOULDN'T BE LOADED... IT'S OUTDATED OR NOT ADDED AND CONFIGURED!\nMinor: " + lui.big_patch + "_" + lui.small_patch + "_" + lui.build_code);
-            }
+            }*/
 
             LevelData.ResizeTerrain((int)terrain.terrainData.size.x, terrainEdging, (int)terrain.terrainData.size.x, false);
 
             TerrainData td = terrain.terrainData;
-
-            //First weather update
-            weatherUpdate();
-            InvokeRepeating("weatherUpdate", WorldEnvironment.FRAME_UPDATE_TIME, WorldEnvironment.FRAME_UPDATE_TIME);
 
             //Generate radar img
             GenerateRadarMinimap();
@@ -284,7 +291,7 @@ public class GameLevelLoader : MonoBehaviour
     public void GenerateRadarMinimap()
     {
         //Generate radar img
-        TerrainData td = LevelData.mainTerrain.terrainData;
+        TerrainData td = Terrain.activeTerrain.terrainData;
         Texture2D radarTxt = new Texture2D(td.alphamapResolution, td.alphamapResolution, TextureFormat.RGBA32, false);
         float[,,] alphamaps = td.GetAlphamaps(0, 0, td.alphamapResolution, td.alphamapResolution);
         Color[] terrainColors = new Color[8] {
@@ -322,11 +329,5 @@ public class GameLevelLoader : MonoBehaviour
         }
         radarTxt.Apply();
         radarImg.texture = radarTxt;
-    }
-
-    private void weatherUpdate()
-    {
-        LevelData.environment.onFrameUpdate();
-        LevelData.environment.OnTimeUpdate();
     }
 }

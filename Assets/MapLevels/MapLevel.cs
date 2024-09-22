@@ -1,4 +1,6 @@
 #region [Libraries] All libraries
+using System.Linq;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using static MapLevelManager;
@@ -65,9 +67,22 @@ public class MapLevel
         if (virtualSpace == VirtualSpace.NORMAL)
         {
             var (originX, originY) = LevelData.gridManager.SamplePosition(unit.transform.position.x, unit.transform.position.z);
-            LevelData.gridManager.PlaceUnit(unit, originX, originY, unit.transform.rotation.y);
+            LevelData.gridManager.PlaceUnit(unit, originX, originY, unit.getRoot().eulerAngles.y);
         }
         return unit;
+    }
+    #endregion
+    #region [Functions] Spawn/Destroy Map objects
+    public static MapObject PlaceMapObject(MapObject mapObject, Vector3 position, Vector3 rotation)
+    {
+        var (gridX, gridY) = LevelData.gridManager.SamplePosition(position.x, position.z);
+
+        MapObject newObject = GameObject.Instantiate(mapObject.gameObject).GetComponent<MapObject>();
+        newObject.transform.position = position;
+        newObject.transform.eulerAngles = rotation;
+        LevelData.gridManager.PlaceMapObject(newObject, gridX, gridY, rotation.y);
+        LevelData.mapObjects.Add(newObject);
+        return newObject;
     }
     #endregion
 }

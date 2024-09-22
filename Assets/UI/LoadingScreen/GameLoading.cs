@@ -121,7 +121,6 @@ public class GameLoading : MonoBehaviour
         string agreedPolicyDate = DateTime.UtcNow.ToShortDateString() + " " + DateTime.UtcNow.ToShortTimeString();
 
         PlayerPrefs.SetString("agreedPolicyDate", agreedPolicyDate);
-        PlayerPrefs.SetString("agreedPolicyVersion", GameManager.getAgreementVer());
         PlayerPrefs.SetInt("agreedToPolicy", 1);
         PlayerPrefs.Save();
     }

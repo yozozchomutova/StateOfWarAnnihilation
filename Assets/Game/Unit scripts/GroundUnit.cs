@@ -16,7 +16,7 @@ public class GroundUnit : AttackingUnit
     public void commandMove(float x, float z)
     {
         if (virtualSpace == VirtualSpace.NORMAL) {
-            float calculatedY = LevelData.mainTerrain.SampleHeight(new Vector3(x, 0, z));
+            float calculatedY = Terrain.activeTerrain.SampleHeight(new Vector3(x, 0, z));
             Vector3 targettedPosition = new Vector3(x, calculatedY, z);
             body.moveTo(targettedPosition);
             state = UnitState.MOVING;

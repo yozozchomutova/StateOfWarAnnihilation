@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.022629824, g: 0.023843355, b: 0.02152036, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13250,7 +13250,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridParent_: {fileID: 0}
-  gridPrefab_: {fileID: 0}
   loadOnStart: 1
 --- !u!4 &773655399
 Transform:
@@ -30355,12 +30354,14 @@ MonoBehaviour:
   discordRPC: {fileID: 1596340342}
   stgFullPanel: {fileID: 1851253287}
   panelBcg: {fileID: 303652934}
-  prefabUIInputField: {fileID: 536950204467184136, guid: c3e739c2b6683154784c5416a4bfbde7,
-    type: 3}
-  prefabUISlider: {fileID: 1969770487880478184, guid: 142cbcc542d05244994ae969b2ebd67d,
-    type: 3}
-  prefabUIDropdown: {fileID: 7957415859274278843, guid: 8b86fa01a1c44be4db1ef9bfba37564e,
-    type: 3}
+  allPanels: []
+  nicknameIF: {fileID: 1125154632}
+  airForcesPositionD: {fileID: 0}
+  gameCameraTypeD: {fileID: 0}
+  resolutionD: {fileID: 0}
+  graphicsD: {fileID: 0}
+  masterAudioS: {fileID: 1953012819}
+  discordRpcS: {fileID: 1596340342}
 --- !u!1 &1808946645 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 713101720054731727, guid: 6b41089620277484a9b5a498d16f72ae,

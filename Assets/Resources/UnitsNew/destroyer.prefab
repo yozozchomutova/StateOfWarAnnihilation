@@ -5532,6 +5532,7 @@ MonoBehaviour:
   bodyId: 
   name: Destroyer
   icon: {fileID: 2800000, guid: bb109cfbf2f04e24085e6d6ff2cb7d82, type: 3}
+  gridSize: {x: 0, y: 0}
   virtualSpace: 0
   unitType: 5
   value: 0

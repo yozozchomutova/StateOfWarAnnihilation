@@ -27,7 +27,8 @@ public class MainMenuCanvas : MonoBehaviour
     {
         blackScreen.alpha = 1;
 
-        versionText.text = "Major: " + GameManager.getBigPatchVer() + " |Side: " + GameManager.getSmallPatchVer() + " |Agr: " + GameManager.getAgreementVer() + " |Build: " + GameManager.getTagVersionFull();
+        var (major, minor, fix) = GameManager.GetGameVersion();
+        versionText.text = "Major: " + major + " |Minor: " + minor + " |Fix: " + fix + " |Build: " + GameManager.versionTag;
     }
     
     void Update()

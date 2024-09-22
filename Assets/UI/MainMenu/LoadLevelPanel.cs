@@ -31,7 +31,7 @@ public class LoadLevelPanel : MonoBehaviour
 
     //CURRENT LOADING LEVEL PATH (These values are shared with GameLevelLoader.cs)
     public static int selectedTeamID = 1; //1 = blue, used for debugging 
-    public static LevelUI.Data onGoingLoadingLvl;
+    public static Level.Header onGoingLoadingLvl;
     public static TeamPlaySettings[] teamPlaySettings;
 
     private void Start()
@@ -81,10 +81,10 @@ public class LoadLevelPanel : MonoBehaviour
             levelUIOffsetY -= 110;
 
             //Disable LevelUI if not compatible
-            if (!PanelLoadLevel.compareVersion(levelUI.d, 03, 01, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 02, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 03, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 04, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 05, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 06, 01))
+            /*if (!PanelLoadLevel.compareVersion(levelUI.d, 03, 01, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 02, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 03, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 04, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 05, 01) && !PanelLoadLevel.compareVersion(levelUI.d, 03, 06, 01))
             {
                 levelUI.disablePlayBtn();
-            }
+            }*/
         }
 
         //Expand Content transform (to be able to scroll)
@@ -93,11 +93,11 @@ public class LoadLevelPanel : MonoBehaviour
 
     public void prepareLevel(LevelUI lui)
     {
-        onGoingLoadingLvl = lui.d;
+        onGoingLoadingLvl = lui.header;
 
         levelIcon.texture = lui.icon.texture;
         levelName.text = lui.levelName.text;
-        levelDesc.text = "Size: " + lui.d.mapWidth + " |Difficulty: " + lui.d.difficulty + "%";
+        levelDesc.text = "Size: " + lui.header.mapWidth + " |Difficulty: " + lui.header.difficulty + " / 10";
 
         //Clear STS list
         if (stsFullList != null)

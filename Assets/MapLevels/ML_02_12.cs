@@ -181,9 +181,6 @@ public class ML_02_12
             tData.SetDetailLayer(0, 0, 1, detailSandGrassInt);
         }
 
-        //Generate navigation
-        LevelData.mainTerrain = terrain;
-
         //7. Buildings, Towers, Units
         for (int j = 0; j < unitIds.Length; j++)
         {

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.19
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 796625090}
-  m_IndirectSpecularColor: {r: 0.042518467, g: 0.05058056, b: 0.05975568, a: 0.19}
+  m_IndirectSpecularColor: {r: 0.003989051, g: 0.0047453297, b: 0.005606022, a: 0.19}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -22313,7 +22313,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridParent_: {fileID: 565715239}
-  gridPrefab_: {fileID: 0}
   loadOnStart: 1
 --- !u!4 &1281383404
 Transform:
@@ -23742,7 +23741,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000047858516}
+  m_AnchoredPosition: {x: 0, y: 0.00044965267}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1432074737
@@ -27021,7 +27020,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1294173609}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9997796
+  m_Size: 0.9999731
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

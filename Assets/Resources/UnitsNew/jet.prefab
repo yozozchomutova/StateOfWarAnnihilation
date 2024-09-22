@@ -5435,6 +5435,7 @@ MonoBehaviour:
   bodyId: 
   name: Jet
   icon: {fileID: 2800000, guid: 4a5d9871cfc2f8e4395e828b36447627, type: 3}
+  gridSize: {x: 0, y: 0}
   virtualSpace: 0
   unitType: 5
   value: 0

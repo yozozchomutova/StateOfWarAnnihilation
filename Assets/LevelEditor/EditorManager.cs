@@ -40,7 +40,6 @@ public class EditorManager : MonoBehaviour
     //Saving level and level info
     [Header("Saving level and level info")]
     public PanelSaveConfirm panelSaveLevel;
-    [HideInInspector] public string levelName = "";
 
     public BarMapObjects barMapObjects;
     public BarNavigations barNavigations;
@@ -66,8 +65,6 @@ public class EditorManager : MonoBehaviour
         self = this;
 
         //Connect with LevelData
-        LevelData.mainTerrain = terrain;
-
         LevelData.Init();
 
         //Set itself as parent of all Units
@@ -119,15 +116,7 @@ public class EditorManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
-                //TODO - If level wasnt never saved before, open panel... Otherwise overwrite level...
-                /*if (string.IsNullOrEmpty(levelName))
-                {
-                    panelSaveLevel.show();
-                } else
-                {
-
-                }*/
-                panelSaveLevel.gameObject.SetActive(true);
+                panelSaveLevel.QuickSave();
             }
         }
 
@@ -138,6 +127,9 @@ public class EditorManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Y))
         {
             actionRedo();
+        } else if (Input.GetKeyDown(KeyCode.U))
+        {
+            panelSaveLevel.QuickSave();
         }
 
         if (Input.GetKeyDown(KeyCode.G))
@@ -189,7 +181,6 @@ public class EditorManager : MonoBehaviour
     {
         LevelData.ResetGame();
         reloadTeamsConfiguration();
-        levelName = "";
     }
 
     public void hidePlayerSettingsTabs()
@@ -225,40 +216,6 @@ public class EditorManager : MonoBehaviour
             else
                 bird3.Play();
         }
-    }
-
-    public void saveLevel(string levelName)
-    {
-        //Create SavedLevels folder, if not created already
-        Directory.CreateDirectory(Application.persistentDataPath + "/SavedLevels/");
-
-        //Setup
-        string path = Application.persistentDataPath + "/SavedLevels/" + levelName + ".lvl";
-
-        FileStream stream = new FileStream(path, FileMode.Create);
-        BinaryWriter bw = new BinaryWriter(stream);
-
-        //Write main informations
-        bw.Write((byte)int.Parse(GameManager.getBigPatchVer())); //Big patch
-        bw.Write((byte)int.Parse(GameManager.getSmallPatchVer())); //Small patch
-        bw.Write((byte)GameManager.getTagVersionId()); //Build code
-        bw.Write(calculateDifficulty()); //Difficulty
-        bw.Write((int)PanelNewLevel.normalMapSize); //Map width
-        bw.Write((int)PanelNewLevel.normalMapSize); //Map height
-        bw.Write((int)panelLevelInfo.description.text.Length); //Desc length
-        bw.Write((int)panelLevelInfo.imageBytes.Length); //Img length
-
-        ML_03_05 mapLevel = new ML_03_05(LevelData.mainTerrain, barMapObjects, barBuildings, barNavigations);
-        byte[] mapLevelData = CompressionManager.Compress(Serialize(mapLevel));
-
-        bw.Write((int)mapLevelData.Length); //Map level data length
-
-        bw.Write((byte[])Encoding.UTF8.GetBytes(panelLevelInfo.description.text)); //Desc
-        bw.Write((byte[])panelLevelInfo.imageBytes); //Img data
-        bw.Write(mapLevelData);
-
-        bw.Close();
-        stream.Close();
     }
 
     public static byte[] Serialize(object obj)

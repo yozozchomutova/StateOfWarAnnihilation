@@ -167,8 +167,8 @@ public class UnitBody : UnitReference
 
             //Align body to terrain
             Vector3 currentPosition = transform.position;
-            Vector3 terrainNormal = LevelData.mainTerrain.terrainData.GetInterpolatedNormal((currentPosition.x / LevelData.mainTerrain.terrainData.size.x),
-                                                                (currentPosition.z / LevelData.mainTerrain.terrainData.size.z));
+            Vector3 terrainNormal = Terrain.activeTerrain.terrainData.GetInterpolatedNormal((currentPosition.x / Terrain.activeTerrain.terrainData.size.x),
+                                                                (currentPosition.z / Terrain.activeTerrain.terrainData.size.z));
 
             Quaternion rot = Quaternion.FromToRotation(transform.up, terrainNormal) * transform.rotation;
             targetedRotationX = rot.x * 90;

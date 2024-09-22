@@ -73,6 +73,7 @@ MonoBehaviour:
   bodyId: 
   name: Debris
   icon: {fileID: 2800000, guid: 0175f7993245d9c42ae8397aeadee183, type: 3}
+  gridSize: {x: 0, y: 0}
   virtualSpace: 0
   unitType: 5
   value: 0

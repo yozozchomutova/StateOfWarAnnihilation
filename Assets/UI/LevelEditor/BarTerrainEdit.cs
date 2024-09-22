@@ -130,7 +130,7 @@ public class BarTerrainEdit : MonoBehaviour
     public void RegenerateGrid()
     {
         //Initialization
-        TerrainData td = LevelData.mainTerrain.terrainData;
+        TerrainData td = Terrain.activeTerrain.terrainData;
         int heightmapSize = td.heightmapResolution;
         int halfMapSize = 256;
         int quarterMapSize = 128;

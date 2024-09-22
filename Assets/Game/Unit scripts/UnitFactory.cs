@@ -63,8 +63,8 @@ public class UnitFactory : BuildingUnit, UnitInFront.RequestUnitUpgrade
         Vector3 forwardVector = Quaternion.Euler(rotation) * Vector3.forward;
         Vector3 factoryForwardPoint = position + forwardVector * 5f;
         Vector3 factoryBackwardPoint = position + forwardVector * -5f;
-        factoryForwardPoint = new Vector3(factoryForwardPoint.x, LevelData.mainTerrain.SampleHeight(factoryForwardPoint), factoryForwardPoint.z);
-        factoryBackwardPoint = new Vector3(factoryBackwardPoint.x, LevelData.mainTerrain.SampleHeight(factoryBackwardPoint), factoryBackwardPoint.z);
+        factoryForwardPoint = new Vector3(factoryForwardPoint.x, Terrain.activeTerrain.SampleHeight(factoryForwardPoint), factoryForwardPoint.z);
+        factoryBackwardPoint = new Vector3(factoryBackwardPoint.x, Terrain.activeTerrain.SampleHeight(factoryBackwardPoint), factoryBackwardPoint.z);
         NavMeshHit forwardHit, backwardHit;
 
         if (NavMesh.SamplePosition(factoryForwardPoint, out forwardHit, 1f, NavMesh.AllAreas))
@@ -256,7 +256,7 @@ public class UnitFactory : BuildingUnit, UnitInFront.RequestUnitUpgrade
         }
 
         Vector3 factoryForwardPoint = gameObject.transform.position + gameObject.transform.forward * 5f;
-        Vector3 testPoint = new Vector3(factoryForwardPoint.x, LevelData.mainTerrain.SampleHeight(factoryForwardPoint), factoryForwardPoint.z);
+        Vector3 testPoint = new Vector3(factoryForwardPoint.x, Terrain.activeTerrain.SampleHeight(factoryForwardPoint), factoryForwardPoint.z);
 
         if (LevelData.ts.teamId == team.id && deployFlagAllowed)
         {
